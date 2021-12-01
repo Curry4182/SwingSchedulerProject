@@ -44,7 +44,7 @@ public class TimeTableSystem {
 		dataMG = new DataLoadSaveManager();	
 		allSchedule = dataMG.loadSchedule();
 		Alarm alarm = dataMG.loadAlarmState();
-		alarm.crawlingHolidayInf();
+		//alarm.crawlingHolidayInf();
 		
 		drawTimeTableSystem();
 	}
@@ -65,13 +65,15 @@ public class TimeTableSystem {
 	    c.gridy = 0;
 	    c.weightx = 8;
         c.weighty = 1;
-	    frame.add(new LeftTableUI(null, null),c);
+        leftUI = new LeftTableUI(allSchedule, null);
+	    frame.add(leftUI,c);
 	    //frame.add(new TestUI(),c);
 	    c.gridx = 1;
 	    c.gridy = 0;
 	    c.weightx = 1;
         c.weighty = 1;
-	    frame.add(new RightSettingUI(null, null, null), c);
+        rightUI = new RightSettingUI(allSchedule, null, null);
+	    frame.add(rightUI, c);
 	    
 	    frame.setVisible(true);
 	}
