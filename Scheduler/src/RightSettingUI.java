@@ -8,19 +8,16 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
 import javax.swing.plaf.ColorUIResource;
 
-import com.formdev.flatlaf.FlatDarkLaf;
-import com.formdev.flatlaf.FlatLightLaf;
-
-import javax.swing.border.Border;
-import javax.swing.JSplitPane;
 import javax.swing.JCheckBox;
 import java.awt.Font;
 
 
 
 public class RightSettingUI extends JPanel {
-
+	//모든 일정 정보를 들고있는 필드 
 	private ArrayList<Schedule> allSchedule;
+	
+	//
 	private LeftTableUI leftUI;
 	private ArrayList<DayTimeUI> timeLines;
 	//알림설정 관련해서 추가한 변수,KCH
@@ -83,10 +80,9 @@ public class RightSettingUI extends JPanel {
 		chckbxNewCheckBox.addActionListener(new ActionListener() {
 	        @Override
 	        public void actionPerformed(ActionEvent e) {
-	        	removeAll();
-	        	createSettingUI();
 	        	selectLecture();
 	        	revalidate();
+	        	repaint();
 	        }
 	    });
 		
@@ -105,17 +101,18 @@ public class RightSettingUI extends JPanel {
 		chckbxNewCheckBox_1.addActionListener(new ActionListener() {
 	        @Override
 	        public void actionPerformed(ActionEvent e) {
-	        	removeAll();
-	        	createSettingUI();
 	        	selectOtherSchedule();
 	        	revalidate();
+	        	repaint();
 	        }
 	    });
+		
+		
 
 		JLabel lineField = new JLabel("");
 		lineField.setBorder(new MatteBorder(0, 0, 1, 0, UIManager.getColor ("Button.light")));
 		GridBagConstraints gbc_lineField = new GridBagConstraints();
-		gbc_lineField.insets = new Insets(0, 0, 5, 0);
+		gbc_lineField.insets = new Insets(0, 0, 5, 5);
 		gbc_lineField.gridwidth = 10;
 		gbc_lineField.fill = GridBagConstraints.HORIZONTAL;
 		gbc_lineField.gridx = 0;
@@ -146,21 +143,25 @@ public class RightSettingUI extends JPanel {
 		//panel에서 모든 컴포넌트 중에 강의일정 검색 후 선택
 		for(int i=0; i<components.length;i++) {
 			if(components[i] instanceof JRadioButton) {
-				//강의일정에 체크 
-				if(((JRadioButton)components[i]).getText().equals("강의일정")) {
-					((JRadioButton)components[i]).setSelected(true);
+				//기타일정 Radio button에 select
+				JRadioButton radioBtn = (JRadioButton)components[i];
+				if(radioBtn.getText().equals("강의일정")) {
+					radioBtn.setSelected(true);
 				}
 			}
 			
+			//isDeleteWhenReSelectRadioBtn -> 강의일정, 기타일정과 같은 Radio Button이 변경될때 마다 기존에 있던 삭제해야할 Component를 의미 
+			//만약 기존에 강의일정이 선택되어있다면 강의일정을 선택했을때 생성된 Component들을 삭제
 			if(components[i] instanceof JComponent) {
-				if(((JComponent)components[i]).getClientProperty("isDeleteWhenReSelectRadioBtn") != null){
-					boolean isDelete = (boolean)((JComponent)components[i]).getClientProperty("isDeleteWhenReSelectRadioBtn");
+				JComponent jComponent = (JComponent)components[i];
+				if(jComponent.getClientProperty("isDeleteWhenReSelectRadioBtn") != null){
+					boolean isDelete = (boolean)jComponent.getClientProperty("isDeleteWhenReSelectRadioBtn");
 					remove(components[i]);
 				}
 			}
 		}
 		
-		
+		//수업명 label 생성
 		JLabel lblNewLabel = new JLabel("수업명");
 		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
 		gbc_lblNewLabel.insets = new Insets(0, 0, 5, 5);
@@ -169,7 +170,7 @@ public class RightSettingUI extends JPanel {
 		add(lblNewLabel, gbc_lblNewLabel);
 		lblNewLabel.putClientProperty("isDeleteWhenReSelectRadioBtn", true);
 		
-		
+		//수업명 field 생성
 		JTextField textField = new JTextField();
 		GridBagConstraints gbc_textField = new GridBagConstraints();
 		textField.setBorder(new MatteBorder(0, 0, 1, 0, UIManager.getColor ("Button.light")));
@@ -182,6 +183,7 @@ public class RightSettingUI extends JPanel {
 		textField.setColumns(10);
 		textField.putClientProperty("isDeleteWhenReSelectRadioBtn", true);
 		
+		//교수명 label 생성
 		JLabel lblNewLabel_1 = new JLabel("교수명");
 		GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
 		gbc_lblNewLabel_1.anchor = GridBagConstraints.EAST;
@@ -191,6 +193,7 @@ public class RightSettingUI extends JPanel {
 		add(lblNewLabel_1, gbc_lblNewLabel_1);
 		lblNewLabel_1.putClientProperty("isDeleteWhenReSelectRadioBtn", true);
 		
+		//교수명 field 생성
 		JTextField textField_1 = new JTextField();
 		textField_1.setColumns(10);
 		GridBagConstraints gbc_textField_1 = new GridBagConstraints();
@@ -203,6 +206,7 @@ public class RightSettingUI extends JPanel {
 		add(textField_1, gbc_textField_1);
 		textField_1.putClientProperty("isDeleteWhenReSelectRadioBtn", true);
 		
+		//장소 label 생성
 		JLabel lblNewLabel_1_1 = new JLabel("장소");
 		GridBagConstraints gbc_lblNewLabel_1_1 = new GridBagConstraints();
 		gbc_lblNewLabel_1_1.anchor = GridBagConstraints.EAST;
@@ -212,6 +216,7 @@ public class RightSettingUI extends JPanel {
 		add(lblNewLabel_1_1, gbc_lblNewLabel_1_1);
 		lblNewLabel_1_1.putClientProperty("isDeleteWhenReSelectRadioBtn", true);
 		
+		//장소 field 생성
 		JTextField textField_2 = new JTextField();
 		textField_2.setColumns(10);
 		textField_2.setBorder(new MatteBorder(0, 0, 1, 0, UIManager.getColor ("Button.light")));
@@ -235,6 +240,13 @@ public class RightSettingUI extends JPanel {
 		panel.add(new DayTimeUI());
 		panel.add(new DayTimeUI());
 		
+		//+버튼 추가 
+		JButton btnNewButton_1 = new JButton("+");
+		btnNewButton_1.setBackground(UIManager.getColor ( "Panel.background" ));
+		btnNewButton_1.setBorder(null);
+		btnNewButton_1.setFont(new Font("aria", Font.BOLD, 25));
+		panel.add(btnNewButton_1);
+				
 		JScrollPane jsp = new JScrollPane(panel, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		jsp.setBorder(BorderFactory.createLineBorder(UIManager.getColor("Panel.background")));
 		GridBagConstraints gbcDayAndTime = new GridBagConstraints();
@@ -258,20 +270,25 @@ public class RightSettingUI extends JPanel {
 		//panel에서 모든 컴포넌트 중에 기타일정 검색 후 선택 
 		for(int i=0; i<components.length;i++) {	
 			if(components[i] instanceof JRadioButton) {
-				//기타일정에 체크 
-				if(((JRadioButton)components[i]).getText().equals("기타일정")) {
-					((JRadioButton)components[i]).setSelected(true);
+				//기타일정 Radio button에 select
+				JRadioButton radioBtn = (JRadioButton)components[i];
+				if(radioBtn.getText().equals("기타일정")) {
+					radioBtn.setSelected(true);
 				}
 			}
 			
+			//isDeleteWhenReSelectRadioBtn -> 강의일정, 기타일정과 같은 Radio Button이 변경될때 마다 기존에 있던 삭제해야할 Component를 의미 
+			//만약 기존에 강의일정이 선택되어있다면 강의일정을 선택했을때 생성된 Component들을 삭제
 			if(components[i] instanceof JComponent) {
-				if(((JComponent)components[i]).getClientProperty("isDeleteWhenReSelectRadioBtn") != null){
-					boolean isDelete = (boolean)((JComponent)components[i]).getClientProperty("isDeleteWhenReSelectRadioBtn");
+				JComponent jComponent = (JComponent)components[i];
+				if(jComponent.getClientProperty("isDeleteWhenReSelectRadioBtn") != null){
+					boolean isDelete = (boolean)jComponent.getClientProperty("isDeleteWhenReSelectRadioBtn");
 					remove(components[i]);
 				}
 			}
 		}
 		
+		//일정명 label 생성
 		JLabel lblNewLabel = new JLabel("일정명");
 		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
 		gbc_lblNewLabel.insets = new Insets(0, 0, 5, 5);
@@ -280,6 +297,7 @@ public class RightSettingUI extends JPanel {
 		add(lblNewLabel, gbc_lblNewLabel);
 		lblNewLabel.putClientProperty("isDeleteWhenReSelectRadioBtn", true);
 		
+		//일정명 field 생성
 		JTextField textField = new JTextField();
 		GridBagConstraints gbc_textField = new GridBagConstraints();
 		textField.setBorder(new MatteBorder(0, 0, 1, 0, UIManager.getColor ("Button.light")));

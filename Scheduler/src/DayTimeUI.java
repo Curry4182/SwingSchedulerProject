@@ -1,11 +1,13 @@
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 
 import java.awt.Color;
+import java.awt.Font;
 
 public class DayTimeUI extends JPanel{
 	private JComboBox day;
@@ -19,7 +21,7 @@ public class DayTimeUI extends JPanel{
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		setLayout(gridBagLayout);
 		setBackground(UIManager.getColor ( "Panel.background" ));
-		gridBagLayout.columnWidths = new int[] {40, 10, 40, 10, 40};
+		gridBagLayout.columnWidths = new int[] {40, 10, 40, 10, 40, 5, 25};
 		
 		String days[]={"월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일"};    
 		day = new JComboBox(days);
@@ -54,6 +56,15 @@ public class DayTimeUI extends JPanel{
 		c.gridx = 4;
 		c.gridy = 0;
 		add(endTime, c);
+		
+		//+버튼 추가 
+		JButton btnNewButton_1 = new JButton(" x");
+		btnNewButton_1.setBackground(UIManager.getColor ( "Panel.background" ));
+		btnNewButton_1.setBorder(null);
+		btnNewButton_1.setFont(new Font("aria", Font.BOLD, 15));
+		c.gridx = 6;
+		c.gridy = 0;
+		add(btnNewButton_1, c);
 	}
 	
 	public DayAndTime getDayAndTimeObject() {

@@ -41,19 +41,17 @@ public class LeftTableUI extends JPanel {
 	//강의 일정 -> 일정명, 장소, 교수명
 	//기타 일정 -> 일정명
 	//같은 일정은 같은 배경색으로 표시 
-	public void printSchedule() {
-		removeAll();
+	public void printSchedule() {		
+		removeAll();//gridTable에 있는 모든 일정을 삭제
 		
 		this.setSize(500, 600);
 		this.setLayout(new BorderLayout());
 
-		
 		gridTable = new JPanel();
 		gridTable.setSize(550, 600);
 		
 		GridBagLayout gl = new GridBagLayout();
 		gridTable.setLayout(gl);
-		
 		
 		Map<String, Integer> dayToNum = new HashMap<String, Integer>();
 		dayToNum.put("월요일", 0);
