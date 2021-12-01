@@ -12,9 +12,11 @@ import java.util.Map;
 
 import javax.swing.Action;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
@@ -202,22 +204,15 @@ public class LeftTableUI extends JPanel {
 				btns.get(startRow).get(col).setText(btnInformStr);
 				
 				btns.get(startRow).get(col).putClientProperty("scheduleItem", allSchedule.get(i));
-				btns.get(startRow).get(col).putClientProperty("isDuplicated", false);
-
+				
 				btns.get(startRow).get(col).addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						JButton btn = (JButton)e.getSource();
-						
-						if(!(boolean)btn.getClientProperty("isDuplicated")) {
-							btn.putClientProperty("isDuplicated", true);
-							Schedule item = (Schedule)(btn).getClientProperty("scheduleItem");
-							deleteBtnClick(item);
-						}
+						Schedule item = (Schedule)(btn).getClientProperty("scheduleItem");
+						deleteBtnClick(item);
 					}
-		        });
-			
-				//System.out.println("c: " + col + " sr: " +  startRow + " er: " + endRow);
+		        });			
 			}
 		}
 		
@@ -245,9 +240,14 @@ public class LeftTableUI extends JPanel {
 	//사용자가 '확인'을 클릭하면 일정을 시간표에서 삭제하고 allschedule 객체에서도 일정정보를 삭제한다.
 	//그 후 알람 정보도 업데이트 한다. 
 	public void deleteBtnClick(Schedule scheduleItem) {
-		//allSchedule
-		allSchedule.remove(scheduleItem);
-		printSchedule();
+		//allSchedule 
+		int dialogButton = JOptionPane.YES_NO_OPTION;
+		String content = "\""+scheduleItem.title + "\"" + "를 삭제하시겠습니까?";
+		int dialogResult = JOptionPane.showConfirmDialog(this, content, "일정 삭제", dialogButton);
+		if(dialogResult == 0) {
+			allSchedule.remove(scheduleItem);
+			printSchedule();
+		}
 	}
 
 
