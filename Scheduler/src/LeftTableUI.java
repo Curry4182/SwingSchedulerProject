@@ -83,39 +83,45 @@ public class LeftTableUI extends JPanel {
 			}
 		}
 	
+		//0,0 버튼 border제거 
 		btns.get(0).get(0).setBorder(new MatteBorder(0,0,0,0, Color.BLACK));
+		
+		//해당 위치 버튼을 넣을때 grid의 위치, 범위 등을 설정해주는 GridBagConstraints들을 설정 
+		ArrayList<ArrayList<GridBagConstraints>> gbcs = new ArrayList<ArrayList<GridBagConstraints>>();
 		for(int i=0; i<49; i++) {
+			gbcs.add(new ArrayList<GridBagConstraints>());
 			for(int j=0; j<8; j++) {
-				btns.get(i).get(j).setBackground(UIManager.getColor ( "Panel.background" ));
+				GridBagConstraints gbc = new GridBagConstraints();
+				
+				gbc.weightx = 1;
+				gbc.weighty = 1;
+				gbc.fill = GridBagConstraints.BOTH; 
+				
+				//일정표 가장왼쪽에 있는 시간 열 
 				if(j==0) {
-					c.gridwidth = 1;
-					c.weightx = 1;
-					c.gridx = j;
+					gbc.gridwidth = 1;
+					gbc.weightx = 1;
+					gbc.gridx = j;
 					
 					if(i%2==0) {
-						c.gridheight = 1;
+						gbc.gridheight = 1;
 					}else {
-						c.gridheight = 2;
+						gbc.gridheight = 2;
 					}
-					btns.get(i).get(j).setPreferredSize(new Dimension(20, 20));
 				}
 				else {
-					c.gridwidth = 2;
-					c.gridheight = 1;
-					c.weightx = 2;
-					c.gridx = j*2 - 1;
-					btns.get(i).get(j).setPreferredSize(new Dimension(15, 20));
+					gbc.gridwidth = 2;
+					gbc.gridheight = 1;
+					gbc.weightx = 2;
+					gbc.gridx = j*2 - 1;
 				}
-				c.gridy = i;
-								
-				gridTable.add(btns.get(i).get(j), c);
+				gbc.gridy = i;
+				
+				gbcs.get(i).add(gbc);
 			}
 		}
 		
-		JScrollPane jsp = new JScrollPane(gridTable, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		this.add(jsp);
-		
-	
+		//스케줄 설정 
 		for(int i=0; i < allSchedule.size(); i++) {
 			ArrayList<DayAndTime> dayAndTimes = allSchedule.get(i).getDayAndTime();
 
@@ -130,27 +136,52 @@ public class LeftTableUI extends JPanel {
 				String day = dayAndTimes.get(j).day;
 				
 				//startTime은 오전11시30분이면 1130과 같이 저장 따라서 시간을 가져올려면 나누기 100을 한다.
-				int hour = startTime/100;
-				
+				int startHour = startTime/100;
+				int endHour = endTime/100;
 
 				//ex) 1130 - 1100
-				int m = startTime - hour*100;
-				
+				int startMinute = startTime - startHour*100;
+				int endMinute = endTime - endHour*100;
 				//시간이 시작되는 row의 위치 
-				int startRow = 1;
+				int initRow = 1;
+				
 				//각시간당 2칸임으로 곱하기 2를 한다. 
 				//분은 0분 아니면 30분 이기 떄문에 0분 이면 0을 아니면 1을 더한다
-				int row = startRow + hour*2 + (m == 0 ? 0 : 1);
+				int startRow = initRow + startHour*2 + (startMinute == 0 ? 0 : 1);
+				int endRow = initRow + endHour*2 + (endMinute == 0 ? 0 : 1);
+				
 				
 				//요일이 시작되는 col의 위치
-				int startCol = 1;
+				int initCol = 1;
 				
 				//각 요일별로 grid에서 2칸을 차기 하기 떄문에 *2를 한다. 
-				int col = startCol + dayToNum.get(day)*2;
+				int col = initCol + dayToNum.get(day)*2;
 
-				System.out.println("c: " + col + "r: " +  row);
+				GridBagConstraints gbc = gbcs.get(startRow).get(col);
+				gbc.gridheight = endRow - startRow + 1;
+				btns.get(startRow).get(col).setText(allSchedule.get(i).title);
+				System.out.println("c: " + col + " sr: " +  startRow + " er: " + endRow);
 			}
 		}
+		
+		for(int i=0; i<49; i++) {
+			for(int j=0; j<8; j++) {
+				btns.get(i).get(j).setBackground(UIManager.getColor ( "Panel.background" ));
+				if(j==0) {
+					btns.get(i).get(j).setPreferredSize(new Dimension(20, 20));
+				}
+				else {
+					btns.get(i).get(j).setPreferredSize(new Dimension(15, 20));
+				}
+				gridTable.add(btns.get(i).get(j), gbcs.get(i).get(j));
+			}
+		}
+		
+		JScrollPane jsp = new JScrollPane(gridTable, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		this.add(jsp);
+		
+	
+		
 	}
 	
 	//삭제 버튼을 클릭하면 호출되는 함수.
