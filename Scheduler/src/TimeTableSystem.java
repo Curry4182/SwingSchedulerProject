@@ -15,27 +15,27 @@ import java.awt.*;
 
 public class TimeTableSystem {
 
-	//사용자가 추가한 모든 일정 정보를 관리한다. 
+	//�궗�슜�옄媛� 異붽��븳 紐⑤뱺 �씪�젙 �젙蹂대�� 愿�由ы븳�떎. 
 	private ArrayList<Schedule> allSchedule;
 
-	//모든 일정 정보를 텍스트파일에 저장하고, 텍스트 파일에서 불러온다.
+	//紐⑤뱺 �씪�젙 �젙蹂대�� �뀓�뒪�듃�뙆�씪�뿉 ���옣�븯怨�, �뀓�뒪�듃 �뙆�씪�뿉�꽌 遺덈윭�삩�떎.
 	//Alarm.txt, Schedule.txt
 	private DataLoadSaveManager dataMG;
 
-	//[그림 2]제안하는 소프트웨어의 구상도에서 왼쪽에 있는 시간표
+	//[洹몃┝ 2]�젣�븞�븯�뒗 �냼�봽�듃�썾�뼱�쓽 援ъ긽�룄�뿉�꽌 �쇊履쎌뿉 �엳�뒗 �떆媛꾪몴
 	private LeftTableUI leftUI;
 
-	//[그림 2]제안하는 소프트웨어의 구상도에서 오른쪽에 있는 설정화면
+	//[洹몃┝ 2]�젣�븞�븯�뒗 �냼�봽�듃�썾�뼱�쓽 援ъ긽�룄�뿉�꽌 �삤瑜몄そ�뿉 �엳�뒗 �꽕�젙�솕硫�
 	private RightSettingUI rightUI;
 	
-	//TimeTableSystem 객체를 생성하여 호출한다. 
+	//TimeTableSystem 媛앹껜瑜� �깮�꽦�븯�뿬 �샇異쒗븳�떎. 
 	public static void main(String[] args) {
-		//FlatDarkLaf.setup();
+		FlatDarkLaf.setup();
 		//FlatDarculaLaf.setup();
 		//FlatCarbonIJTheme.setup();
 		//FlatArcDarkOrangeIJTheme.setup();
 		//FlatLightLaf.setup();	
-		FlatCyanLightIJTheme.setup();
+		//FlatCyanLightIJTheme.setup();
 
 		TimeTableSystem system = new TimeTableSystem();
 	}
@@ -49,8 +49,8 @@ public class TimeTableSystem {
 		drawTimeTableSystem();
 	}
 	
-	//leftTableUI에 시간표 격자를 생성하고 시간표에 일정 정보를 출력하고 시간표 격자칸에 색을 표시한다.
-	//rightsettingUI에 입력 UI 를 생성하고 알림 여부에 따라 알림스위치를 설정한다. 
+	//leftTableUI�뿉 �떆媛꾪몴 寃⑹옄瑜� �깮�꽦�븯怨� �떆媛꾪몴�뿉 �씪�젙 �젙蹂대�� 異쒕젰�븯怨� �떆媛꾪몴 寃⑹옄移몄뿉 �깋�쓣 �몴�떆�븳�떎.
+	//rightsettingUI�뿉 �엯�젰 UI 瑜� �깮�꽦�븯怨� �븣由� �뿬遺��뿉 �뵲�씪 �븣由쇱뒪�쐞移섎�� �꽕�젙�븳�떎. 
 	public void drawTimeTableSystem() {
 		JFrame frame = new JFrame("I love Swing ");
 	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -78,10 +78,10 @@ public class TimeTableSystem {
 	    frame.setVisible(true);
 	}
 	
-	//dataMG의 saveSchedule함수를 호출하여 txt파일에 저장한다. 
-	//시스템을 종료한다.
+	//dataMG�쓽 saveSchedule�븿�닔瑜� �샇異쒗븯�뿬 txt�뙆�씪�뿉 ���옣�븳�떎. 
+	//�떆�뒪�뀥�쓣 醫낅즺�븳�떎.
 	public void closeSystem() {
-	//(6)종료 SequenceDiagram -KCH
+	//(6)醫낅즺 SequenceDiagram -KCH
 		dataMG.saveSchedule();
 		dataMG.saveAlarmState();
 		//terminate System

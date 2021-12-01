@@ -1,1 +1,1 @@
-{"location":"Ã¢¿ø","professor":"professorName","type":0,"title":"title","dayAndTime":[{"day":"¿ù¿äÀÏ","startTime":1030,"endTime":1100},{"day":"È­¿äÀÏ","startTime":1030,"endTime":1100}]}
+{"location":"ì°½ì›","professor":"professorName","type":0,"title":"title","dayAndTime":[{"day":"ì›”ìš”ì¼","startTime":1030,"endTime":1100},{"day":"í™”ìš”ì¼","startTime":1030,"endTime":1100}]}

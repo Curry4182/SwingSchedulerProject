@@ -12,6 +12,7 @@ import java.util.Map;
 
 import javax.swing.Action;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -174,8 +175,9 @@ public class LeftTableUI extends JPanel {
 				
 				//요일이 시작되는 col의 위치
 				int initCol = 1;
-				
+				//day="월요일";
 				//각 요일별로 grid에서 2칸을 차기 하기 떄문에 *2를 한다. 
+				System.out.print(day);
 				int col = initCol + dayToNum.get(day)*2;
 
 				GridBagConstraints gbc = gbcs.get(startRow).get(col);
@@ -204,13 +206,20 @@ public class LeftTableUI extends JPanel {
 				btns.get(startRow).get(col).setText(btnInformStr);
 				
 				btns.get(startRow).get(col).putClientProperty("scheduleItem", allSchedule.get(i));
+
 				
 				btns.get(startRow).get(col).addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						JButton btn = (JButton)e.getSource();
 						Schedule item = (Schedule)(btn).getClientProperty("scheduleItem");
-						deleteBtnClick(item);
+						String InformStr = String.format("<html>강의명: %s<br/>장소: %s<br/>교수: %s<br/></html>", item.title,  item.getLocation(), item.getProfessor());
+						ScheduleDeleteDialog dialog = new ScheduleDeleteDialog(InformStr,new ActionListener() {
+							@Override
+							public void actionPerformed(ActionEvent e) {
+								deleteBtnClick(item);
+							}
+				        });
 					}
 		        });			
 			}
