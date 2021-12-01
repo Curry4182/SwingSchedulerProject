@@ -52,7 +52,7 @@ public class TimeTableSystem {
 	//leftTableUI에 시간표 격자를 생성하고 시간표에 일정 정보를 출력하고 시간표 격자칸에 색을 표시한다.
 	//rightsettingUI에 입력 UI 를 생성하고 알림 여부에 따라 알림스위치를 설정한다. 
 	public void drawTimeTableSystem() {
-		JFrame frame = new JFrame("I love Swing");
+		JFrame frame = new JFrame("I love Swing ");
 	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    frame.setSize(1200, 530);
 	    frame.setLayout(new GridBagLayout());
