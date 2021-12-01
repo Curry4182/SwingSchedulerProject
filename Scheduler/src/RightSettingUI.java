@@ -44,7 +44,9 @@ public class RightSettingUI extends JPanel {
 	private JTextField textField;
 	private JTextField textField_1;
 	private JTextField textField_2;
-	
+	//알림설정 관련해서 추가한 변수,KCH
+	private Alarm alarm;
+
 	public RightSettingUI(ArrayList<Schedule> allSchedule, LeftTableUI leftUI, Alarm alarm) {
 		createSettingUI();
 	}
@@ -350,4 +352,10 @@ public class RightSettingUI extends JPanel {
 	public void timeDeleteBtnClick() {
 		
 	}
+
+	//Seq(5) 알림설정 KCH
+	public void alarmOnOffBtnClick() {
+		alarm.changeAlarmState();
+	}
+
 }
