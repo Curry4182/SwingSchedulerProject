@@ -15,20 +15,20 @@ import java.awt.*;
 
 public class TimeTableSystem {
 
-	//»ç¿ëÀÚ°¡ Ãß°¡ÇÑ ¸ğµç ÀÏÁ¤ Á¤º¸¸¦ °ü¸®ÇÑ´Ù. 
+	//ì‚¬ìš©ìê°€ ì¶”ê°€í•œ ëª¨ë“  ì¼ì • ì •ë³´ë¥¼ ê´€ë¦¬í•œë‹¤. 
 	private ArrayList<Schedule> allSchedule;
 
-	//¸ğµç ÀÏÁ¤ Á¤º¸¸¦ ÅØ½ºÆ®ÆÄÀÏ¿¡ ÀúÀåÇÏ°í, ÅØ½ºÆ® ÆÄÀÏ¿¡¼­ ºÒ·¯¿Â´Ù.
+	//ëª¨ë“  ì¼ì • ì •ë³´ë¥¼ í…ìŠ¤íŠ¸íŒŒì¼ì— ì €ì¥í•˜ê³ , í…ìŠ¤íŠ¸ íŒŒì¼ì—ì„œ ë¶ˆëŸ¬ì˜¨ë‹¤.
 	//Alarm.txt, Schedule.txt
 	private DataLoadSaveManager dataMG;
 
-	//[±×¸² 2]Á¦¾ÈÇÏ´Â ¼ÒÇÁÆ®¿ş¾îÀÇ ±¸»óµµ¿¡¼­ ¿ŞÂÊ¿¡ ÀÖ´Â ½Ã°£Ç¥
+	//[ê·¸ë¦¼ 2]ì œì•ˆí•˜ëŠ” ì†Œí”„íŠ¸ì›¨ì–´ì˜ êµ¬ìƒë„ì—ì„œ ì™¼ìª½ì— ìˆëŠ” ì‹œê°„í‘œ
 	private LeftTableUI leftUI;
 
-	//[±×¸² 2]Á¦¾ÈÇÏ´Â ¼ÒÇÁÆ®¿ş¾îÀÇ ±¸»óµµ¿¡¼­ ¿À¸¥ÂÊ¿¡ ÀÖ´Â ¼³Á¤È­¸é
+	//[ê·¸ë¦¼ 2]ì œì•ˆí•˜ëŠ” ì†Œí”„íŠ¸ì›¨ì–´ì˜ êµ¬ìƒë„ì—ì„œ ì˜¤ë¥¸ìª½ì— ìˆëŠ” ì„¤ì •í™”ë©´
 	private RightSettingUI rightUI;
 	
-	//TimeTableSystem °´Ã¼¸¦ »ı¼ºÇÏ¿© È£ÃâÇÑ´Ù. 
+	//TimeTableSystem ê°ì²´ë¥¼ ìƒì„±í•˜ì—¬ í˜¸ì¶œí•œë‹¤. 
 	public static void main(String[] args) {
 		//FlatDarkLaf.setup();
 		//FlatDarculaLaf.setup();
@@ -49,8 +49,8 @@ public class TimeTableSystem {
 		drawTimeTableSystem();
 	}
 	
-	//leftTableUI¿¡ ½Ã°£Ç¥ °İÀÚ¸¦ »ı¼ºÇÏ°í ½Ã°£Ç¥¿¡ ÀÏÁ¤ Á¤º¸¸¦ Ãâ·ÂÇÏ°í ½Ã°£Ç¥ °İÀÚÄ­¿¡ »öÀ» Ç¥½ÃÇÑ´Ù.
-	//rightsettingUI¿¡ ÀÔ·Â UI ¸¦ »ı¼ºÇÏ°í ¾Ë¸² ¿©ºÎ¿¡ µû¶ó ¾Ë¸²½ºÀ§Ä¡¸¦ ¼³Á¤ÇÑ´Ù. 
+	//leftTableUIì— ì‹œê°„í‘œ ê²©ìë¥¼ ìƒì„±í•˜ê³  ì‹œê°„í‘œì— ì¼ì • ì •ë³´ë¥¼ ì¶œë ¥í•˜ê³  ì‹œê°„í‘œ ê²©ìì¹¸ì— ìƒ‰ì„ í‘œì‹œí•œë‹¤.
+	//rightsettingUIì— ì…ë ¥ UI ë¥¼ ìƒì„±í•˜ê³  ì•Œë¦¼ ì—¬ë¶€ì— ë”°ë¼ ì•Œë¦¼ìŠ¤ìœ„ì¹˜ë¥¼ ì„¤ì •í•œë‹¤. 
 	public void drawTimeTableSystem() {
 		JFrame frame = new JFrame("I love Swing ");
 	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -78,9 +78,12 @@ public class TimeTableSystem {
 	    frame.setVisible(true);
 	}
 	
-	//dataMGÀÇ saveScheduleÇÔ¼ö¸¦ È£ÃâÇÏ¿© txtÆÄÀÏ¿¡ ÀúÀåÇÑ´Ù. 
-	//½Ã½ºÅÛÀ» Á¾·áÇÑ´Ù.
+	//dataMGì˜ saveScheduleí•¨ìˆ˜ë¥¼ í˜¸ì¶œí•˜ì—¬ txtíŒŒì¼ì— ì €ì¥í•œë‹¤. 
+	//ì‹œìŠ¤í…œì„ ì¢…ë£Œí•œë‹¤.
 	public void closeSystem() {
-	
+	//(6)ì¢…ë£Œ SequenceDiagram -KCH
+		dataMG.saveSchedule();
+		dataMG.saveAlarmState();
+		//terminate System
 	}
 }
