@@ -1,12 +1,16 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -15,6 +19,7 @@ import javax.swing.UIManager;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
+
 
 public class LeftTableUI extends JPanel {
 
@@ -34,6 +39,19 @@ public class LeftTableUI extends JPanel {
 	//기타 일정 -> 일정명
 	//같은 일정은 같은 배경색으로 표시 
 	public void printSchedule() {
+		removeAll();
+		
+		this.setSize(500, 600);
+		this.setLayout(new BorderLayout());
+
+		
+		gridTable = new JPanel();
+		gridTable.setSize(550, 600);
+		
+		GridBagLayout gl = new GridBagLayout();
+		gridTable.setLayout(gl);
+		
+		
 		Map<String, Integer> dayToNum = new HashMap<String, Integer>();
 		dayToNum.put("월요일", 0);
 		dayToNum.put("화요일", 1);
@@ -126,6 +144,7 @@ public class LeftTableUI extends JPanel {
 			ArrayList<DayAndTime> dayAndTimes = allSchedule.get(i).getDayAndTime();
 
 			for(int j=0; j<dayAndTimes.size(); j++) {
+				
 				//일정 시작시간
 				int startTime = dayAndTimes.get(j).startTime;
 				
@@ -159,8 +178,46 @@ public class LeftTableUI extends JPanel {
 
 				GridBagConstraints gbc = gbcs.get(startRow).get(col);
 				gbc.gridheight = endRow - startRow + 1;
-				btns.get(startRow).get(col).setText(allSchedule.get(i).title);
-				System.out.println("c: " + col + " sr: " +  startRow + " er: " + endRow);
+				
+				String btnInformStr = allSchedule.get(i).title;
+				 
+				//font수정
+				btns.get(startRow).get(col).setFont(new Font("굴림", Font.PLAIN, 12));
+				//type에서 강의 일정은 0, 기타일정은 1
+				//강의일정 이라면
+				if(allSchedule.get(i).type == 0) {
+					int height = endRow - startRow + 1;
+					if(height == 1) {
+						btnInformStr = String.format("<html>%s</html>", allSchedule.get(i).title);
+					}else if (height == 2) {
+						btnInformStr = String.format("<html>%s<br/>%s</html>", allSchedule.get(i).title,  allSchedule.get(i).getLocation());
+					}else {
+						btnInformStr = String.format("<html>%s<br/>%s<br/>%s<br/></html>", allSchedule.get(i).title,  allSchedule.get(i).getLocation(), allSchedule.get(i).getProfessor());
+					}
+				}else if(allSchedule.get(i).type == 1) { //기타일정이라면 
+					btnInformStr = String.format("<html>%s</html>", allSchedule.get(i).title);
+				}
+				
+				//버튼 텍스트 수정 
+				btns.get(startRow).get(col).setText(btnInformStr);
+				
+				btns.get(startRow).get(col).putClientProperty("scheduleItem", allSchedule.get(i));
+				btns.get(startRow).get(col).putClientProperty("isDuplicated", false);
+
+				btns.get(startRow).get(col).addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						JButton btn = (JButton)e.getSource();
+						
+						if(!(boolean)btn.getClientProperty("isDuplicated")) {
+							btn.putClientProperty("isDuplicated", true);
+							Schedule item = (Schedule)(btn).getClientProperty("scheduleItem");
+							deleteBtnClick(item);
+						}
+					}
+		        });
+			
+				//System.out.println("c: " + col + " sr: " +  startRow + " er: " + endRow);
 			}
 		}
 		
@@ -180,30 +237,22 @@ public class LeftTableUI extends JPanel {
 		JScrollPane jsp = new JScrollPane(gridTable, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		this.add(jsp);
 		
-	
-		
+		revalidate();
 	}
 	
 	//삭제 버튼을 클릭하면 호출되는 함수.
 	//삭제 여부를 확인하는 팝업창을 띄운다.
 	//사용자가 '확인'을 클릭하면 일정을 시간표에서 삭제하고 allschedule 객체에서도 일정정보를 삭제한다.
 	//그 후 알람 정보도 업데이트 한다. 
-	public void deleteBtnClick() {
-		
+	public void deleteBtnClick(Schedule scheduleItem) {
+		//allSchedule
+		allSchedule.remove(scheduleItem);
+		printSchedule();
 	}
 
 
 	//Jpanel을 GridLayout으로 생성한다.
 	public void createTable() {
-		this.setSize(500, 600);
-		this.setLayout(new BorderLayout());
-
-		
-		gridTable = new JPanel();
-		gridTable.setSize(550, 600);
-		
-		GridBagLayout gl = new GridBagLayout();
-		gridTable.setLayout(gl);
 		
 		printSchedule();
 	}

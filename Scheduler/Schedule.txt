@@ -1,2 +1,1 @@
 {"location":"창원","professor":"professorName","type":0,"title":"title","dayAndTime":[{"day":"월요일","startTime":1030,"endTime":1100},{"day":"화요일","startTime":1030,"endTime":1100}]}
-{"location":"창원","professor":"professorName","type":0,"title":"title","dayAndTime":[{"day":"월요일","startTime":1030,"endTime":1100},{"day":"화요일","startTime":1030,"endTime":1100}]}
