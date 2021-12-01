@@ -15,18 +15,18 @@ public class DataLoadSaveManager {
 	private ArrayList<Schedule> allSchedule;
 	private Alarm alarm;
 	
-	//¸ðµç ÀÏÁ¤ Á¤º¸¸¦ allScheduleº¯¼ö¿¡ ÀúÀå
-	//¾ÖÇÃ¸®ÄÉÀÌ¼ÇÀ» ½ÇÇàÇÒ ¶§ »ç¿ëÀÚÀÇ ÀÏÁ¤ Á¤º¸°¡ ÀúÀåµÇ¾î ÀÖ´Â Schedule.txtÆÄÀÏÀ» ¿¬´Ù.
-	//txtÆÄÀÏ¿¡´Â ÇÑ Çà¸¶´Ù ÇÏ³ªÀÇ ÀÏÁ¤ Á¤º¸°¡ ÀúÀåµÇ¾îÀÖ´Ù.
-	//°¢ÇàÀÇ Á¤º¸¸¦ Schedule¿¡ ÀúÀåÇÑ ÈÄ allSchedule¿¡ Ãß°¡ÇÑ´Ù.
-	//txtÆÄÀÏÀ» ´Ù ÀÐ¾îµéÀÌ¸é ÆÄÀÏÀ» ´Ý´Â´Ù.
-	//¸ðµç ÀÏÁ¤ Á¤º¸°¡ ÀúÀåµÈ allScheduleÀ» ¹ÝÈ¯ÇÑ´Ù.
-	//Ã³À½ loadÇÒ°æ¿ì Schedule.txt°¡ ¾øÀ» ¼ö ÀÖ´Ù. ÀÌ·² °æ¿ì ³»¿ëÀÌ ¾ø´Â Schedule.txt¸¦ »ý¼ºÇÑ´Ù. 
+	//ëª¨ë“  ì¼ì • ì •ë³´ë¥¼ allScheduleë³€ìˆ˜ì— ì €ìž¥
+	//ì• í”Œë¦¬ì¼€ì´ì…˜ì„ ì‹¤í–‰í•  ë•Œ ì‚¬ìš©ìžì˜ ì¼ì • ì •ë³´ê°€ ì €ìž¥ë˜ì–´ ìžˆëŠ” Schedule.txtíŒŒì¼ì„ ì—°ë‹¤.
+	//txtíŒŒì¼ì—ëŠ” í•œ í–‰ë§ˆë‹¤ í•˜ë‚˜ì˜ ì¼ì • ì •ë³´ê°€ ì €ìž¥ë˜ì–´ìžˆë‹¤.
+	//ê°í–‰ì˜ ì •ë³´ë¥¼ Scheduleì— ì €ìž¥í•œ í›„ allScheduleì— ì¶”ê°€í•œë‹¤.
+	//txtíŒŒì¼ì„ ë‹¤ ì½ì–´ë“¤ì´ë©´ íŒŒì¼ì„ ë‹«ëŠ”ë‹¤.
+	//ëª¨ë“  ì¼ì • ì •ë³´ê°€ ì €ìž¥ëœ allScheduleì„ ë°˜í™˜í•œë‹¤.
+	//ì²˜ìŒ loadí• ê²½ìš° Schedule.txtê°€ ì—†ì„ ìˆ˜ ìžˆë‹¤. ì´ëŸ´ ê²½ìš° ë‚´ìš©ì´ ì—†ëŠ” Schedule.txtë¥¼ ìƒì„±í•œë‹¤. 
 	public ArrayList<Schedule> loadSchedule(){
 		allSchedule = new ArrayList<Schedule>();
 		File file = new File("Schedule.txt");
 		
-		//¼³°è¿¡ ¾ø´Â ÄÚµå 
+		//ì„¤ê³„ì— ì—†ëŠ” ì½”ë“œ 
 		if(!file.exists()) {
 			allSchedule = new ArrayList<Schedule>();
 			saveSchedule();
@@ -48,15 +48,15 @@ public class DataLoadSaveManager {
 		return allSchedule;
 	}
 	
-	//¾ÖÇÃ¸®ÄÉÀÌ¼ÇÀ» Á¾·áÇÒ¶§ È£ÃâµÇ´Â ÇÔ¼öÀÌ´Ù.
-	//¸ðµç ÀÏÁ¤ÀÌ ÀúÀåµÇ¾î ÀÖ´Â allScheduleÀÇ °ªÀ» Schedule.txtÆÄÀÏ¿¡ ÀúÀåÇÑ´Ù.
-	//ÀÌ¶§ Schedule.txtÆÄÀÏÀÇ ÇÑÇà¿¡ ÇÏ³ªÀÇ ÀÏÁ¤ Á¤º¸¸¦ ÀúÀåÇÑ´Ù. 
+	//ì• í”Œë¦¬ì¼€ì´ì…˜ì„ ì¢…ë£Œí• ë•Œ í˜¸ì¶œë˜ëŠ” í•¨ìˆ˜ì´ë‹¤.
+	//ëª¨ë“  ì¼ì •ì´ ì €ìž¥ë˜ì–´ ìžˆëŠ” allScheduleì˜ ê°’ì„ Schedule.txtíŒŒì¼ì— ì €ìž¥í•œë‹¤.
+	//ì´ë•Œ Schedule.txtíŒŒì¼ì˜ í•œí–‰ì— í•˜ë‚˜ì˜ ì¼ì • ì •ë³´ë¥¼ ì €ìž¥í•œë‹¤. 
 	public void saveSchedule() {
 		StringBuilder saveStr = new StringBuilder();
 		Gson gson = new Gson();
 		
-		//¿ø·¡´Â String json = gson.toJson(allSchedule); ÀÌ·¸°Ô ÇØÁÖ¸éµÇ´Âµ¥
-		//ÇÑ¶óÀÎ¿¡ ¹«Á¶°Ç ÇÑ°¡Áö ÀÏÁ¤À» ³ÖÀ¸¶ó°í ÇØ¼­ ÀÌ·¸°Ô ÇÕ´Ï´Ù. 
+		//ì›ëž˜ëŠ” String json = gson.toJson(allSchedule); ì´ë ‡ê²Œ í•´ì£¼ë©´ë˜ëŠ”ë°
+		//í•œë¼ì¸ì— ë¬´ì¡°ê±´ í•œê°€ì§€ ì¼ì •ì„ ë„£ìœ¼ë¼ê³  í•´ì„œ ì´ë ‡ê²Œ í•©ë‹ˆë‹¤. 
 		for(int i=0; i<allSchedule.size(); i++) {
 			String line = gson.toJson(allSchedule.get(i));
 			saveStr.append(line+"\n");
@@ -70,11 +70,15 @@ public class DataLoadSaveManager {
 		} catch (IOException e) {
 		    e.printStackTrace();
 		}
+		
+		
+		//(6)ì¢…ë£Œ SequenceDiagram -KCH
+		int returnValue = alarm.getAlarmState();
 	}
 	
-	//¾ÖÇÃ¸®ÄÉÀÌ¼ÇÀ» Á¾·áÇÒ ¶§ È£ÃâµÇ´Â ÇÔ¼öÀÌ´Ù.
-	//»ç¿ëÀÚ°¡ ¼³Á¤ÇÑ ¾Ë¸² »óÅÂ(0¶Ç´Â1)¸¦ Alarm.txtÆÄÀÏ¿¡ ÀúÀåÇÑ´Ù.
-	//¾Ë¸² »óÅÂ´Â Alarm°´Ã¼ÀÇ getAlarmState·Î ¾ò¾î¿Â´Ù.
+	//ì• í”Œë¦¬ì¼€ì´ì…˜ì„ ì¢…ë£Œí•  ë•Œ í˜¸ì¶œë˜ëŠ” í•¨ìˆ˜ì´ë‹¤.
+	//ì‚¬ìš©ìžê°€ ì„¤ì •í•œ ì•Œë¦¼ ìƒíƒœ(0ë˜ëŠ”1)ë¥¼ Alarm.txtíŒŒì¼ì— ì €ìž¥í•œë‹¤.
+	//ì•Œë¦¼ ìƒíƒœëŠ” Alarmê°ì²´ì˜ getAlarmStateë¡œ ì–»ì–´ì˜¨ë‹¤.
 	public void saveAlarmState() {
 		Gson gson = new Gson();
 		String saveStr="";
@@ -92,17 +96,17 @@ public class DataLoadSaveManager {
 		}
 	}
 	
-	//¾ÖÇÃ¸®ÄÉÀÌ¼ÇÀ» ½ÃÀÛÇÒ ¶§ È£ÃâµÇ´Â ÇÔ¼öÀÌ´Ù.
-	//Alarm°´Ã¼¸¦ »ý¼ºÇÑ´Ù.
-	//Alarm.txt ÆÄÀÏÀÌ Á¸ÀçÇÑ´Ù¸é Alarm.txtÆÄÀÏ¿¡¼­ ¾Ë¸² »óÅÂ(0¶Ç´Â1)¸¦ ÀÐ¾î¿Â´Ù.
-	//Alarm °´Ã¼ÀÇ setAlarmStateÇÔ¼ö¸¦ »ç¿ëÇØ ¾Ë¸² »óÅÂ¸¦ ÀúÀåÇÑ´Ù. ±× ÈÄ Alarm°´Ã¼¸¦ ¹ÝÈ¯ÇÑ´Ù. 
-	//Ã³À½ loadÇÒ°æ¿ì Alarm.txt°¡ ¾øÀ» ¼ö ÀÖ´Ù. ÀÌ·² °æ¿ì ³»¿ëÀÌ ¾ø´Â Alarm.txt¸¦ »ý¼ºÇÑ´Ù. 
+	//ì• í”Œë¦¬ì¼€ì´ì…˜ì„ ì‹œìž‘í•  ë•Œ í˜¸ì¶œë˜ëŠ” í•¨ìˆ˜ì´ë‹¤.
+	//Alarmê°ì²´ë¥¼ ìƒì„±í•œë‹¤.
+	//Alarm.txt íŒŒì¼ì´ ì¡´ìž¬í•œë‹¤ë©´ Alarm.txtíŒŒì¼ì—ì„œ ì•Œë¦¼ ìƒíƒœ(0ë˜ëŠ”1)ë¥¼ ì½ì–´ì˜¨ë‹¤.
+	//Alarm ê°ì²´ì˜ setAlarmStateí•¨ìˆ˜ë¥¼ ì‚¬ìš©í•´ ì•Œë¦¼ ìƒíƒœë¥¼ ì €ìž¥í•œë‹¤. ê·¸ í›„ Alarmê°ì²´ë¥¼ ë°˜í™˜í•œë‹¤. 
+	//ì²˜ìŒ loadí• ê²½ìš° Alarm.txtê°€ ì—†ì„ ìˆ˜ ìžˆë‹¤. ì´ëŸ´ ê²½ìš° ë‚´ìš©ì´ ì—†ëŠ” Alarm.txtë¥¼ ìƒì„±í•œë‹¤. 
 	public Alarm loadAlarmState() {
 		Gson gson = new Gson();
 
 		String filePath = "Alarm.txt";
 		
-		//¼³°è¿¡ ¾ø´Â ÄÚµå 
+		//ì„¤ê³„ì— ì—†ëŠ” ì½”ë“œ 
 		File file = new File(filePath);
 		if(!file.exists()) {
 			alarm = null;
