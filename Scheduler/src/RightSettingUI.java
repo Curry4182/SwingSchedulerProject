@@ -8,7 +8,6 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
 import javax.swing.plaf.ColorUIResource;
 
-import javax.swing.JCheckBox;
 import java.awt.Font;
 
 
@@ -24,6 +23,9 @@ public class RightSettingUI extends JPanel {
 	private Alarm alarm;
 
 	public RightSettingUI(ArrayList<Schedule> allSchedule, LeftTableUI leftUI, Alarm alarm) {
+		this.allSchedule = allSchedule;
+		this.leftUI = leftUI;
+		this.timeLines = new ArrayList<DayTimeUI>();
 		createSettingUI();
 	}
 	
@@ -132,6 +134,89 @@ public class RightSettingUI extends JPanel {
 		selectLecture();
 	}
 	
+	//요일 및 시간을 입력받는 UI를 초기화 하는 함수
+	//selectLecture와 selectOtherSchedule 함수에서 쓰인다. 
+	public void dayTimeUIContainerInit(JPanel dayTimeUIContainerPanel) {
+		dayTimeUIContainerPanel.setBackground(UIManager.getColor ( "Panel.background" ));
+		dayTimeUIContainerPanel.setBorder(BorderFactory.createLineBorder(UIManager.getColor("Panel.background")));
+		
+		//Y축으로 추가되도록 설정
+		dayTimeUIContainerPanel.setLayout(new BoxLayout(dayTimeUIContainerPanel, BoxLayout.Y_AXIS));
+		
+		//DayAndTime UI Panel
+		JPanel dayTimeUIPanel = new JPanel();
+		dayTimeUIPanel.setBackground(UIManager.getColor ( "Panel.background" ));
+		dayTimeUIPanel.setBorder(BorderFactory.createLineBorder(UIManager.getColor("Panel.background")));
+		
+		//Y축으로 추가되도록 설정
+		dayTimeUIPanel.setLayout(new BoxLayout(dayTimeUIPanel, BoxLayout.Y_AXIS));
+		
+		//기본적으로 요일 및 시간을 입력받을 수 있는 UI한줄 추가
+		DayTimeUI newDayTimeUI = new DayTimeUI();
+		timeLines.add(newDayTimeUI);
+		dayTimeUIPanel.add(newDayTimeUI);
+		
+		//DayAndTime UI Container에 DayAndTime UI Panel추가
+		dayTimeUIContainerPanel.add(dayTimeUIPanel);
+		
+		//+버튼 추가 
+		JButton dayTimePlusBtn = new JButton("+");
+		
+		//+버튼 action추가 
+		dayTimePlusBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				DayTimeUI newDayTimeUI = new DayTimeUI();
+				timeLines.add(newDayTimeUI);
+				dayTimeUIPanel.add(newDayTimeUI);
+				
+				//x버튼 추가 
+				JButton dayTimeXBtn = new JButton(" x");
+				dayTimeXBtn.setBackground(UIManager.getColor ( "Panel.background" ));
+				dayTimeXBtn.setBorder(null);
+				dayTimeXBtn.setFont(new Font("aria", Font.BOLD, 15));
+				dayTimeXBtn.putClientProperty("DayTimeUIInstance", newDayTimeUI);
+				GridBagConstraints gbcDayTimeXBtn = new GridBagConstraints();
+				gbcDayTimeXBtn.gridx = 6;
+				gbcDayTimeXBtn.gridy = 0;
+				newDayTimeUI.add(dayTimeXBtn, gbcDayTimeXBtn);
+						
+				//x버튼 action추가
+				dayTimeXBtn.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						JComponent button = (JComponent)e.getSource();
+						DayTimeUI dayTime = (DayTimeUI)button.getClientProperty("DayTimeUIInstance");
+						dayTimeUIPanel.remove(dayTime);
+						timeLines.remove(dayTime);
+						revalidate();
+						repaint();
+					}
+				});
+				
+				revalidate();
+				repaint();
+			}
+		});
+		
+		//+버튼 추가 
+		dayTimePlusBtn.setBackground(UIManager.getColor ( "Panel.background" ));
+		dayTimePlusBtn.setBorder(null);
+		dayTimePlusBtn.setFont(new Font("aria", Font.BOLD, 25));
+		dayTimeUIContainerPanel.add(dayTimePlusBtn);
+				
+		//스크롤 추가
+		JScrollPane jsp = new JScrollPane(dayTimeUIContainerPanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		jsp.setBorder(BorderFactory.createLineBorder(UIManager.getColor("Panel.background")));
+		GridBagConstraints gbcDayAndTime = new GridBagConstraints();
+		gbcDayAndTime.gridwidth = 10;
+		gbcDayAndTime.gridheight = 3;
+		gbcDayAndTime.insets = new Insets(0, 0, 5, 35);
+		gbcDayAndTime.fill = GridBagConstraints.BOTH;
+		gbcDayAndTime.gridx = 1;
+		gbcDayAndTime.gridy = 9;
+		jsp.putClientProperty("isDeleteWhenReSelectRadioBtn", true);
+		add(jsp, gbcDayAndTime);
+	}
+	
 	//강의 일정 체크 박스를 체크하면 호출되는 함수
 	//기타 일정 체크 박스의 체크상태를 해제
 	//강의명, 교수명, 장소, 요일 및 시간을 입력할 수 있는 입력란을 보여준다.
@@ -229,35 +314,11 @@ public class RightSettingUI extends JPanel {
 		add(textField_2, gbc_textField_2);
 		textField_2.putClientProperty("isDeleteWhenReSelectRadioBtn", true);
 		
-		//DayAndTime UI창
-		JPanel panel = new JPanel();
-		panel.setBackground(UIManager.getColor ( "Panel.background" ));
-		panel.setBorder(BorderFactory.createLineBorder(UIManager.getColor("Panel.background")));
-		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+		//DayAndTime UI Container
+		JPanel dayTimeUIContainerPanel = new JPanel();
 		
-		panel.add(new DayTimeUI());
-		panel.add(new DayTimeUI());
-		panel.add(new DayTimeUI());
-		panel.add(new DayTimeUI());
-		
-		//+버튼 추가 
-		JButton btnNewButton_1 = new JButton("+");
-		btnNewButton_1.setBackground(UIManager.getColor ( "Panel.background" ));
-		btnNewButton_1.setBorder(null);
-		btnNewButton_1.setFont(new Font("aria", Font.BOLD, 25));
-		panel.add(btnNewButton_1);
-				
-		JScrollPane jsp = new JScrollPane(panel, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		jsp.setBorder(BorderFactory.createLineBorder(UIManager.getColor("Panel.background")));
-		GridBagConstraints gbcDayAndTime = new GridBagConstraints();
-		gbcDayAndTime.gridwidth = 10;
-		gbcDayAndTime.gridheight = 3;
-		gbcDayAndTime.insets = new Insets(0, 0, 5, 35);
-		gbcDayAndTime.fill = GridBagConstraints.BOTH;
-		gbcDayAndTime.gridx = 1;
-		gbcDayAndTime.gridy = 9;
-		jsp.putClientProperty("isDeleteWhenReSelectRadioBtn", true);
-		add(jsp, gbcDayAndTime);
+		//DayAndTime UI Container 초기화
+		dayTimeUIContainerInit(dayTimeUIContainerPanel);
 	}
 	
 	//기타일정 체크 박스를 선택하면 호출되는 함수이다.
@@ -309,6 +370,12 @@ public class RightSettingUI extends JPanel {
 		add(textField, gbc_textField);
 		textField.setColumns(10);
 		textField.putClientProperty("isDeleteWhenReSelectRadioBtn", true);
+		
+		//DayAndTime UI Container
+		JPanel dayTimeUIContainerPanel = new JPanel();
+		
+		//DayAndTime UI Container 초기화
+		dayTimeUIContainerInit(dayTimeUIContainerPanel);
 
 	}
 	
@@ -370,8 +437,8 @@ public class RightSettingUI extends JPanel {
 		return false;
 	}
 	
-	//timeDelete버튼을 클릭하면 호출되는 함수이다.
 	//선택된 TimeLine을 삭제해준다. 
+	//timeDelete버튼을 클릭하면 호출되는 함수이다.
 	public void timeDeleteBtnClick() {
 		
 	}

@@ -57,14 +57,7 @@ public class DayTimeUI extends JPanel{
 		c.gridy = 0;
 		add(endTime, c);
 		
-		//+버튼 추가 
-		JButton btnNewButton_1 = new JButton(" x");
-		btnNewButton_1.setBackground(UIManager.getColor ( "Panel.background" ));
-		btnNewButton_1.setBorder(null);
-		btnNewButton_1.setFont(new Font("aria", Font.BOLD, 15));
-		c.gridx = 6;
-		c.gridy = 0;
-		add(btnNewButton_1, c);
+		
 	}
 	
 	public DayAndTime getDayAndTimeObject() {
