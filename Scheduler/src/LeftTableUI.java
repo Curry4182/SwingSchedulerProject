@@ -173,8 +173,9 @@ public class LeftTableUI extends JPanel {
 				
 				//요일이 시작되는 col의 위치
 				int initCol = 1;
+				
 				//각 요일별로 grid에서 2칸을 차기 하기 떄문에 *2를 한다. 
-				int col = initCol + dayToNum.get(day)*2;
+				int col = initCol + dayToNum.get(day);
 
 				GridBagConstraints gbc = gbcs.get(startRow).get(col);
 				gbc.gridheight = endRow - startRow + 1;
