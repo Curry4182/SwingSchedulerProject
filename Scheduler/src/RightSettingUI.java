@@ -25,7 +25,7 @@ public class RightSettingUI extends JPanel {
 	public RightSettingUI(ArrayList<Schedule> allSchedule, LeftTableUI leftUI, Alarm alarm) {
 		this.allSchedule = allSchedule;
 		this.leftUI = leftUI;
-		this.timeLines = new ArrayList<DayTimeUI>();
+		
 		createSettingUI();
 	}
 	
@@ -225,7 +225,7 @@ public class RightSettingUI extends JPanel {
 	//요일 및 시간을 추가할 수 있는 버튼을 보여준다.
 	public void selectLecture() {
 		Component[] components = getComponents();
-
+		this.timeLines = new ArrayList<DayTimeUI>();
 		//panel에서 모든 컴포넌트 중에 강의일정 검색 후 선택
 		for(int i=0; i<components.length;i++) {
 			if(components[i] instanceof JRadioButton) {
@@ -332,7 +332,7 @@ public class RightSettingUI extends JPanel {
 	//요일 및 시간을 삭제할 수 있는 버튼과 요일 및 시간을 추가할 수 있는 버튼을 보여준다. 
 	public void selectOtherSchedule() {
 		Component[] components = getComponents();
-
+		this.timeLines = new ArrayList<DayTimeUI>();
 		//panel에서 모든 컴포넌트 중에 기타일정 검색 후 선택 
 		for(int i=0; i<components.length;i++) {	
 			if(components[i] instanceof JRadioButton) {
@@ -420,49 +420,63 @@ public class RightSettingUI extends JPanel {
 			}
 		}
 		
+		String title="", profName="", location="";
+		//강의일정이 선택된 경우 
+		if(isLecture) {
+			for(int i=0; i<components.length;i++) {	
+				if(components[i] instanceof JTextField) {
+					JTextField field = (JTextField)components[i];
+					String fieldName = field.getName();
+					
+					if(fieldName.equals("title")) {
+						title = field.getText().strip();
+					}else if(fieldName.equals("profName")) {
+						profName = field.getText().strip();
+					}else if(fieldName.equals("location")) {
+						location = field.getText().strip();
+					}
+				}
+			}
+		}else {//기타일정이 선택된 경우 
+			for(int i=0; i<components.length;i++) {	
+				if(components[i] instanceof JTextField) {
+					JTextField field = (JTextField)components[i];
+					String fieldName = field.getName();
+					
+					if(fieldName.equals("title")) {
+						title = field.getText().strip();
+					}
+				}
+			}
+		}
+		
+		if(isLecture) {
+			if(title.equals("")) {
+				JOptionPane.showMessageDialog(null, "수업명을 입력해주세요", "일정추가 에러 메세지", JOptionPane.WARNING_MESSAGE);
+				return;
+			}else if(profName.equals("")) {
+				JOptionPane.showMessageDialog(null, "교수명을 입력해주세요", "일정추가 에러 메세지", JOptionPane.WARNING_MESSAGE);
+				return;
+			}else if(location.equals("")) {
+				JOptionPane.showMessageDialog(null, "장소명을 입력해주세요", "일정추가 에러 메세지", JOptionPane.WARNING_MESSAGE);
+				return;
+			}
+		}else {
+			if(title.equals("")) {
+				JOptionPane.showMessageDialog(null, "일정명을 입력해주세요", "일정추가 에러 메세지", JOptionPane.WARNING_MESSAGE);
+				return;
+			}
+		}
+		
 		ArrayList<DayAndTime> dayAndTimes = new ArrayList<DayAndTime>();
 		for(int i=0; i<timeLines.size(); i++) {
 			DayAndTime dayTime = timeLines.get(i).getDayAndTimeObject();
 			dayAndTimes.add(dayTime);
 		}
 		
-		//강의일정이 선택된 경우 
-		if(isLecture) {
-			String title="", profName="", location="";
-			for(int i=0; i<components.length;i++) {	
-				if(components[i] instanceof JTextField) {
-					JTextField field = (JTextField)components[i];
-					String fieldName = field.getName();
-					
-					if(fieldName.equals("title")) {
-						title = field.getText();
-					}else if(fieldName.equals("profName")) {
-						profName = field.getText();
-					}else if(fieldName.equals("location")) {
-						location = field.getText();
-					}
-				}
-			}
-			
-			Schedule scheldule = new Schedule(0, title, profName, location, dayAndTimes);
-			allSchedule.add(scheldule);
-		}else {//기타일정이 선택된 경우 
-			String title="";
-			for(int i=0; i<components.length;i++) {	
-				
-				if(components[i] instanceof JTextField) {
-					JTextField field = (JTextField)components[i];
-					String fieldName = field.getName();
-					
-					if(fieldName.equals("title")) {
-						title = field.getText();
-					}
-				}
-			}
-			
-			Schedule scheldule = new Schedule(0, title, "", "", dayAndTimes);
-			allSchedule.add(scheldule);
-		}
+		Schedule scheldule = new Schedule(0, title, profName, location, dayAndTimes);
+		allSchedule.add(scheldule);
+		
 		
 		leftUI.printSchedule();
 	}
