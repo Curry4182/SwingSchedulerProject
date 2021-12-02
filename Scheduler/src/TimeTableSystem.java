@@ -72,7 +72,7 @@ public class TimeTableSystem {
 	    c.gridy = 0;
 	    c.weightx = 1;
         c.weighty = 1;
-        rightUI = new RightSettingUI(allSchedule, null, null);
+        rightUI = new RightSettingUI(allSchedule, leftUI, null);
 	    frame.add(rightUI, c);
 	    
 	    frame.setVisible(true);

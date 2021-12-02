@@ -58,6 +58,7 @@ public class RightSettingUI extends JPanel {
 		btnNewButton.setBorder(new RoundedBorder(5));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				addScheduleBtnClick();
 			}
 		});
 		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
@@ -257,6 +258,7 @@ public class RightSettingUI extends JPanel {
 		
 		//수업명 field 생성
 		JTextField textField = new JTextField();
+		textField.setName("title");// 필드 이름 설정
 		GridBagConstraints gbc_textField = new GridBagConstraints();
 		textField.setBorder(new MatteBorder(0, 0, 1, 0, UIManager.getColor ("Button.light")));
 		gbc_textField.gridwidth = 6;
@@ -267,6 +269,7 @@ public class RightSettingUI extends JPanel {
 		add(textField, gbc_textField);
 		textField.setColumns(10);
 		textField.putClientProperty("isDeleteWhenReSelectRadioBtn", true);
+		
 		
 		//교수명 label 생성
 		JLabel lblNewLabel_1 = new JLabel("교수명");
@@ -280,6 +283,7 @@ public class RightSettingUI extends JPanel {
 		
 		//교수명 field 생성
 		JTextField textField_1 = new JTextField();
+		textField_1.setName("profName");// 필드 이름 설정
 		textField_1.setColumns(10);
 		GridBagConstraints gbc_textField_1 = new GridBagConstraints();
 		textField_1.setBorder(new MatteBorder(0, 0, 1, 0, UIManager.getColor ("Button.light")));
@@ -303,6 +307,7 @@ public class RightSettingUI extends JPanel {
 		
 		//장소 field 생성
 		JTextField textField_2 = new JTextField();
+		textField_2.setName("location");// 필드 이름 설정
 		textField_2.setColumns(10);
 		textField_2.setBorder(new MatteBorder(0, 0, 1, 0, UIManager.getColor ("Button.light")));
 		GridBagConstraints gbc_textField_2 = new GridBagConstraints();
@@ -360,6 +365,7 @@ public class RightSettingUI extends JPanel {
 		
 		//일정명 field 생성
 		JTextField textField = new JTextField();
+		textField.setName("title"); // 필드 이름 설정
 		GridBagConstraints gbc_textField = new GridBagConstraints();
 		textField.setBorder(new MatteBorder(0, 0, 1, 0, UIManager.getColor ("Button.light")));
 		gbc_textField.gridwidth = 6;
@@ -387,7 +393,16 @@ public class RightSettingUI extends JPanel {
 	//정보를 가져와서 새로운 Schedule객체에 저장한다.
 	//서로 생성된 Schedule객체를 allSchedule에 추가한다.
 	//leftTableUI의 printSchedule 함수를 호출하여 새로운 일정을 시간표에 추가해 보여 줄 수 있도록 한다.
+	
 	public void addScheduleBtnClick() {
+		
+		//현재 추가할려고 하는 일정에서 기존에 저장되어있던 일정과 겹치는게 있다면
+		//알림 표시 후 함수 종료 
+		if(checkDuplication()) {
+			JOptionPane.showMessageDialog(null, "기존일정과 겹치는 일정이 있습니다.", "일정추가 에러 메세지", JOptionPane.WARNING_MESSAGE);
+			return;
+		}
+		
 		Component[] components = getComponents();
 		boolean isLecture = false; //강의일정이 선택되어 있는지 아니면 기타일정이 선택되어있는지 상태를 저장하는 변수
 
@@ -405,44 +420,82 @@ public class RightSettingUI extends JPanel {
 			}
 		}
 		
-		if(isLecture) {
-			for(int i=0; i<components.length;i++) {	
-				if(components[i] instanceof JTextField) {
-					
-				}
-			}
-		}else {
-			
-		}
-	}
-	
-	//allSchedule에 저장되어 있는 일정들의 시간과 인자로 받은 시간이 겹친다면 true를 반환한다. 
-	public Boolean checkDuplication(String day, int startTime, int endTime) {
-		for(int i=0; i < allSchedule.size(); i++) {
-			ArrayList<DayAndTime> dayAndTimes = allSchedule.get(i).getDayAndTime();
-
-			for(int j=0; j<dayAndTimes.size(); j++) {
-				if(dayAndTimes.get(j).day == day) {
-					DayAndTime nowDay = dayAndTimes.get(j);
-					if(nowDay.startTime <= startTime &&  startTime < nowDay.endTime) {
-						return true;
-					}
-					else if(nowDay.startTime < endTime &&  endTime <= nowDay.endTime) {
-						return true;
-					}
-				}
-			}
+		ArrayList<DayAndTime> dayAndTimes = new ArrayList<DayAndTime>();
+		for(int i=0; i<timeLines.size(); i++) {
+			DayAndTime dayTime = timeLines.get(i).getDayAndTimeObject();
+			dayAndTimes.add(dayTime);
 		}
 		
+		//강의일정이 선택된 경우 
+		if(isLecture) {
+			String title="", profName="", location="";
+			for(int i=0; i<components.length;i++) {	
+				if(components[i] instanceof JTextField) {
+					JTextField field = (JTextField)components[i];
+					String fieldName = field.getName();
+					
+					if(fieldName.equals("title")) {
+						title = field.getText();
+					}else if(fieldName.equals("profName")) {
+						profName = field.getText();
+					}else if(fieldName.equals("location")) {
+						location = field.getText();
+					}
+				}
+			}
+			
+			Schedule scheldule = new Schedule(0, title, profName, location, dayAndTimes);
+			allSchedule.add(scheldule);
+		}else {//기타일정이 선택된 경우 
+			String title="";
+			for(int i=0; i<components.length;i++) {	
+				
+				if(components[i] instanceof JTextField) {
+					JTextField field = (JTextField)components[i];
+					String fieldName = field.getName();
+					
+					if(fieldName.equals("title")) {
+						title = field.getText();
+					}
+				}
+			}
+			
+			Schedule scheldule = new Schedule(0, title, "", "", dayAndTimes);
+			allSchedule.add(scheldule);
+		}
+		
+		leftUI.printSchedule();
+	}
+	
+	
+	//allSchedule에 저장되어 있는 일정들의 시간과 인자로 받은 시간이 겹친다면 true를 반환한다. 
+	public Boolean checkDuplication() {
+		for(int k=0; k<timeLines.size(); k++) {
+			DayAndTime dayTime = timeLines.get(k).getDayAndTimeObject();
+			String day = dayTime.day;
+			int startTime = dayTime.startTime;
+			int endTime = dayTime.endTime;
+			
+			for(int i=0; i < allSchedule.size(); i++) {
+				ArrayList<DayAndTime> dayAndTimes = allSchedule.get(i).getDayAndTime();
+
+				for(int j=0; j<dayAndTimes.size(); j++) {
+					if(dayAndTimes.get(j).day == day) {
+						DayAndTime nowDay = dayAndTimes.get(j);
+						if(nowDay.startTime <= startTime &&  startTime < nowDay.endTime) {
+							return true;
+						}
+						else if(nowDay.startTime < endTime &&  endTime <= nowDay.endTime) {
+							return true;
+						}
+					}
+				}
+			}
+		}
 		return false;
 	}
 	
-	//선택된 TimeLine을 삭제해준다. 
-	//timeDelete버튼을 클릭하면 호출되는 함수이다.
-	public void timeDeleteBtnClick() {
-		
-	}
-
+	
 	//Seq(5) 알림설정 KCH
 	public void alarmOnOffBtnClick() {
 		alarm.changeAlarmState();
