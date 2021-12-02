@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 import java.awt.GridLayout;
-
+import java.awt.event.*;
 import javax.swing.*;
 
 import com.formdev.flatlaf.FlatDarculaLaf;
@@ -28,6 +28,8 @@ public class TimeTableSystem {
 	//[洹몃┝ 2]�젣�븞�븯�뒗 �냼�봽�듃�썾�뼱�쓽 援ъ긽�룄�뿉�꽌 �삤瑜몄そ�뿉 �엳�뒗 �꽕�젙�솕硫�
 	private RightSettingUI rightUI;
 	
+	private Alarm alarm;
+	
 	//TimeTableSystem 媛앹껜瑜� �깮�꽦�븯�뿬 �샇異쒗븳�떎. 
 	public static void main(String[] args) {
 		FlatDarkLaf.setup();
@@ -43,8 +45,10 @@ public class TimeTableSystem {
 	public TimeTableSystem() {
 		dataMG = new DataLoadSaveManager();	
 		allSchedule = dataMG.loadSchedule();
-		Alarm alarm = dataMG.loadAlarmState();
-		//alarm.crawlingHolidayInf();
+		//alarm = dataMG.loadAlarmState();
+		
+		alarm = new Alarm();
+		//alarm.crawlingHolidayInf("2021");
 		
 		drawTimeTableSystem();
 	}
@@ -65,17 +69,29 @@ public class TimeTableSystem {
 	    c.gridy = 0;
 	    c.weightx = 8;
         c.weighty = 1;
-        leftUI = new LeftTableUI(allSchedule, null);
+        leftUI = new LeftTableUI(allSchedule, alarm);
+        leftUI.setVisible(true);
 	    frame.add(leftUI,c);
+	    frame.setVisible(true);
+
 
 	    c.gridx = 1;
 	    c.gridy = 0;
 	    c.weightx = 1;
         c.weighty = 1;
-        rightUI = new RightSettingUI(allSchedule, leftUI, null);
+        rightUI = new RightSettingUI(allSchedule, leftUI, alarm);
 	    frame.add(rightUI, c);
-	    
 	    frame.setVisible(true);
+	    
+	    frame.addWindowListener(new WindowAdapter()
+        {
+            @Override
+            public void windowClosing(WindowEvent e)
+            {
+            	closeSystem();
+                e.getWindow().dispose();
+            }
+        });
 	}
 	
 	//dataMG�쓽 saveSchedule�븿�닔瑜� �샇異쒗븯�뿬 txt�뙆�씪�뿉 ���옣�븳�떎. 
@@ -83,7 +99,7 @@ public class TimeTableSystem {
 	public void closeSystem() {
 	//(6)醫낅즺 SequenceDiagram -KCH
 		dataMG.saveSchedule();
-		dataMG.saveAlarmState();
+		//dataMG.saveAlarmState();
 		//terminate System
 	}
 }

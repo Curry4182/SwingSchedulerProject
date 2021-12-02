@@ -1,1 +1,5 @@
 {"location":"창원","professor":"professorName","type":0,"title":"title","dayAndTime":[{"day":"월요일","startTime":1030,"endTime":1100},{"day":"화요일","startTime":1030,"endTime":1100}]}
+{"location":"50109","professor":"강동현","type":0,"title":"소공","dayAndTime":[{"day":"월요일","startTime":0,"endTime":30}]}
+{"location":"55109","professor":"칸트","type":0,"title":"윤리와사상","dayAndTime":[{"day":"화요일","startTime":0,"endTime":230}]}
+{"location":"55109","professor":"칸트","type":0,"title":"윤리와사상","dayAndTime":[{"day":"목요일","startTime":0,"endTime":230}]}
+{"location":"55501","professor":"오일러","type":0,"title":"위상수학","dayAndTime":[{"day":"수요일","startTime":0,"endTime":200}]}

@@ -50,8 +50,6 @@ public class RightSettingUI extends JPanel {
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		
-		
-		
 		JButton btnNewButton = new JButton("일정추가");
 		btnNewButton.setFont(new Font("맑은 고딕", Font.BOLD, 12));
 		btnNewButton.setBorder(new RoundedBorder(5));
@@ -131,12 +129,20 @@ public class RightSettingUI extends JPanel {
 		gbc_chckbxNewCheckBox_2.gridy = 16;
 		add(chckbxNewCheckBox_2, gbc_chckbxNewCheckBox_2);
 		
+		this.timeLines = new ArrayList<DayTimeUI>();
+
+		//DayAndTime UI Container
+		JPanel dayTimeUIContainerPanel = new JPanel();
+		
+		//DayAndTime UI Container 초기화
+		addDayTimeUI(dayTimeUIContainerPanel);
+		
 		selectLecture();
 	}
 	
-	//요일 및 시간을 입력받는 UI를 초기화 하는 함수
+	//요일 및 시간을 입력받는 UI를 초기화하고 panel에 붙이는 함수 
 	//selectLecture와 selectOtherSchedule 함수에서 쓰인다. 
-	public void dayTimeUIContainerInit(JPanel dayTimeUIContainerPanel) {
+	public void addDayTimeUI(JPanel dayTimeUIContainerPanel) {
 		dayTimeUIContainerPanel.setBackground(UIManager.getColor ( "Panel.background" ));
 		dayTimeUIContainerPanel.setBorder(BorderFactory.createLineBorder(UIManager.getColor("Panel.background")));
 		
@@ -185,7 +191,6 @@ public class RightSettingUI extends JPanel {
 		gbcDayAndTime.fill = GridBagConstraints.BOTH;
 		gbcDayAndTime.gridx = 1;
 		gbcDayAndTime.gridy = 9;
-		jsp.putClientProperty("isDeleteWhenReSelectRadioBtn", true);
 		add(jsp, gbcDayAndTime);
 	}
 	
@@ -196,7 +201,6 @@ public class RightSettingUI extends JPanel {
 	//요일 및 시간을 추가할 수 있는 버튼을 보여준다.
 	public void selectLecture() {
 		Component[] components = getComponents();
-		this.timeLines = new ArrayList<DayTimeUI>();
 		//panel에서 모든 컴포넌트 중에 강의일정 검색 후 선택
 		for(int i=0; i<components.length;i++) {
 			if(components[i] instanceof JRadioButton) {
@@ -289,21 +293,15 @@ public class RightSettingUI extends JPanel {
 		gbc_textField_2.gridy = 7;
 		add(textField_2, gbc_textField_2);
 		textField_2.putClientProperty("isDeleteWhenReSelectRadioBtn", true);
-		
-		//DayAndTime UI Container
-		JPanel dayTimeUIContainerPanel = new JPanel();
-		
-		//DayAndTime UI Container 초기화
-		dayTimeUIContainerInit(dayTimeUIContainerPanel);
 	}
 	
 	//기타일정 체크 박스를 선택하면 호출되는 함수이다.
 	//강의 일정 체크박스의 체크상태를 해제한다.
 	//일정명, 요일및시간 입력란을 보여준다.
-	//요일 및 시간을 삭제할 수 있는 버튼과 요일 및 시간을 추가할 수 있는 버튼을 보여준다. 
+	//요일 및 시간을 삭제할 수 있는 버튼과
+	//요일 및 시간을 추가할 수 있는 버튼을 보여준다. 
 	public void selectOtherSchedule() {
 		Component[] components = getComponents();
-		this.timeLines = new ArrayList<DayTimeUI>();
 		//panel에서 모든 컴포넌트 중에 기타일정 검색 후 선택 
 		for(int i=0; i<components.length;i++) {	
 			if(components[i] instanceof JRadioButton) {
@@ -347,13 +345,6 @@ public class RightSettingUI extends JPanel {
 		add(textField, gbc_textField);
 		textField.setColumns(10);
 		textField.putClientProperty("isDeleteWhenReSelectRadioBtn", true);
-		
-		//DayAndTime UI Container
-		JPanel dayTimeUIContainerPanel = new JPanel();
-		
-		//DayAndTime UI Container 초기화
-		dayTimeUIContainerInit(dayTimeUIContainerPanel);
-
 	}
 	
 	//일정추가 버튼을 클릭하면 호출되는 함수이다.

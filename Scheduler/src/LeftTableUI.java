@@ -239,6 +239,8 @@ public class LeftTableUI extends JPanel {
 		this.add(jsp);
 		
 		revalidate();
+		
+		alarm.updateAlarm();
 	}
 	
 	//삭제 버튼을 클릭하면 호출되는 함수.
@@ -259,6 +261,15 @@ public class LeftTableUI extends JPanel {
 
 	//Jpanel을 GridLayout으로 생성한다.
 	public void createTable() {
+		this.setSize(500, 600);
+		this.setLayout(new BorderLayout());
+
+		gridTable = new JPanel();
+		gridTable.setSize(550, 600);
+		
+		GridBagLayout gl = new GridBagLayout();
+		gridTable.setLayout(gl);
+		
 		printSchedule();
 	}
 
