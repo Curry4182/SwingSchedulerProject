@@ -25,7 +25,6 @@ public class RightSettingUI extends JPanel {
 	public RightSettingUI(ArrayList<Schedule> allSchedule, LeftTableUI leftUI, Alarm alarm) {
 		this.allSchedule = allSchedule;
 		this.leftUI = leftUI;
-		
 		createSettingUI();
 	}
 	
@@ -484,6 +483,8 @@ public class RightSettingUI extends JPanel {
 		return false;
 	}
 	
+	//시간 추가 버튼(UI상으로 +버튼)을 크릭하면 호출되는 함수이다.
+	//dayTimeUI를 추가로 생성하여 요일 및시간 입력란을 하나 더 추가하여 보여준다. 입력란 옆에 삭제버튼을 생성한다. 
 	public void addTimeLineBtnClick() {
 		DayTimeUI newDayTimeUI = new DayTimeUI();
 		timeLines.add(newDayTimeUI);

@@ -144,7 +144,7 @@ public class Alarm implements Runnable {
 				if(node.getNodeType() == Node.ELEMENT_NODE) {
 					Element element = (Element)node;
 					holidayText.add(getTagValue("dateName", element));	//insert data, format ex: "Christmas"
-					holidayDate.add(Integer.valueOf(Objects.requireNonNull(getTagValue("locdate", element))));	//insert arr data, format ex: 20211225
+					holidayDate.add(Integer.valueOf(Objects.requireNonNull(getTagValue("locdate", element))));//insert arr data, format ex: 20211225
 				}
 			}
 		} catch (Exception e) {
@@ -161,7 +161,8 @@ public class Alarm implements Runnable {
 		return node.getNodeValue();
 	}
 	
-	//allSchedule의 getAllStartTime함수에서 반환받은 값을 alarmTime에 저장한다. 
+	
+	//allSchedule의 getAllStartTime함수에서 반환받은 값을 alarmTime에 저장한다.  
 	public void updateAlarm() {
 	}
 }
