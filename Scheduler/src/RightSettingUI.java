@@ -53,7 +53,7 @@ public class RightSettingUI extends JPanel {
 		
 		
 		
-		JButton btnNewButton = new JButton("강의추가");
+		JButton btnNewButton = new JButton("일정추가");
 		btnNewButton.setFont(new Font("맑은 고딕", Font.BOLD, 12));
 		btnNewButton.setBorder(new RoundedBorder(5));
 		btnNewButton.addActionListener(new ActionListener() {
@@ -481,11 +481,15 @@ public class RightSettingUI extends JPanel {
 
 				for(int j=0; j<dayAndTimes.size(); j++) {
 					if(dayAndTimes.get(j).day == day) {
-						DayAndTime nowDay = dayAndTimes.get(j);
+						DayAndTime nowDay = dayAndTimes.get(j); //기존에 있던 일정 
+						
+						
 						if(nowDay.startTime <= startTime &&  startTime < nowDay.endTime) {
 							return true;
 						}
 						else if(nowDay.startTime < endTime &&  endTime <= nowDay.endTime) {
+							return true;
+						}else if(startTime <= nowDay.startTime && nowDay.startTime <= endTime) {
 							return true;
 						}
 					}
