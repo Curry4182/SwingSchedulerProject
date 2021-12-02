@@ -1,8 +1,10 @@
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.*;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 
@@ -48,16 +50,61 @@ public class DayTimeUI extends JPanel{
 		}
 		
 		startTime = new JComboBox(times);
+		endTime = new JComboBox(times);
+
+		startTime.putClientProperty("pre", startTime.getSelectedItem());
+		startTime.putClientProperty("endTime", endTime);
+		
+		endTime.putClientProperty("pre", endTime.getSelectedItem());
+		endTime.putClientProperty("startTime", startTime);
+		
+		//시작시간이 종료시간 보다 크거나 같을 경우 되돌리는 함수 추가
+		startTime.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                JComboBox startComboBox = (JComboBox) e.getSource();
+                int selectedStartTime = Integer.valueOf(startComboBox.getSelectedItem().toString().replace(":", ""));
+                
+                JComboBox endComboBox = (JComboBox)startComboBox.getClientProperty("endTime");
+        		int selectedEndTime = Integer.valueOf(endComboBox.getSelectedItem().toString().replace(":", ""));
+
+        		if(selectedStartTime >= selectedEndTime) {
+        			JOptionPane.showMessageDialog(null, "시작시간이 종료시간 보다 크거나 같을 수 없습니다.", "일정추가 에러 메세지", JOptionPane.WARNING_MESSAGE);
+        			Object pre = startComboBox.getClientProperty("pre");
+        			startComboBox.setSelectedItem(pre);
+        		}else {
+        			Object pre = startComboBox.getSelectedItem();
+        			startComboBox.putClientProperty("pre", pre);
+        		}
+            }
+        });
+		
+		//종료시간이 시작시간 보다 작거나 같을 경우 되돌리는 함수 추가
+		endTime.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	JComboBox endComboBox = (JComboBox) e.getSource();
+                int selectedEndTime = Integer.valueOf(endComboBox.getSelectedItem().toString().replace(":", ""));
+                
+                JComboBox startComboBox = (JComboBox)endComboBox.getClientProperty("startTime");
+        		int selectedStartTime = Integer.valueOf(startComboBox.getSelectedItem().toString().replace(":", ""));
+
+        		if(selectedStartTime >= selectedEndTime) {
+        			JOptionPane.showMessageDialog(null, "종료시간이 시작시간 보다 작거나 같을 수 없습니다.", "일정추가 에러 메세지", JOptionPane.WARNING_MESSAGE);
+        			Object pre = endComboBox.getClientProperty("pre");
+        			endComboBox.setSelectedItem(pre);
+        		}else {
+        			Object pre = endComboBox.getSelectedItem();
+        			endComboBox.putClientProperty("pre", pre);
+        		}
+            }
+        });
+		
 		c.gridx = 2;
 		c.gridy = 0;
 		add(startTime, c);
 		
-		endTime = new JComboBox(times);
 		c.gridx = 4;
 		c.gridy = 0;
 		add(endTime, c);
-		
-		
 	}
 	
 	public DayAndTime getDayAndTimeObject() {

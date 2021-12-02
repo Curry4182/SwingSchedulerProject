@@ -52,7 +52,7 @@ public class TimeTableSystem {
 	//leftTableUI�뿉 �떆媛꾪몴 寃⑹옄瑜� �깮�꽦�븯怨� �떆媛꾪몴�뿉 �씪�젙 �젙蹂대�� 異쒕젰�븯怨� �떆媛꾪몴 寃⑹옄移몄뿉 �깋�쓣 �몴�떆�븳�떎.
 	//rightsettingUI�뿉 �엯�젰 UI 瑜� �깮�꽦�븯怨� �븣由� �뿬遺��뿉 �뵲�씪 �븣由쇱뒪�쐞移섎�� �꽕�젙�븳�떎. 
 	public void drawTimeTableSystem() {
-		JFrame frame = new JFrame("I love Swing ");
+		JFrame frame = new JFrame("시간표 기반 일정 관리 어플리케이션");
 	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    frame.setSize(1200, 530);
 	    frame.setLayout(new GridBagLayout());

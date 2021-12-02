@@ -178,7 +178,7 @@ public class LeftTableUI extends JPanel {
 				int col = initCol + dayToNum.get(day);
 
 				GridBagConstraints gbc = gbcs.get(startRow).get(col);
-				gbc.gridheight = endRow - startRow + 1;
+				gbc.gridheight = endRow - startRow;
 				
 				String btnInformStr = allSchedule.get(i).title;
 				 
@@ -187,7 +187,7 @@ public class LeftTableUI extends JPanel {
 				//type에서 강의 일정은 0, 기타일정은 1
 				//강의일정 이라면
 				if(allSchedule.get(i).type == 0) {
-					int height = endRow - startRow + 1;
+					int height = endRow - startRow;
 					if(height == 1) {
 						btnInformStr = String.format("<html>%s</html>", allSchedule.get(i).title);
 					}else if (height == 2) {
