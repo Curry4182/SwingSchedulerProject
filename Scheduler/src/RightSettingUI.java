@@ -21,7 +21,7 @@ public class RightSettingUI extends JPanel {
 	private ArrayList<DayTimeUI> timeLines;
 	//알림설정 관련해서 추가한 변수,KCH
 	private Alarm alarm;
-
+	private JPanel dayTimeUIPanel;
 	public RightSettingUI(ArrayList<Schedule> allSchedule, LeftTableUI leftUI, Alarm alarm) {
 		this.allSchedule = allSchedule;
 		this.leftUI = leftUI;
@@ -145,7 +145,7 @@ public class RightSettingUI extends JPanel {
 		dayTimeUIContainerPanel.setLayout(new BoxLayout(dayTimeUIContainerPanel, BoxLayout.Y_AXIS));
 		
 		//DayAndTime UI Panel
-		JPanel dayTimeUIPanel = new JPanel();
+		dayTimeUIPanel = new JPanel();
 		dayTimeUIPanel.setBackground(UIManager.getColor ( "Panel.background" ));
 		dayTimeUIPanel.setBorder(BorderFactory.createLineBorder(UIManager.getColor("Panel.background")));
 		
@@ -166,35 +166,7 @@ public class RightSettingUI extends JPanel {
 		//+버튼 action추가 
 		dayTimePlusBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				DayTimeUI newDayTimeUI = new DayTimeUI();
-				timeLines.add(newDayTimeUI);
-				dayTimeUIPanel.add(newDayTimeUI);
-				
-				//x버튼 추가 
-				JButton dayTimeXBtn = new JButton(" x");
-				dayTimeXBtn.setBackground(UIManager.getColor ( "Panel.background" ));
-				dayTimeXBtn.setBorder(null);
-				dayTimeXBtn.setFont(new Font("aria", Font.BOLD, 15));
-				dayTimeXBtn.putClientProperty("DayTimeUIInstance", newDayTimeUI);
-				GridBagConstraints gbcDayTimeXBtn = new GridBagConstraints();
-				gbcDayTimeXBtn.gridx = 6;
-				gbcDayTimeXBtn.gridy = 0;
-				newDayTimeUI.add(dayTimeXBtn, gbcDayTimeXBtn);
-						
-				//x버튼 action추가
-				dayTimeXBtn.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						JComponent button = (JComponent)e.getSource();
-						DayTimeUI dayTime = (DayTimeUI)button.getClientProperty("DayTimeUIInstance");
-						dayTimeUIPanel.remove(dayTime);
-						timeLines.remove(dayTime);
-						revalidate();
-						repaint();
-					}
-				});
-				
-				revalidate();
-				repaint();
+				addTimeLineBtnClick();
 			}
 		});
 		
@@ -393,13 +365,12 @@ public class RightSettingUI extends JPanel {
 	//정보를 가져와서 새로운 Schedule객체에 저장한다.
 	//서로 생성된 Schedule객체를 allSchedule에 추가한다.
 	//leftTableUI의 printSchedule 함수를 호출하여 새로운 일정을 시간표에 추가해 보여 줄 수 있도록 한다.
-	
 	public void addScheduleBtnClick() {
 		
 		//현재 추가할려고 하는 일정에서 기존에 저장되어있던 일정과 겹치는게 있다면
 		//알림 표시 후 함수 종료 
 		if(checkDuplication()) {
-			JOptionPane.showMessageDialog(null, "기존일정과 겹치는 일정이 있습니다.", "일정추가 에러 메세지", JOptionPane.WARNING_MESSAGE);
+			JOptionPane.showMessageDialog(null, "시간이 겹칩니다.", "일정추가 에러 메세지", JOptionPane.WARNING_MESSAGE);
 			return;
 		}
 		
@@ -513,6 +484,39 @@ public class RightSettingUI extends JPanel {
 		return false;
 	}
 	
+	public void addTimeLineBtnClick() {
+		DayTimeUI newDayTimeUI = new DayTimeUI();
+		timeLines.add(newDayTimeUI);
+		
+		//
+		dayTimeUIPanel.add(newDayTimeUI);
+		
+		//x버튼 추가 
+		JButton dayTimeXBtn = new JButton(" x");
+		dayTimeXBtn.setBackground(UIManager.getColor ( "Panel.background" ));
+		dayTimeXBtn.setBorder(null);
+		dayTimeXBtn.setFont(new Font("aria", Font.BOLD, 15));
+		dayTimeXBtn.putClientProperty("DayTimeUIInstance", newDayTimeUI);
+		GridBagConstraints gbcDayTimeXBtn = new GridBagConstraints();
+		gbcDayTimeXBtn.gridx = 6;
+		gbcDayTimeXBtn.gridy = 0;
+		newDayTimeUI.add(dayTimeXBtn, gbcDayTimeXBtn);
+				
+		//x버튼 action추가
+		dayTimeXBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JComponent button = (JComponent)e.getSource();
+				DayTimeUI dayTime = (DayTimeUI)button.getClientProperty("DayTimeUIInstance");
+				dayTimeUIPanel.remove(dayTime);
+				timeLines.remove(dayTime);
+				revalidate();
+				repaint();
+			}
+		});
+		
+		revalidate();
+		repaint();
+	}
 	
 	//Seq(5) 알림설정 KCH
 	public void alarmOnOffBtnClick() {
