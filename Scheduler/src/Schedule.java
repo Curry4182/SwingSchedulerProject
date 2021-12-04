@@ -1,8 +1,8 @@
 import java.util.ArrayList;
 
 public class Schedule extends CommonSchedule{
-	private String location; //°­ÀÇ Àå¼Ò¸¦ ÀúÀåÇÑ´Ù.
-	private String professor; //°­ÀÇ¸¦ ´ã´çÇÏ´Â ±³¼ö¸íÀ» ÀúÀåÇÑ´Ù.
+	private String location; //ê°•ì˜ ì¥ì†Œë¥¼ ì €ì¥í•œë‹¤.
+	private String professor; //ê°•ì˜ë¥¼ ë‹´ë‹¹í•˜ëŠ” êµìˆ˜ëª…ì„ ì €ì¥í•œë‹¤.
 
 	public Schedule(int type, String title, String professor, String location, ArrayList<DayAndTime> dayAndTime) {
 		super.setInfo(type, title, dayAndTime);

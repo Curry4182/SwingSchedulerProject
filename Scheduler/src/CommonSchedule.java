@@ -1,9 +1,9 @@
 import java.util.ArrayList;
 
 public class CommonSchedule {
-	protected int type; //ÀÏÁ¤ÀÇ Á¾·ù¸¦ ÀúÀåÇÑ´Ù.(°­ÀÇÀÏÁ¤(0), ±âÅ¸ÀÏÁ¤(1))
-	protected String title; //ÀÏÁ¤¸íÀ» ÀúÀåÇÑ´Ù.
-	protected ArrayList<DayAndTime> dayAndTime; //ÀÏÁ¤ÀÇ ½ÃÀÛ½Ã°£, Á¾·á½Ã°£, ¿äÀÏÀ» ¸ğµÎ ÀúÀåÇÑ´Ù.
+	protected int type; //ì¼ì •ì˜ ì¢…ë¥˜ë¥¼ ì €ì¥í•œë‹¤.(ê°•ì˜ì¼ì •(0), ê¸°íƒ€ì¼ì •(1))
+	protected String title; //ì¼ì •ëª…ì„ ì €ì¥í•œë‹¤.
+	protected ArrayList<DayAndTime> dayAndTime; //ì¼ì •ì˜ ì‹œì‘ì‹œê°„, ì¢…ë£Œì‹œê°„, ìš”ì¼ì„ ëª¨ë‘ ì €ì¥í•œë‹¤.
 	
 	public void setInfo(int type, String title, ArrayList<DayAndTime> dayAndTime) {
 		this.type = type;
@@ -29,7 +29,7 @@ public class CommonSchedule {
 		return startTimes;
 	}
 	
-	//typeÀ» ¹İÈ¯ÇÑ´Ù. 0Àº °­ÀÇ ÀÏÁ¤À» , 1Àº ±âÅ¸ÀÏÁ¤À» ÀÇ¹ÌÇÑ´Ù
+	//typeì„ ë°˜í™˜í•œë‹¤. 0ì€ ê°•ì˜ ì¼ì •ì„ , 1ì€ ê¸°íƒ€ì¼ì •ì„ ì˜ë¯¸í•œë‹¤
 	public int getType() {
 		return type;
 	}

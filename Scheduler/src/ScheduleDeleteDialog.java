@@ -29,7 +29,7 @@ public class ScheduleDeleteDialog extends JDialog {
 		final int y = (screenSize.height - getHeight()) / 2;
 		setLocation(x, y);
 		
-		setTitle("ªÛºº¡§∫∏");
+		setTitle("ÏÉÅÏÑ∏Ï†ïÎ≥¥");
 		//getContentPane().setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -45,7 +45,7 @@ public class ScheduleDeleteDialog extends JDialog {
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				JButton okButton = new JButton("ªË¡¶");
+				JButton okButton = new JButton("ÏÇ≠Ï†ú");
 				okButton.addActionListener(action);
 				okButton.addActionListener(new ActionListener() {
 					@Override
@@ -57,14 +57,13 @@ public class ScheduleDeleteDialog extends JDialog {
 				getRootPane().setDefaultButton(okButton);
 			}
 			{
-				JButton cancelButton = new JButton("√Îº“");
+				JButton cancelButton = new JButton("Ï∑®ÏÜå");
 				cancelButton.addActionListener(new ActionListener() {
 							@Override
 							public void actionPerformed(ActionEvent e) {
 								setVisible(false);
 							}
 				        });
-				cancelButton.setActionCommand("Cancel");
 				buttonPane.add(cancelButton);
 			}
 		}

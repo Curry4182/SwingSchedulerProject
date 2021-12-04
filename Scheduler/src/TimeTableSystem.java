@@ -32,7 +32,7 @@ public class TimeTableSystem {
 	
 	//TimeTableSystem 媛앹껜瑜� �깮�꽦�븯�뿬 �샇異쒗븳�떎. 
 	public static void main(String[] args) {
-		FlatDarkLaf.setup();
+		//FlatDarkLaf.setup();
 		//FlatDarculaLaf.setup();
 		//FlatCarbonIJTheme.setup();
 		//FlatArcDarkOrangeIJTheme.setup();

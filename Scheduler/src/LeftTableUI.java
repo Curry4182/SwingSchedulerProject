@@ -36,13 +36,13 @@ public class LeftTableUI extends JPanel {
 		createTable();
 	}
 	
-	//gridTable¿¡ ÀÖ´Â ¸ğµç ÀÏÁ¤À» »èÁ¦ÇÑÈÄ
-	//ÀÏÁ¤À» ÀĞ¾î¿Í ´Ù½Ã ±×¸°´Ù. 
-	//°­ÀÇ ÀÏÁ¤ -> ÀÏÁ¤¸í, Àå¼Ò, ±³¼ö¸í
-	//±âÅ¸ ÀÏÁ¤ -> ÀÏÁ¤¸í
-	//°°Àº ÀÏÁ¤Àº °°Àº ¹è°æ»öÀ¸·Î Ç¥½Ã 
+	//gridTableì— ìˆëŠ” ëª¨ë“  ì¼ì •ì„ ì‚­ì œí•œí›„
+	//ì¼ì •ì„ ì½ì–´ì™€ ë‹¤ì‹œ ê·¸ë¦°ë‹¤. 
+	//ê°•ì˜ ì¼ì • -> ì¼ì •ëª…, ì¥ì†Œ, êµìˆ˜ëª…
+	//ê¸°íƒ€ ì¼ì • -> ì¼ì •ëª…
+	//ê°™ì€ ì¼ì •ì€ ê°™ì€ ë°°ê²½ìƒ‰ìœ¼ë¡œ í‘œì‹œ 
 	public void printSchedule() {		
-		removeAll();//gridTable¿¡ ÀÖ´Â ¸ğµç ÀÏÁ¤À» »èÁ¦
+		removeAll();//gridTableì— ìˆëŠ” ëª¨ë“  ì¼ì •ì„ ì‚­ì œ
 		
 		this.setSize(500, 600);
 		this.setLayout(new BorderLayout());
@@ -54,13 +54,13 @@ public class LeftTableUI extends JPanel {
 		gridTable.setLayout(gl);
 		
 		Map<String, Integer> dayToNum = new HashMap<String, Integer>();
-		dayToNum.put("¿ù¿äÀÏ", 0);
-		dayToNum.put("È­¿äÀÏ", 1);
-		dayToNum.put("¼ö¿äÀÏ", 2);
-		dayToNum.put("¸ñ¿äÀÏ", 3);
-		dayToNum.put("±İ¿äÀÏ", 4);
-		dayToNum.put("Åä¿äÀÏ", 5);
-		dayToNum.put("ÀÏ¿äÀÏ", 6);
+		dayToNum.put("ì›”ìš”ì¼", 0);
+		dayToNum.put("í™”ìš”ì¼", 1);
+		dayToNum.put("ìˆ˜ìš”ì¼", 2);
+		dayToNum.put("ëª©ìš”ì¼", 3);
+		dayToNum.put("ê¸ˆìš”ì¼", 4);
+		dayToNum.put("í† ìš”ì¼", 5);
+		dayToNum.put("ì¼ìš”ì¼", 6);
 		
 		GridBagConstraints c = new GridBagConstraints();
 		c.weightx = 1;
@@ -80,13 +80,13 @@ public class LeftTableUI extends JPanel {
 		}
 		
 		btns.get(0).set(0,new JButton());
-		btns.get(0).set(1,new JButton("¿ù"));
-		btns.get(0).set(2,new JButton("È­"));
-		btns.get(0).set(3,new JButton("¼ö"));
-		btns.get(0).set(4,new JButton("¸ñ"));
-		btns.get(0).set(5,new JButton("±İ"));
-		btns.get(0).set(6,new JButton("Åä"));
-		btns.get(0).set(7,new JButton("ÀÏ"));
+		btns.get(0).set(1,new JButton("ì›”"));
+		btns.get(0).set(2,new JButton("í™”"));
+		btns.get(0).set(3,new JButton("ìˆ˜"));
+		btns.get(0).set(4,new JButton("ëª©"));
+		btns.get(0).set(5,new JButton("ê¸ˆ"));
+		btns.get(0).set(6,new JButton("í† "));
+		btns.get(0).set(7,new JButton("ì¼"));
 
 		int time = 0;
 		for(int i=1; i<49; i++) {
@@ -102,10 +102,10 @@ public class LeftTableUI extends JPanel {
 			}
 		}
 	
-		//0,0 ¹öÆ° borderÁ¦°Å 
+		//0,0 ë²„íŠ¼ borderì œê±° 
 		btns.get(0).get(0).setBorder(new MatteBorder(0,0,0,0, Color.BLACK));
 		
-		//ÇØ´ç À§Ä¡ ¹öÆ°À» ³ÖÀ»¶§ gridÀÇ À§Ä¡, ¹üÀ§ µîÀ» ¼³Á¤ÇØÁÖ´Â GridBagConstraintsµéÀ» ¼³Á¤ 
+		//í•´ë‹¹ ìœ„ì¹˜ ë²„íŠ¼ì„ ë„£ì„ë•Œ gridì˜ ìœ„ì¹˜, ë²”ìœ„ ë“±ì„ ì„¤ì •í•´ì£¼ëŠ” GridBagConstraintsë“¤ì„ ì„¤ì • 
 		ArrayList<ArrayList<GridBagConstraints>> gbcs = new ArrayList<ArrayList<GridBagConstraints>>();
 		for(int i=0; i<49; i++) {
 			gbcs.add(new ArrayList<GridBagConstraints>());
@@ -116,7 +116,7 @@ public class LeftTableUI extends JPanel {
 				gbc.weighty = 1;
 				gbc.fill = GridBagConstraints.BOTH; 
 				
-				//ÀÏÁ¤Ç¥ °¡Àå¿ŞÂÊ¿¡ ÀÖ´Â ½Ã°£ ¿­ 
+				//ì¼ì •í‘œ ê°€ì¥ì™¼ìª½ì— ìˆëŠ” ì‹œê°„ ì—´ 
 				if(j==0) {
 					gbc.gridwidth = 1;
 					gbc.weightx = 1;
@@ -140,41 +140,41 @@ public class LeftTableUI extends JPanel {
 			}
 		}
 		
-		//½ºÄÉÁÙ ¼³Á¤ 
+		//ìŠ¤ì¼€ì¤„ ì„¤ì • 
 		for(int i=0; i < allSchedule.size(); i++) {
 			ArrayList<DayAndTime> dayAndTimes = allSchedule.get(i).getDayAndTime();
 
 			for(int j=0; j<dayAndTimes.size(); j++) {
 				
-				//ÀÏÁ¤ ½ÃÀÛ½Ã°£
+				//ì¼ì • ì‹œì‘ì‹œê°„
 				int startTime = dayAndTimes.get(j).startTime;
 				
-				//ÀÏÁ¤ Á¾·á½Ã°£
+				//ì¼ì • ì¢…ë£Œì‹œê°„
 				int endTime = dayAndTimes.get(j).endTime;
 				
-				//ÀÏÁ¤ ¿äÀÏ, "¿ù"~"ÀÏ"
+				//ì¼ì • ìš”ì¼, "ì›”"~"ì¼"
 				String day = dayAndTimes.get(j).day;
 				
-				//startTimeÀº ¿ÀÀü11½Ã30ºĞÀÌ¸é 1130°ú °°ÀÌ ÀúÀå µû¶ó¼­ ½Ã°£À» °¡Á®¿Ã·Á¸é ³ª´©±â 100À» ÇÑ´Ù.
+				//startTimeì€ ì˜¤ì „11ì‹œ30ë¶„ì´ë©´ 1130ê³¼ ê°™ì´ ì €ì¥ ë”°ë¼ì„œ ì‹œê°„ì„ ê°€ì ¸ì˜¬ë ¤ë©´ ë‚˜ëˆ„ê¸° 100ì„ í•œë‹¤.
 				int startHour = startTime/100;
 				int endHour = endTime/100;
 
 				//ex) 1130 - 1100
 				int startMinute = startTime - startHour*100;
 				int endMinute = endTime - endHour*100;
-				//½Ã°£ÀÌ ½ÃÀÛµÇ´Â rowÀÇ À§Ä¡ 
+				//ì‹œê°„ì´ ì‹œì‘ë˜ëŠ” rowì˜ ìœ„ì¹˜ 
 				int initRow = 1;
 				
-				//°¢½Ã°£´ç 2Ä­ÀÓÀ¸·Î °öÇÏ±â 2¸¦ ÇÑ´Ù. 
-				//ºĞÀº 0ºĞ ¾Æ´Ï¸é 30ºĞ ÀÌ±â ‹š¹®¿¡ 0ºĞ ÀÌ¸é 0À» ¾Æ´Ï¸é 1À» ´õÇÑ´Ù
+				//ê°ì‹œê°„ë‹¹ 2ì¹¸ì„ìœ¼ë¡œ ê³±í•˜ê¸° 2ë¥¼ í•œë‹¤. 
+				//ë¶„ì€ 0ë¶„ ì•„ë‹ˆë©´ 30ë¶„ ì´ê¸° Â‹Âšë¬¸ì— 0ë¶„ ì´ë©´ 0ì„ ì•„ë‹ˆë©´ 1ì„ ë”í•œë‹¤
 				int startRow = initRow + startHour*2 + (startMinute == 0 ? 0 : 1);
 				int endRow = initRow + endHour*2 + (endMinute == 0 ? 0 : 1);
 				
 				
-				//¿äÀÏÀÌ ½ÃÀÛµÇ´Â colÀÇ À§Ä¡
+				//ìš”ì¼ì´ ì‹œì‘ë˜ëŠ” colì˜ ìœ„ì¹˜
 				int initCol = 1;
 				
-				//°¢ ¿äÀÏ(¿ù¿äÀÏ~ÀÏ¿äÀÏ)¿¡ ¸Â°Ô colº¯°æ 
+				//ê° ìš”ì¼(ì›”ìš”ì¼~ì¼ìš”ì¼)ì— ë§ê²Œ colë³€ê²½ 
 				int col = initCol + dayToNum.get(day);
 
 				GridBagConstraints gbc = gbcs.get(startRow).get(col);
@@ -182,10 +182,10 @@ public class LeftTableUI extends JPanel {
 				
 				String btnInformStr = allSchedule.get(i).title;
 				 
-				//font¼öÁ¤
-				btns.get(startRow).get(col).setFont(new Font("±¼¸²", Font.PLAIN, 12));
-				//type¿¡¼­ °­ÀÇ ÀÏÁ¤Àº 0, ±âÅ¸ÀÏÁ¤Àº 1
-				//°­ÀÇÀÏÁ¤ ÀÌ¶ó¸é
+				//fontìˆ˜ì •
+				btns.get(startRow).get(col).setFont(new Font("êµ´ë¦¼", Font.PLAIN, 12));
+				//typeì—ì„œ ê°•ì˜ ì¼ì •ì€ 0, ê¸°íƒ€ì¼ì •ì€ 1
+				//ê°•ì˜ì¼ì • ì´ë¼ë©´
 				if(allSchedule.get(i).type == 0) {
 					int height = endRow - startRow;
 					if(height == 1) {
@@ -195,22 +195,37 @@ public class LeftTableUI extends JPanel {
 					}else {
 						btnInformStr = String.format("<html>%s<br/>%s<br/>%s<br/></html>", allSchedule.get(i).title,  allSchedule.get(i).getLocation(), allSchedule.get(i).getProfessor());
 					}
-				}else if(allSchedule.get(i).type == 1) { //±âÅ¸ÀÏÁ¤ÀÌ¶ó¸é 
+				}else if(allSchedule.get(i).type == 1) { //ê¸°íƒ€ì¼ì •ì´ë¼ë©´ 
 					btnInformStr = String.format("<html>%s</html>", allSchedule.get(i).title);
 				}
 				
-				//¹öÆ° ÅØ½ºÆ® ¼öÁ¤ 
+				//ë²„íŠ¼ í…ìŠ¤íŠ¸ ìˆ˜ì • 
 				btns.get(startRow).get(col).setText(btnInformStr);
 				
 				btns.get(startRow).get(col).putClientProperty("scheduleItem", allSchedule.get(i));
 
+				int r = (int)(Math.random()*256);
+				int g = (int)(Math.random()*256);
+			    int b = (int)(Math.random()*256);
+			    
+			    Color newColor = new Color(r,g,b);
+			    Color darkColor = newColor.darker();
+			    Color lightColor = newColor.brighter();
+			    
+				btns.get(startRow).get(col).setBorder(new LineBorder(darkColor));
+				btns.get(startRow).get(col).setBackground(lightColor);
+
 				
+				//btns.get(startRow).get(col).setBackground(Color.RED);
+
+				
+				//ë²„íŠ¼ í´ë¦­ì‹œ ìƒì„¸ì •ë³´ í‘œì‹œ í•¨ìˆ˜ ì‹¤í–‰
 				btns.get(startRow).get(col).addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						JButton btn = (JButton)e.getSource();
 						Schedule item = (Schedule)(btn).getClientProperty("scheduleItem");
-						String InformStr = String.format("<html>°­ÀÇ¸í: %s<br/>Àå¼Ò: %s<br/>±³¼ö: %s<br/></html>", item.title,  item.getLocation(), item.getProfessor());
+						String InformStr = String.format("<html>ê°•ì˜ëª…: %s<br/>ì¥ì†Œ: %s<br/>êµìˆ˜: %s<br/></html>", item.title,  item.getLocation(), item.getProfessor());
 						ScheduleDeleteDialog dialog = new ScheduleDeleteDialog(InformStr,new ActionListener() {
 							@Override
 							public void actionPerformed(ActionEvent e) {
@@ -224,7 +239,7 @@ public class LeftTableUI extends JPanel {
 		
 		for(int i=0; i<49; i++) {
 			for(int j=0; j<8; j++) {
-				btns.get(i).get(j).setBackground(UIManager.getColor ( "Panel.background" ));
+				//btns.get(i).get(j).setBackground(UIManager.getColor ( "Panel.background" ));
 				if(j==0) {
 					btns.get(i).get(j).setPreferredSize(new Dimension(20, 20));
 				}
@@ -243,15 +258,15 @@ public class LeftTableUI extends JPanel {
 		alarm.updateAlarm();
 	}
 	
-	//»èÁ¦ ¹öÆ°À» Å¬¸¯ÇÏ¸é È£ÃâµÇ´Â ÇÔ¼ö.
-	//»èÁ¦ ¿©ºÎ¸¦ È®ÀÎÇÏ´Â ÆË¾÷Ã¢À» ¶ç¿î´Ù.
-	//»ç¿ëÀÚ°¡ 'È®ÀÎ'À» Å¬¸¯ÇÏ¸é ÀÏÁ¤À» ½Ã°£Ç¥¿¡¼­ »èÁ¦ÇÏ°í allschedule °´Ã¼¿¡¼­µµ ÀÏÁ¤Á¤º¸¸¦ »èÁ¦ÇÑ´Ù.
-	//±× ÈÄ ¾Ë¶÷ Á¤º¸µµ ¾÷µ¥ÀÌÆ® ÇÑ´Ù. 
+	//ì‚­ì œ ë²„íŠ¼ì„ í´ë¦­í•˜ë©´ í˜¸ì¶œë˜ëŠ” í•¨ìˆ˜.
+	//ì‚­ì œ ì—¬ë¶€ë¥¼ í™•ì¸í•˜ëŠ” íŒì—…ì°½ì„ ë„ìš´ë‹¤.
+	//ì‚¬ìš©ìê°€ 'í™•ì¸'ì„ í´ë¦­í•˜ë©´ ì¼ì •ì„ ì‹œê°„í‘œì—ì„œ ì‚­ì œí•˜ê³  allschedule ê°ì²´ì—ì„œë„ ì¼ì •ì •ë³´ë¥¼ ì‚­ì œí•œë‹¤.
+	//ê·¸ í›„ ì•ŒëŒ ì •ë³´ë„ ì—…ë°ì´íŠ¸ í•œë‹¤. 
 	public void deleteBtnClick(Schedule scheduleItem) {
 		//allSchedule 
 		int dialogButton = JOptionPane.YES_NO_OPTION;
-		String content = "\""+scheduleItem.title + "\"" + "¸¦ »èÁ¦ÇÏ½Ã°Ú½À´Ï±î?";
-		int dialogResult = JOptionPane.showConfirmDialog(this, content, "ÀÏÁ¤ »èÁ¦", dialogButton);
+		String content = "\""+scheduleItem.title + "\"" + "ë¥¼ ì‚­ì œí•˜ì‹œê² ìŠµë‹ˆê¹Œ?";
+		int dialogResult = JOptionPane.showConfirmDialog(this, content, "ì¼ì • ì‚­ì œ", dialogButton);
 		if(dialogResult == 0) {
 			allSchedule.remove(scheduleItem);
 			printSchedule();
@@ -259,7 +274,7 @@ public class LeftTableUI extends JPanel {
 	}
 
 
-	//JpanelÀ» GridLayoutÀ¸·Î »ı¼ºÇÑ´Ù.
+	//Jpanelì„ GridLayoutìœ¼ë¡œ ìƒì„±í•œë‹¤.
 	public void createTable() {
 		this.setSize(500, 600);
 		this.setLayout(new BorderLayout());

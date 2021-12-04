@@ -13,13 +13,13 @@ import java.awt.Font;
 
 
 public class RightSettingUI extends JPanel {
-	//¸ğµç ÀÏÁ¤ Á¤º¸¸¦ µé°íÀÖ´Â ÇÊµå 
+	//ëª¨ë“  ì¼ì • ì •ë³´ë¥¼ ë“¤ê³ ìˆëŠ” í•„ë“œ 
 	private ArrayList<Schedule> allSchedule;
 	
 	//
 	private LeftTableUI leftUI;
 	private ArrayList<DayTimeUI> timeLines;
-	//¾Ë¸²¼³Á¤ °ü·ÃÇØ¼­ Ãß°¡ÇÑ º¯¼ö,KCH
+	//ì•Œë¦¼ì„¤ì • ê´€ë ¨í•´ì„œ ì¶”ê°€í•œ ë³€ìˆ˜,KCH
 	private Alarm alarm;
 	private JPanel dayTimeUIPanel;
 	public RightSettingUI(ArrayList<Schedule> allSchedule, LeftTableUI leftUI, Alarm alarm) {
@@ -28,11 +28,11 @@ public class RightSettingUI extends JPanel {
 		createSettingUI();
 	}
 	
-	//°­ÀÇÀÏÁ¤°ú ±âÅ¸ÀÏÁ¤ Ã¼Å©¹Ú½º, ¾Ë¸² ½ºÀ§Ä¡, DayTimeUI»ı¼º
-	//±âº»ÀûÀ¸·Î °­ÀÇ ÀÏÁ¤ÀÌ Ã¼Å©µÈ »óÅÂ·Î º¯°æ
-	//selectLecture È£Ãâ
+	//ê°•ì˜ì¼ì •ê³¼ ê¸°íƒ€ì¼ì • ì²´í¬ë°•ìŠ¤, ì•Œë¦¼ ìŠ¤ìœ„ì¹˜, DayTimeUIìƒì„±
+	//ê¸°ë³¸ì ìœ¼ë¡œ ê°•ì˜ ì¼ì •ì´ ì²´í¬ëœ ìƒíƒœë¡œ ë³€ê²½
+	//selectLecture í˜¸ì¶œ
 	public void createSettingUI() {
-		//¹öÆ° Å¬¸¯½Ã ¾È¿¡ÀÖ´Â ÅØ½ºÆ®¿¡ ¹ØÁÙ »ı±â´Â°ÍÀ» ¾ø¾Ø´Ù. 
+		//ë²„íŠ¼ í´ë¦­ì‹œ ì•ˆì—ìˆëŠ” í…ìŠ¤íŠ¸ì— ë°‘ì¤„ ìƒê¸°ëŠ”ê²ƒì„ ì—†ì•¤ë‹¤. 
 		UIDefaults defaults = UIManager.getLookAndFeelDefaults();
 		defaults.put("Button.focus", new ColorUIResource(new Color(0, 0, 0, 0)));
 		defaults.put("RadioButton.focus", new ColorUIResource(new Color(0, 0, 0, 0)));
@@ -50,8 +50,8 @@ public class RightSettingUI extends JPanel {
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		
-		JButton btnNewButton = new JButton("ÀÏÁ¤Ãß°¡");
-		btnNewButton.setFont(new Font("¸¼Àº °íµñ", Font.BOLD, 12));
+		JButton btnNewButton = new JButton("ì¼ì •ì¶”ê°€");
+		btnNewButton.setFont(new Font("ë§‘ì€ ê³ ë”•", Font.BOLD, 12));
 		btnNewButton.setBorder(new RoundedBorder(5));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -67,7 +67,7 @@ public class RightSettingUI extends JPanel {
 		
 		ButtonGroup group = new ButtonGroup();
 		
-		JRadioButton chckbxNewCheckBox = new JRadioButton("°­ÀÇÀÏÁ¤");
+		JRadioButton chckbxNewCheckBox = new JRadioButton("ê°•ì˜ì¼ì •");
 		chckbxNewCheckBox.setBackground(UIManager.getColor ( "Panel.background" ));
 		GridBagConstraints gbc_chckbxNewCheckBox = new GridBagConstraints();
 		gbc_chckbxNewCheckBox.insets = new Insets(0, 0, 5, 5);
@@ -86,7 +86,7 @@ public class RightSettingUI extends JPanel {
 	        }
 	    });
 		
-		JRadioButton chckbxNewCheckBox_1 = new JRadioButton("±âÅ¸ÀÏÁ¤");
+		JRadioButton chckbxNewCheckBox_1 = new JRadioButton("ê¸°íƒ€ì¼ì •");
 		chckbxNewCheckBox_1.setBackground(UIManager.getColor ( "Panel.background" ));
 		GridBagConstraints gbc_chckbxNewCheckBox_1 = new GridBagConstraints();
 		gbc_chckbxNewCheckBox_1.insets = new Insets(0, 0, 5, 5);
@@ -119,9 +119,9 @@ public class RightSettingUI extends JPanel {
 		gbc_lineField.gridy = 15;
 		add(lineField, gbc_lineField);
 		
-		JCheckBox chckbxNewCheckBox_2 = new JCheckBox("¾Ë¶÷¼³Á¤");
+		JCheckBox chckbxNewCheckBox_2 = new JCheckBox("ì•ŒëŒì„¤ì •");
 		chckbxNewCheckBox_2.setBackground(UIManager.getColor ( "Panel.background" ));
-		chckbxNewCheckBox_2.setFont(new Font("±¼¸²", Font.PLAIN, 12));
+		chckbxNewCheckBox_2.setFont(new Font("êµ´ë¦¼", Font.PLAIN, 12));
 		GridBagConstraints gbc_chckbxNewCheckBox_2 = new GridBagConstraints();
 		gbc_chckbxNewCheckBox_2.gridwidth = 3;
 		gbc_chckbxNewCheckBox_2.insets = new Insets(0, 0, 0, 5);
@@ -134,19 +134,19 @@ public class RightSettingUI extends JPanel {
 		//DayAndTime UI Container
 		JPanel dayTimeUIContainerPanel = new JPanel();
 		
-		//DayAndTime UI Container ÃÊ±âÈ­
+		//DayAndTime UI Container ì´ˆê¸°í™”
 		addDayTimeUI(dayTimeUIContainerPanel);
 		
 		selectLecture();
 	}
 	
-	//¿äÀÏ ¹× ½Ã°£À» ÀÔ·Â¹Ş´Â UI¸¦ ÃÊ±âÈ­ÇÏ°í panel¿¡ ºÙÀÌ´Â ÇÔ¼ö 
-	//selectLecture¿Í selectOtherSchedule ÇÔ¼ö¿¡¼­ ¾²ÀÎ´Ù. 
+	//ìš”ì¼ ë° ì‹œê°„ì„ ì…ë ¥ë°›ëŠ” UIë¥¼ ì´ˆê¸°í™”í•˜ê³  panelì— ë¶™ì´ëŠ” í•¨ìˆ˜ 
+	//selectLectureì™€ selectOtherSchedule í•¨ìˆ˜ì—ì„œ ì“°ì¸ë‹¤. 
 	public void addDayTimeUI(JPanel dayTimeUIContainerPanel) {
 		dayTimeUIContainerPanel.setBackground(UIManager.getColor ( "Panel.background" ));
 		dayTimeUIContainerPanel.setBorder(BorderFactory.createLineBorder(UIManager.getColor("Panel.background")));
 		
-		//YÃàÀ¸·Î Ãß°¡µÇµµ·Ï ¼³Á¤
+		//Yì¶•ìœ¼ë¡œ ì¶”ê°€ë˜ë„ë¡ ì„¤ì •
 		dayTimeUIContainerPanel.setLayout(new BoxLayout(dayTimeUIContainerPanel, BoxLayout.Y_AXIS));
 		
 		//DayAndTime UI Panel
@@ -154,34 +154,34 @@ public class RightSettingUI extends JPanel {
 		dayTimeUIPanel.setBackground(UIManager.getColor ( "Panel.background" ));
 		dayTimeUIPanel.setBorder(BorderFactory.createLineBorder(UIManager.getColor("Panel.background")));
 		
-		//YÃàÀ¸·Î Ãß°¡µÇµµ·Ï ¼³Á¤
+		//Yì¶•ìœ¼ë¡œ ì¶”ê°€ë˜ë„ë¡ ì„¤ì •
 		dayTimeUIPanel.setLayout(new BoxLayout(dayTimeUIPanel, BoxLayout.Y_AXIS));
 		
-		//±âº»ÀûÀ¸·Î ¿äÀÏ ¹× ½Ã°£À» ÀÔ·Â¹ŞÀ» ¼ö ÀÖ´Â UIÇÑÁÙ Ãß°¡
+		//ê¸°ë³¸ì ìœ¼ë¡œ ìš”ì¼ ë° ì‹œê°„ì„ ì…ë ¥ë°›ì„ ìˆ˜ ìˆëŠ” UIí•œì¤„ ì¶”ê°€
 		DayTimeUI newDayTimeUI = new DayTimeUI();
 		timeLines.add(newDayTimeUI);
 		dayTimeUIPanel.add(newDayTimeUI);
 		
-		//DayAndTime UI Container¿¡ DayAndTime UI PanelÃß°¡
+		//DayAndTime UI Containerì— DayAndTime UI Panelì¶”ê°€
 		dayTimeUIContainerPanel.add(dayTimeUIPanel);
 		
-		//+¹öÆ° Ãß°¡ 
+		//+ë²„íŠ¼ ì¶”ê°€ 
 		JButton dayTimePlusBtn = new JButton("+");
 		
-		//+¹öÆ° actionÃß°¡ 
+		//+ë²„íŠ¼ actionì¶”ê°€ 
 		dayTimePlusBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				addTimeLineBtnClick();
 			}
 		});
 		
-		//+¹öÆ° Ãß°¡ 
+		//+ë²„íŠ¼ ì¶”ê°€ 
 		dayTimePlusBtn.setBackground(UIManager.getColor ( "Panel.background" ));
 		dayTimePlusBtn.setBorder(null);
 		dayTimePlusBtn.setFont(new Font("aria", Font.BOLD, 25));
 		dayTimeUIContainerPanel.add(dayTimePlusBtn);
 				
-		//½ºÅ©·Ñ Ãß°¡
+		//ìŠ¤í¬ë¡¤ ì¶”ê°€
 		JScrollPane jsp = new JScrollPane(dayTimeUIContainerPanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		jsp.setBorder(BorderFactory.createLineBorder(UIManager.getColor("Panel.background")));
 		GridBagConstraints gbcDayAndTime = new GridBagConstraints();
@@ -194,25 +194,25 @@ public class RightSettingUI extends JPanel {
 		add(jsp, gbcDayAndTime);
 	}
 	
-	//°­ÀÇ ÀÏÁ¤ Ã¼Å© ¹Ú½º¸¦ Ã¼Å©ÇÏ¸é È£ÃâµÇ´Â ÇÔ¼ö
-	//±âÅ¸ ÀÏÁ¤ Ã¼Å© ¹Ú½ºÀÇ Ã¼Å©»óÅÂ¸¦ ÇØÁ¦
-	//°­ÀÇ¸í, ±³¼ö¸í, Àå¼Ò, ¿äÀÏ ¹× ½Ã°£À» ÀÔ·ÂÇÒ ¼ö ÀÖ´Â ÀÔ·Â¶õÀ» º¸¿©ÁØ´Ù.
-	//¿äÀÏ ¹× ½Ã°£À» »èÁ¦ÇÒ ¼ö ÀÖ´Â ¹öÆ°°ú 
-	//¿äÀÏ ¹× ½Ã°£À» Ãß°¡ÇÒ ¼ö ÀÖ´Â ¹öÆ°À» º¸¿©ÁØ´Ù.
+	//ê°•ì˜ ì¼ì • ì²´í¬ ë°•ìŠ¤ë¥¼ ì²´í¬í•˜ë©´ í˜¸ì¶œë˜ëŠ” í•¨ìˆ˜
+	//ê¸°íƒ€ ì¼ì • ì²´í¬ ë°•ìŠ¤ì˜ ì²´í¬ìƒíƒœë¥¼ í•´ì œ
+	//ê°•ì˜ëª…, êµìˆ˜ëª…, ì¥ì†Œ, ìš”ì¼ ë° ì‹œê°„ì„ ì…ë ¥í•  ìˆ˜ ìˆëŠ” ì…ë ¥ë€ì„ ë³´ì—¬ì¤€ë‹¤.
+	//ìš”ì¼ ë° ì‹œê°„ì„ ì‚­ì œí•  ìˆ˜ ìˆëŠ” ë²„íŠ¼ê³¼ 
+	//ìš”ì¼ ë° ì‹œê°„ì„ ì¶”ê°€í•  ìˆ˜ ìˆëŠ” ë²„íŠ¼ì„ ë³´ì—¬ì¤€ë‹¤.
 	public void selectLecture() {
 		Component[] components = getComponents();
-		//panel¿¡¼­ ¸ğµç ÄÄÆ÷³ÍÆ® Áß¿¡ °­ÀÇÀÏÁ¤ °Ë»ö ÈÄ ¼±ÅÃ
+		//panelì—ì„œ ëª¨ë“  ì»´í¬ë„ŒíŠ¸ ì¤‘ì— ê°•ì˜ì¼ì • ê²€ìƒ‰ í›„ ì„ íƒ
 		for(int i=0; i<components.length;i++) {
 			if(components[i] instanceof JRadioButton) {
-				//±âÅ¸ÀÏÁ¤ Radio button¿¡ select
+				//ê¸°íƒ€ì¼ì • Radio buttonì— select
 				JRadioButton radioBtn = (JRadioButton)components[i];
-				if(radioBtn.getText().equals("°­ÀÇÀÏÁ¤")) {
+				if(radioBtn.getText().equals("ê°•ì˜ì¼ì •")) {
 					radioBtn.setSelected(true);
 				}
 			}
 			
-			//isDeleteWhenReSelectRadioBtn -> °­ÀÇÀÏÁ¤, ±âÅ¸ÀÏÁ¤°ú °°Àº Radio ButtonÀÌ º¯°æµÉ¶§ ¸¶´Ù ±âÁ¸¿¡ ÀÖ´ø »èÁ¦ÇØ¾ßÇÒ Component¸¦ ÀÇ¹Ì 
-			//¸¸¾à ±âÁ¸¿¡ °­ÀÇÀÏÁ¤ÀÌ ¼±ÅÃµÇ¾îÀÖ´Ù¸é °­ÀÇÀÏÁ¤À» ¼±ÅÃÇßÀ»¶§ »ı¼ºµÈ ComponentµéÀ» »èÁ¦
+			//isDeleteWhenReSelectRadioBtn -> ê°•ì˜ì¼ì •, ê¸°íƒ€ì¼ì •ê³¼ ê°™ì€ Radio Buttonì´ ë³€ê²½ë ë•Œ ë§ˆë‹¤ ê¸°ì¡´ì— ìˆë˜ ì‚­ì œí•´ì•¼í•  Componentë¥¼ ì˜ë¯¸ 
+			//ë§Œì•½ ê¸°ì¡´ì— ê°•ì˜ì¼ì •ì´ ì„ íƒë˜ì–´ìˆë‹¤ë©´ ê°•ì˜ì¼ì •ì„ ì„ íƒí–ˆì„ë•Œ ìƒì„±ëœ Componentë“¤ì„ ì‚­ì œ
 			if(components[i] instanceof JComponent) {
 				JComponent jComponent = (JComponent)components[i];
 				if(jComponent.getClientProperty("isDeleteWhenReSelectRadioBtn") != null){
@@ -222,8 +222,8 @@ public class RightSettingUI extends JPanel {
 			}
 		}
 		
-		//¼ö¾÷¸í label »ı¼º
-		JLabel lblNewLabel = new JLabel("¼ö¾÷¸í");
+		//ìˆ˜ì—…ëª… label ìƒì„±
+		JLabel lblNewLabel = new JLabel("ìˆ˜ì—…ëª…");
 		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
 		gbc_lblNewLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel.gridx = 1;
@@ -231,9 +231,9 @@ public class RightSettingUI extends JPanel {
 		add(lblNewLabel, gbc_lblNewLabel);
 		lblNewLabel.putClientProperty("isDeleteWhenReSelectRadioBtn", true);
 		
-		//¼ö¾÷¸í field »ı¼º
+		//ìˆ˜ì—…ëª… field ìƒì„±
 		JTextField textField = new JTextField();
-		textField.setName("title");// ÇÊµå ÀÌ¸§ ¼³Á¤
+		textField.setName("title");// í•„ë“œ ì´ë¦„ ì„¤ì •
 		GridBagConstraints gbc_textField = new GridBagConstraints();
 		textField.setBorder(new MatteBorder(0, 0, 1, 0, UIManager.getColor ("Button.light")));
 		gbc_textField.gridwidth = 6;
@@ -246,8 +246,8 @@ public class RightSettingUI extends JPanel {
 		textField.putClientProperty("isDeleteWhenReSelectRadioBtn", true);
 		
 		
-		//±³¼ö¸í label »ı¼º
-		JLabel lblNewLabel_1 = new JLabel("±³¼ö¸í");
+		//êµìˆ˜ëª… label ìƒì„±
+		JLabel lblNewLabel_1 = new JLabel("êµìˆ˜ëª…");
 		GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
 		gbc_lblNewLabel_1.anchor = GridBagConstraints.EAST;
 		gbc_lblNewLabel_1.insets = new Insets(0, 0, 5, 5);
@@ -256,9 +256,9 @@ public class RightSettingUI extends JPanel {
 		add(lblNewLabel_1, gbc_lblNewLabel_1);
 		lblNewLabel_1.putClientProperty("isDeleteWhenReSelectRadioBtn", true);
 		
-		//±³¼ö¸í field »ı¼º
+		//êµìˆ˜ëª… field ìƒì„±
 		JTextField textField_1 = new JTextField();
-		textField_1.setName("profName");// ÇÊµå ÀÌ¸§ ¼³Á¤
+		textField_1.setName("profName");// í•„ë“œ ì´ë¦„ ì„¤ì •
 		textField_1.setColumns(10);
 		GridBagConstraints gbc_textField_1 = new GridBagConstraints();
 		textField_1.setBorder(new MatteBorder(0, 0, 1, 0, UIManager.getColor ("Button.light")));
@@ -270,8 +270,8 @@ public class RightSettingUI extends JPanel {
 		add(textField_1, gbc_textField_1);
 		textField_1.putClientProperty("isDeleteWhenReSelectRadioBtn", true);
 		
-		//Àå¼Ò label »ı¼º
-		JLabel lblNewLabel_1_1 = new JLabel("Àå¼Ò");
+		//ì¥ì†Œ label ìƒì„±
+		JLabel lblNewLabel_1_1 = new JLabel("ì¥ì†Œ");
 		GridBagConstraints gbc_lblNewLabel_1_1 = new GridBagConstraints();
 		gbc_lblNewLabel_1_1.anchor = GridBagConstraints.EAST;
 		gbc_lblNewLabel_1_1.insets = new Insets(0, 0, 5, 5);
@@ -280,9 +280,9 @@ public class RightSettingUI extends JPanel {
 		add(lblNewLabel_1_1, gbc_lblNewLabel_1_1);
 		lblNewLabel_1_1.putClientProperty("isDeleteWhenReSelectRadioBtn", true);
 		
-		//Àå¼Ò field »ı¼º
+		//ì¥ì†Œ field ìƒì„±
 		JTextField textField_2 = new JTextField();
-		textField_2.setName("location");// ÇÊµå ÀÌ¸§ ¼³Á¤
+		textField_2.setName("location");// í•„ë“œ ì´ë¦„ ì„¤ì •
 		textField_2.setColumns(10);
 		textField_2.setBorder(new MatteBorder(0, 0, 1, 0, UIManager.getColor ("Button.light")));
 		GridBagConstraints gbc_textField_2 = new GridBagConstraints();
@@ -295,25 +295,25 @@ public class RightSettingUI extends JPanel {
 		textField_2.putClientProperty("isDeleteWhenReSelectRadioBtn", true);
 	}
 	
-	//±âÅ¸ÀÏÁ¤ Ã¼Å© ¹Ú½º¸¦ ¼±ÅÃÇÏ¸é È£ÃâµÇ´Â ÇÔ¼öÀÌ´Ù.
-	//°­ÀÇ ÀÏÁ¤ Ã¼Å©¹Ú½ºÀÇ Ã¼Å©»óÅÂ¸¦ ÇØÁ¦ÇÑ´Ù.
-	//ÀÏÁ¤¸í, ¿äÀÏ¹×½Ã°£ ÀÔ·Â¶õÀ» º¸¿©ÁØ´Ù.
-	//¿äÀÏ ¹× ½Ã°£À» »èÁ¦ÇÒ ¼ö ÀÖ´Â ¹öÆ°°ú
-	//¿äÀÏ ¹× ½Ã°£À» Ãß°¡ÇÒ ¼ö ÀÖ´Â ¹öÆ°À» º¸¿©ÁØ´Ù. 
+	//ê¸°íƒ€ì¼ì • ì²´í¬ ë°•ìŠ¤ë¥¼ ì„ íƒí•˜ë©´ í˜¸ì¶œë˜ëŠ” í•¨ìˆ˜ì´ë‹¤.
+	//ê°•ì˜ ì¼ì • ì²´í¬ë°•ìŠ¤ì˜ ì²´í¬ìƒíƒœë¥¼ í•´ì œí•œë‹¤.
+	//ì¼ì •ëª…, ìš”ì¼ë°ì‹œê°„ ì…ë ¥ë€ì„ ë³´ì—¬ì¤€ë‹¤.
+	//ìš”ì¼ ë° ì‹œê°„ì„ ì‚­ì œí•  ìˆ˜ ìˆëŠ” ë²„íŠ¼ê³¼
+	//ìš”ì¼ ë° ì‹œê°„ì„ ì¶”ê°€í•  ìˆ˜ ìˆëŠ” ë²„íŠ¼ì„ ë³´ì—¬ì¤€ë‹¤. 
 	public void selectOtherSchedule() {
 		Component[] components = getComponents();
-		//panel¿¡¼­ ¸ğµç ÄÄÆ÷³ÍÆ® Áß¿¡ ±âÅ¸ÀÏÁ¤ °Ë»ö ÈÄ ¼±ÅÃ 
+		//panelì—ì„œ ëª¨ë“  ì»´í¬ë„ŒíŠ¸ ì¤‘ì— ê¸°íƒ€ì¼ì • ê²€ìƒ‰ í›„ ì„ íƒ 
 		for(int i=0; i<components.length;i++) {	
 			if(components[i] instanceof JRadioButton) {
-				//±âÅ¸ÀÏÁ¤ Radio button¿¡ select
+				//ê¸°íƒ€ì¼ì • Radio buttonì— select
 				JRadioButton radioBtn = (JRadioButton)components[i];
-				if(radioBtn.getText().equals("±âÅ¸ÀÏÁ¤")) {
+				if(radioBtn.getText().equals("ê¸°íƒ€ì¼ì •")) {
 					radioBtn.setSelected(true);
 				}
 			}
 			
-			//isDeleteWhenReSelectRadioBtn -> °­ÀÇÀÏÁ¤, ±âÅ¸ÀÏÁ¤°ú °°Àº Radio ButtonÀÌ º¯°æµÉ¶§ ¸¶´Ù ±âÁ¸¿¡ ÀÖ´ø »èÁ¦ÇØ¾ßÇÒ Component¸¦ ÀÇ¹Ì 
-			//¸¸¾à ±âÁ¸¿¡ °­ÀÇÀÏÁ¤ÀÌ ¼±ÅÃµÇ¾îÀÖ´Ù¸é °­ÀÇÀÏÁ¤À» ¼±ÅÃÇßÀ»¶§ »ı¼ºµÈ ComponentµéÀ» »èÁ¦
+			//isDeleteWhenReSelectRadioBtn -> ê°•ì˜ì¼ì •, ê¸°íƒ€ì¼ì •ê³¼ ê°™ì€ Radio Buttonì´ ë³€ê²½ë ë•Œ ë§ˆë‹¤ ê¸°ì¡´ì— ìˆë˜ ì‚­ì œí•´ì•¼í•  Componentë¥¼ ì˜ë¯¸ 
+			//ë§Œì•½ ê¸°ì¡´ì— ê°•ì˜ì¼ì •ì´ ì„ íƒë˜ì–´ìˆë‹¤ë©´ ê°•ì˜ì¼ì •ì„ ì„ íƒí–ˆì„ë•Œ ìƒì„±ëœ Componentë“¤ì„ ì‚­ì œ
 			if(components[i] instanceof JComponent) {
 				JComponent jComponent = (JComponent)components[i];
 				if(jComponent.getClientProperty("isDeleteWhenReSelectRadioBtn") != null){
@@ -323,8 +323,8 @@ public class RightSettingUI extends JPanel {
 			}
 		}
 		
-		//ÀÏÁ¤¸í label »ı¼º
-		JLabel lblNewLabel = new JLabel("ÀÏÁ¤¸í");
+		//ì¼ì •ëª… label ìƒì„±
+		JLabel lblNewLabel = new JLabel("ì¼ì •ëª…");
 		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
 		gbc_lblNewLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel.gridx = 1;
@@ -332,9 +332,9 @@ public class RightSettingUI extends JPanel {
 		add(lblNewLabel, gbc_lblNewLabel);
 		lblNewLabel.putClientProperty("isDeleteWhenReSelectRadioBtn", true);
 		
-		//ÀÏÁ¤¸í field »ı¼º
+		//ì¼ì •ëª… field ìƒì„±
 		JTextField textField = new JTextField();
-		textField.setName("title"); // ÇÊµå ÀÌ¸§ ¼³Á¤
+		textField.setName("title"); // í•„ë“œ ì´ë¦„ ì„¤ì •
 		GridBagConstraints gbc_textField = new GridBagConstraints();
 		textField.setBorder(new MatteBorder(0, 0, 1, 0, UIManager.getColor ("Button.light")));
 		gbc_textField.gridwidth = 6;
@@ -347,32 +347,32 @@ public class RightSettingUI extends JPanel {
 		textField.putClientProperty("isDeleteWhenReSelectRadioBtn", true);
 	}
 	
-	//ÀÏÁ¤Ãß°¡ ¹öÆ°À» Å¬¸¯ÇÏ¸é È£ÃâµÇ´Â ÇÔ¼öÀÌ´Ù.
-	//ÀÔ·ÂµÇ¾îÀÖ´Â ½Ã°£ Á¤º¸¸¦ °¡Á®¿Í¼­ checkDuplicationÇÔ¼öÀÇ ÀÎÀÚ·Î ³Ñ±ä´Ù.
-	//true¸¦ ¹İÈ¯ ¹ŞÀ¸¸é "½Ã°£ÀÌ °ãÄ¨´Ï´Ù."ÆË¾÷Ã¢À» ¶ç¿ì°í ÇÔ¼ö¸¦ Á¾·áÇÑ´Ù.
-	//false¸¦ ¹İÈ¯ ¹ŞÀ¸¸é ¼±ÅÃµÇ¾î ÀÖ´Â ÀÏÁ¤ Á¾·ù¸¦ È®ÀÎÇÑ´Ù.
-	//'°­ÀÇ ÀÏÁ¤'ÀÇ °æ¿ì '°­ÀÇ¸í, ±³¼ö¸í, Àå¼Ò, ¿äÀÏ ¹× ½Ã°£'À» '±âÅ¸ ÀÏÁ¤'ÀÇ °æ¿ì 'ÀÏÁ¤¸í, ¿äÀÏ ¹× ½Ã°£'
-	//Á¤º¸¸¦ °¡Á®¿Í¼­ »õ·Î¿î Schedule°´Ã¼¿¡ ÀúÀåÇÑ´Ù.
-	//¼­·Î »ı¼ºµÈ Schedule°´Ã¼¸¦ allSchedule¿¡ Ãß°¡ÇÑ´Ù.
-	//leftTableUIÀÇ printSchedule ÇÔ¼ö¸¦ È£ÃâÇÏ¿© »õ·Î¿î ÀÏÁ¤À» ½Ã°£Ç¥¿¡ Ãß°¡ÇØ º¸¿© ÁÙ ¼ö ÀÖµµ·Ï ÇÑ´Ù.
+	//ì¼ì •ì¶”ê°€ ë²„íŠ¼ì„ í´ë¦­í•˜ë©´ í˜¸ì¶œë˜ëŠ” í•¨ìˆ˜ì´ë‹¤.
+	//ì…ë ¥ë˜ì–´ìˆëŠ” ì‹œê°„ ì •ë³´ë¥¼ ê°€ì ¸ì™€ì„œ checkDuplicationí•¨ìˆ˜ì˜ ì¸ìë¡œ ë„˜ê¸´ë‹¤.
+	//trueë¥¼ ë°˜í™˜ ë°›ìœ¼ë©´ "ì‹œê°„ì´ ê²¹ì¹©ë‹ˆë‹¤."íŒì—…ì°½ì„ ë„ìš°ê³  í•¨ìˆ˜ë¥¼ ì¢…ë£Œí•œë‹¤.
+	//falseë¥¼ ë°˜í™˜ ë°›ìœ¼ë©´ ì„ íƒë˜ì–´ ìˆëŠ” ì¼ì • ì¢…ë¥˜ë¥¼ í™•ì¸í•œë‹¤.
+	//'ê°•ì˜ ì¼ì •'ì˜ ê²½ìš° 'ê°•ì˜ëª…, êµìˆ˜ëª…, ì¥ì†Œ, ìš”ì¼ ë° ì‹œê°„'ì„ 'ê¸°íƒ€ ì¼ì •'ì˜ ê²½ìš° 'ì¼ì •ëª…, ìš”ì¼ ë° ì‹œê°„'
+	//ì •ë³´ë¥¼ ê°€ì ¸ì™€ì„œ ìƒˆë¡œìš´ Scheduleê°ì²´ì— ì €ì¥í•œë‹¤.
+	//ì„œë¡œ ìƒì„±ëœ Scheduleê°ì²´ë¥¼ allScheduleì— ì¶”ê°€í•œë‹¤.
+	//leftTableUIì˜ printSchedule í•¨ìˆ˜ë¥¼ í˜¸ì¶œí•˜ì—¬ ìƒˆë¡œìš´ ì¼ì •ì„ ì‹œê°„í‘œì— ì¶”ê°€í•´ ë³´ì—¬ ì¤„ ìˆ˜ ìˆë„ë¡ í•œë‹¤.
 	public void addScheduleBtnClick() {
 		
-		//ÇöÀç Ãß°¡ÇÒ·Á°í ÇÏ´Â ÀÏÁ¤¿¡¼­ ±âÁ¸¿¡ ÀúÀåµÇ¾îÀÖ´ø ÀÏÁ¤°ú °ãÄ¡´Â°Ô ÀÖ´Ù¸é
-		//¾Ë¸² Ç¥½Ã ÈÄ ÇÔ¼ö Á¾·á 
+		//í˜„ì¬ ì¶”ê°€í• ë ¤ê³  í•˜ëŠ” ì¼ì •ì—ì„œ ê¸°ì¡´ì— ì €ì¥ë˜ì–´ìˆë˜ ì¼ì •ê³¼ ê²¹ì¹˜ëŠ”ê²Œ ìˆë‹¤ë©´
+		//ì•Œë¦¼ í‘œì‹œ í›„ í•¨ìˆ˜ ì¢…ë£Œ 
 		if(checkDuplication()) {
-			JOptionPane.showMessageDialog(null, "½Ã°£ÀÌ °ãÄ¨´Ï´Ù.", "ÀÏÁ¤Ãß°¡ ¿¡·¯ ¸Ş¼¼Áö", JOptionPane.WARNING_MESSAGE);
+			JOptionPane.showMessageDialog(null, "ì‹œê°„ì´ ê²¹ì¹©ë‹ˆë‹¤.", "ì¼ì •ì¶”ê°€ ì—ëŸ¬ ë©”ì„¸ì§€", JOptionPane.WARNING_MESSAGE);
 			return;
 		}
 		
 		Component[] components = getComponents();
-		boolean isLecture = false; //°­ÀÇÀÏÁ¤ÀÌ ¼±ÅÃµÇ¾î ÀÖ´ÂÁö ¾Æ´Ï¸é ±âÅ¸ÀÏÁ¤ÀÌ ¼±ÅÃµÇ¾îÀÖ´ÂÁö »óÅÂ¸¦ ÀúÀåÇÏ´Â º¯¼ö
+		boolean isLecture = false; //ê°•ì˜ì¼ì •ì´ ì„ íƒë˜ì–´ ìˆëŠ”ì§€ ì•„ë‹ˆë©´ ê¸°íƒ€ì¼ì •ì´ ì„ íƒë˜ì–´ìˆëŠ”ì§€ ìƒíƒœë¥¼ ì €ì¥í•˜ëŠ” ë³€ìˆ˜
 
-		//panel¿¡¼­ ¸ğµç ÄÄÆ÷³ÍÆ® Áß¿¡ "°­ÀÇÀÏÁ¤" °Ë»ö ÈÄ ¼±ÅÃ 
+		//panelì—ì„œ ëª¨ë“  ì»´í¬ë„ŒíŠ¸ ì¤‘ì— "ê°•ì˜ì¼ì •" ê²€ìƒ‰ í›„ ì„ íƒ 
 		for(int i=0; i<components.length;i++) {	
 			if(components[i] instanceof JRadioButton) {
-				if(((JRadioButton)components[i]).getText().equals("°­ÀÇÀÏÁ¤")) {
+				if(((JRadioButton)components[i]).getText().equals("ê°•ì˜ì¼ì •")) {
 					
-					//ÇöÀç °­ÀÇÀÏÁ¤ÀÌ ¼±ÅÃµÇ¾î ÀÖ´Ù¸é 
+					//í˜„ì¬ ê°•ì˜ì¼ì •ì´ ì„ íƒë˜ì–´ ìˆë‹¤ë©´ 
 					if(((JRadioButton)components[i]).isSelected()) {
 						isLecture = true;
 						break;
@@ -382,7 +382,7 @@ public class RightSettingUI extends JPanel {
 		}
 		
 		String title="", profName="", location="";
-		//°­ÀÇÀÏÁ¤ÀÌ ¼±ÅÃµÈ °æ¿ì 
+		//ê°•ì˜ì¼ì •ì´ ì„ íƒëœ ê²½ìš° 
 		if(isLecture) {
 			for(int i=0; i<components.length;i++) {	
 				if(components[i] instanceof JTextField) {
@@ -398,7 +398,7 @@ public class RightSettingUI extends JPanel {
 					}
 				}
 			}
-		}else {//±âÅ¸ÀÏÁ¤ÀÌ ¼±ÅÃµÈ °æ¿ì 
+		}else {//ê¸°íƒ€ì¼ì •ì´ ì„ íƒëœ ê²½ìš° 
 			for(int i=0; i<components.length;i++) {	
 				if(components[i] instanceof JTextField) {
 					JTextField field = (JTextField)components[i];
@@ -413,18 +413,18 @@ public class RightSettingUI extends JPanel {
 		
 		if(isLecture) {
 			if(title.equals("")) {
-				JOptionPane.showMessageDialog(null, "¼ö¾÷¸íÀ» ÀÔ·ÂÇØÁÖ¼¼¿ä", "ÀÏÁ¤Ãß°¡ ¿¡·¯ ¸Ş¼¼Áö", JOptionPane.WARNING_MESSAGE);
+				JOptionPane.showMessageDialog(null, "ìˆ˜ì—…ëª…ì„ ì…ë ¥í•´ì£¼ì„¸ìš”", "ì¼ì •ì¶”ê°€ ì—ëŸ¬ ë©”ì„¸ì§€", JOptionPane.WARNING_MESSAGE);
 				return;
 			}else if(profName.equals("")) {
-				JOptionPane.showMessageDialog(null, "±³¼ö¸íÀ» ÀÔ·ÂÇØÁÖ¼¼¿ä", "ÀÏÁ¤Ãß°¡ ¿¡·¯ ¸Ş¼¼Áö", JOptionPane.WARNING_MESSAGE);
+				JOptionPane.showMessageDialog(null, "êµìˆ˜ëª…ì„ ì…ë ¥í•´ì£¼ì„¸ìš”", "ì¼ì •ì¶”ê°€ ì—ëŸ¬ ë©”ì„¸ì§€", JOptionPane.WARNING_MESSAGE);
 				return;
 			}else if(location.equals("")) {
-				JOptionPane.showMessageDialog(null, "Àå¼Ò¸íÀ» ÀÔ·ÂÇØÁÖ¼¼¿ä", "ÀÏÁ¤Ãß°¡ ¿¡·¯ ¸Ş¼¼Áö", JOptionPane.WARNING_MESSAGE);
+				JOptionPane.showMessageDialog(null, "ì¥ì†Œëª…ì„ ì…ë ¥í•´ì£¼ì„¸ìš”", "ì¼ì •ì¶”ê°€ ì—ëŸ¬ ë©”ì„¸ì§€", JOptionPane.WARNING_MESSAGE);
 				return;
 			}
 		}else {
 			if(title.equals("")) {
-				JOptionPane.showMessageDialog(null, "ÀÏÁ¤¸íÀ» ÀÔ·ÂÇØÁÖ¼¼¿ä", "ÀÏÁ¤Ãß°¡ ¿¡·¯ ¸Ş¼¼Áö", JOptionPane.WARNING_MESSAGE);
+				JOptionPane.showMessageDialog(null, "ì¼ì •ëª…ì„ ì…ë ¥í•´ì£¼ì„¸ìš”", "ì¼ì •ì¶”ê°€ ì—ëŸ¬ ë©”ì„¸ì§€", JOptionPane.WARNING_MESSAGE);
 				return;
 			}
 		}
@@ -443,7 +443,7 @@ public class RightSettingUI extends JPanel {
 	}
 	
 	
-	//allSchedule¿¡ ÀúÀåµÇ¾î ÀÖ´Â ÀÏÁ¤µéÀÇ ½Ã°£°ú ÀÎÀÚ·Î ¹ŞÀº ½Ã°£ÀÌ °ãÄ£´Ù¸é true¸¦ ¹İÈ¯ÇÑ´Ù. 
+	//allScheduleì— ì €ì¥ë˜ì–´ ìˆëŠ” ì¼ì •ë“¤ì˜ ì‹œê°„ê³¼ ì¸ìë¡œ ë°›ì€ ì‹œê°„ì´ ê²¹ì¹œë‹¤ë©´ trueë¥¼ ë°˜í™˜í•œë‹¤. 
 	public Boolean checkDuplication() {
 		for(int k=0; k<timeLines.size(); k++) {
 			DayAndTime dayTime = timeLines.get(k).getDayAndTimeObject();
@@ -456,7 +456,7 @@ public class RightSettingUI extends JPanel {
 
 				for(int j=0; j<dayAndTimes.size(); j++) {
 					if(dayAndTimes.get(j).day == day) {
-						DayAndTime nowDay = dayAndTimes.get(j); //±âÁ¸¿¡ ÀÖ´ø ÀÏÁ¤ 
+						DayAndTime nowDay = dayAndTimes.get(j); //ê¸°ì¡´ì— ìˆë˜ ì¼ì • 
 						
 						
 						if(nowDay.startTime <= startTime &&  startTime < nowDay.endTime) {
@@ -474,8 +474,8 @@ public class RightSettingUI extends JPanel {
 		return false;
 	}
 	
-	//½Ã°£ Ãß°¡ ¹öÆ°(UI»óÀ¸·Î +¹öÆ°)À» Å©¸¯ÇÏ¸é È£ÃâµÇ´Â ÇÔ¼öÀÌ´Ù.
-	//dayTimeUI¸¦ Ãß°¡·Î »ı¼ºÇÏ¿© ¿äÀÏ ¹×½Ã°£ ÀÔ·Â¶õÀ» ÇÏ³ª ´õ Ãß°¡ÇÏ¿© º¸¿©ÁØ´Ù. ÀÔ·Â¶õ ¿·¿¡ »èÁ¦¹öÆ°À» »ı¼ºÇÑ´Ù. 
+	//ì‹œê°„ ì¶”ê°€ ë²„íŠ¼(UIìƒìœ¼ë¡œ +ë²„íŠ¼)ì„ í¬ë¦­í•˜ë©´ í˜¸ì¶œë˜ëŠ” í•¨ìˆ˜ì´ë‹¤.
+	//dayTimeUIë¥¼ ì¶”ê°€ë¡œ ìƒì„±í•˜ì—¬ ìš”ì¼ ë°ì‹œê°„ ì…ë ¥ë€ì„ í•˜ë‚˜ ë” ì¶”ê°€í•˜ì—¬ ë³´ì—¬ì¤€ë‹¤. ì…ë ¥ë€ ì˜†ì— ì‚­ì œë²„íŠ¼ì„ ìƒì„±í•œë‹¤. 
 	public void addTimeLineBtnClick() {
 		DayTimeUI newDayTimeUI = new DayTimeUI();
 		timeLines.add(newDayTimeUI);
@@ -483,7 +483,7 @@ public class RightSettingUI extends JPanel {
 		//
 		dayTimeUIPanel.add(newDayTimeUI);
 		
-		//x¹öÆ° Ãß°¡ 
+		//xë²„íŠ¼ ì¶”ê°€ 
 		JButton dayTimeXBtn = new JButton(" x");
 		dayTimeXBtn.setBackground(UIManager.getColor ( "Panel.background" ));
 		dayTimeXBtn.setBorder(null);
@@ -494,7 +494,7 @@ public class RightSettingUI extends JPanel {
 		gbcDayTimeXBtn.gridy = 0;
 		newDayTimeUI.add(dayTimeXBtn, gbcDayTimeXBtn);
 				
-		//x¹öÆ° actionÃß°¡
+		//xë²„íŠ¼ actionì¶”ê°€
 		dayTimeXBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JComponent button = (JComponent)e.getSource();
@@ -510,7 +510,7 @@ public class RightSettingUI extends JPanel {
 		repaint();
 	}
 	
-	//Seq(5) ¾Ë¸²¼³Á¤ KCH
+	//Seq(5) ì•Œë¦¼ì„¤ì • KCH
 	public void alarmOnOffBtnClick() {
 		alarm.changeAlarmState();
 	}

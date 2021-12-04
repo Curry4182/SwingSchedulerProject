@@ -17,7 +17,7 @@ public class DayTimeUI extends JPanel{
 	private JComboBox endTime;
 	
 	
-	//¿äÀÏ, ½ÃÀÛ ½Ã°£, Á¾·á ½Ã°£À» ¼±ÅÃÇÒ ¼ö ÀÖ´Â ÄŞº¸¹Ú½º¸¦ »ı¼ºÇØ¼­ panel¿¡ ºÙÀÎ´Ù.
+	//ìš”ì¼, ì‹œì‘ ì‹œê°„, ì¢…ë£Œ ì‹œê°„ì„ ì„ íƒí•  ìˆ˜ ìˆëŠ” ì½¤ë³´ë°•ìŠ¤ë¥¼ ìƒì„±í•´ì„œ panelì— ë¶™ì¸ë‹¤.
 	public DayTimeUI() {
 		
 		GridBagLayout gridBagLayout = new GridBagLayout();
@@ -25,7 +25,7 @@ public class DayTimeUI extends JPanel{
 		setBackground(UIManager.getColor ( "Panel.background" ));
 		gridBagLayout.columnWidths = new int[] {40, 10, 40, 10, 40, 5, 25};
 		
-		String days[]={"¿ù¿äÀÏ", "È­¿äÀÏ", "¼ö¿äÀÏ", "¸ñ¿äÀÏ", "±İ¿äÀÏ", "Åä¿äÀÏ", "ÀÏ¿äÀÏ"};    
+		String days[]={"ì›”ìš”ì¼", "í™”ìš”ì¼", "ìˆ˜ìš”ì¼", "ëª©ìš”ì¼", "ê¸ˆìš”ì¼", "í† ìš”ì¼", "ì¼ìš”ì¼"};    
 		day = new JComboBox(days);
 		
 		GridBagConstraints c = new GridBagConstraints();
@@ -57,10 +57,10 @@ public class DayTimeUI extends JPanel{
 		
 		endTime.putClientProperty("pre", endTime.getSelectedItem());
 		endTime.putClientProperty("startTime", startTime);
-		//00:30ºĞ ºÎÅÍ ½ÃÀÛµÇµµ·Ï ¼³Á¤
+		//00:30ë¶„ ë¶€í„° ì‹œì‘ë˜ë„ë¡ ì„¤ì •
 		endTime.setSelectedIndex(1);
 		
-		//½ÃÀÛ½Ã°£ÀÌ Á¾·á½Ã°£ º¸´Ù Å©°Å³ª °°À» °æ¿ì µÇµ¹¸®´Â ÇÔ¼ö Ãß°¡
+		//ì‹œì‘ì‹œê°„ì´ ì¢…ë£Œì‹œê°„ ë³´ë‹¤ í¬ê±°ë‚˜ ê°™ì„ ê²½ìš° ë˜ëŒë¦¬ëŠ” í•¨ìˆ˜ ì¶”ê°€
 		startTime.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 JComboBox startComboBox = (JComboBox) e.getSource();
@@ -70,7 +70,7 @@ public class DayTimeUI extends JPanel{
         		int selectedEndTime = Integer.valueOf(endComboBox.getSelectedItem().toString().replace(":", ""));
 
         		if(selectedStartTime >= selectedEndTime) {
-        			JOptionPane.showMessageDialog(null, "½ÃÀÛ½Ã°£ÀÌ Á¾·á½Ã°£ º¸´Ù Å©°Å³ª °°À» ¼ö ¾ø½À´Ï´Ù.", "ÀÏÁ¤Ãß°¡ ¿¡·¯ ¸Ş¼¼Áö", JOptionPane.WARNING_MESSAGE);
+        			JOptionPane.showMessageDialog(null, "ì‹œì‘ì‹œê°„ì´ ì¢…ë£Œì‹œê°„ ë³´ë‹¤ í¬ê±°ë‚˜ ê°™ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤.", "ì¼ì •ì¶”ê°€ ì—ëŸ¬ ë©”ì„¸ì§€", JOptionPane.WARNING_MESSAGE);
         			Object pre = startComboBox.getClientProperty("pre");
         			startComboBox.setSelectedItem(pre);
         		}else {
@@ -80,7 +80,7 @@ public class DayTimeUI extends JPanel{
             }
         });
 		
-		//Á¾·á½Ã°£ÀÌ ½ÃÀÛ½Ã°£ º¸´Ù ÀÛ°Å³ª °°À» °æ¿ì µÇµ¹¸®´Â ÇÔ¼ö Ãß°¡
+		//ì¢…ë£Œì‹œê°„ì´ ì‹œì‘ì‹œê°„ ë³´ë‹¤ ì‘ê±°ë‚˜ ê°™ì„ ê²½ìš° ë˜ëŒë¦¬ëŠ” í•¨ìˆ˜ ì¶”ê°€
 		endTime.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	JComboBox endComboBox = (JComboBox) e.getSource();
@@ -90,7 +90,7 @@ public class DayTimeUI extends JPanel{
         		int selectedStartTime = Integer.valueOf(startComboBox.getSelectedItem().toString().replace(":", ""));
 
         		if(selectedStartTime >= selectedEndTime) {
-        			JOptionPane.showMessageDialog(null, "Á¾·á½Ã°£ÀÌ ½ÃÀÛ½Ã°£ º¸´Ù ÀÛ°Å³ª °°À» ¼ö ¾ø½À´Ï´Ù.", "ÀÏÁ¤Ãß°¡ ¿¡·¯ ¸Ş¼¼Áö", JOptionPane.WARNING_MESSAGE);
+        			JOptionPane.showMessageDialog(null, "ì¢…ë£Œì‹œê°„ì´ ì‹œì‘ì‹œê°„ ë³´ë‹¤ ì‘ê±°ë‚˜ ê°™ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤.", "ì¼ì •ì¶”ê°€ ì—ëŸ¬ ë©”ì„¸ì§€", JOptionPane.WARNING_MESSAGE);
         			Object pre = endComboBox.getClientProperty("pre");
         			endComboBox.setSelectedItem(pre);
         		}else {

@@ -11,15 +11,15 @@ import java.util.Date;
 import java.util.Objects;
 
 public class Alarm implements Runnable {
-	private ArrayList<Schedule> allSchedule; //»ç¿ëÀÚ°¡ Ãß°¡ÇÑ ¸ğµç ÀÏÁ¤ Á¤º¸¸¦ °ü¸®ÇÑ´Ù.
-	private ArrayList<Integer> alarmTime; //¸ğµç ÀÏÁ¤ÀÇ ¡®ÀÏÁ¤ ½ÃÀÛ 1½Ã°£ Àü¡¯ ½Ã°£À» ÀúÀåÇÑ´Ù.
-	private ArrayList<Integer> holidayDate; //°øÈŞÀÏÀÇ ³¯Â¥¸¦ ÀúÀåÇÑ´Ù.
-	private ArrayList<String> holidayText; //°øÈŞÀÏ ¹®±¸¸¦ ÀúÀåÇÑ´Ù.
-	private int alarmState; //»ç¿ëÀÚ°¡ ¼³Á¤ÇÑ ¾Ë¸² »óÅÂ¸¦ ÀúÀåÇÑ´Ù, 1ÀÌ¸é ¿ï¸®°í, 0ÀÌ¸é ¿ï¸®Áö ¾Ê´Â°Í°°À½
-	private Thread th; //¾Ë¸²¹ß»ı½Ã°£¿¡ ¾Ë¸² ÆË¾÷À» ¹ß»ı½ÃÅ°´Â ½º·¹µåÀÌ´Ù.
+	private ArrayList<Schedule> allSchedule; //ì‚¬ìš©ìê°€ ì¶”ê°€í•œ ëª¨ë“  ì¼ì • ì •ë³´ë¥¼ ê´€ë¦¬í•œë‹¤.
+	private ArrayList<Integer> alarmTime; //ëª¨ë“  ì¼ì •ì˜ â€˜ì¼ì • ì‹œì‘ 1ì‹œê°„ ì „â€™ ì‹œê°„ì„ ì €ì¥í•œë‹¤.
+	private ArrayList<Integer> holidayDate; //ê³µíœ´ì¼ì˜ ë‚ ì§œë¥¼ ì €ì¥í•œë‹¤.
+	private ArrayList<String> holidayText; //ê³µíœ´ì¼ ë¬¸êµ¬ë¥¼ ì €ì¥í•œë‹¤.
+	private int alarmState; //ì‚¬ìš©ìê°€ ì„¤ì •í•œ ì•Œë¦¼ ìƒíƒœë¥¼ ì €ì¥í•œë‹¤, 1ì´ë©´ ìš¸ë¦¬ê³ , 0ì´ë©´ ìš¸ë¦¬ì§€ ì•ŠëŠ”ê²ƒê°™ìŒ
+	private Thread th; //ì•Œë¦¼ë°œìƒì‹œê°„ì— ì•Œë¦¼ íŒì—…ì„ ë°œìƒì‹œí‚¤ëŠ” ìŠ¤ë ˆë“œì´ë‹¤.
 
 
-	//¾Ë¸² OnOff ¸¦ À§ÇÑ ¾²·¹µå¸¦ µ¿ÀÛÇÒ Int, KCH
+	//ì•Œë¦¼ OnOff ë¥¼ ìœ„í•œ ì“°ë ˆë“œë¥¼ ë™ì‘í•  Int, KCH
 	static int threadOnOff = 0;
 	
 	public Alarm() {
@@ -34,7 +34,7 @@ public class Alarm implements Runnable {
 		return alarmState;
 	}
 
-	//Seq(5) ¾Ë¸²¼³Á¤ °ü·Ã º¯°æ KCH
+	//Seq(5) ì•Œë¦¼ì„¤ì • ê´€ë ¨ ë³€ê²½ KCH
 	public int changeAlarmState() {
 		if(alarmState == 0) {
 			alarmState = 1;
@@ -47,13 +47,13 @@ public class Alarm implements Runnable {
 		}
 	}
 	
-	//Runnable ÀÎÅÍÆäÀÌ½ºÀÇ run()ÇÔ¼ö¸¦ ¿À¹ö¶óÀÌµùÇÑ ÇÔ¼öÀÌ´Ù.
-	//¾Ë¸² ±â´ÉÀ» ½º·¹µå·Î ½ÇÇàÇÑ´Ù.
-	//alarmTimeÀÇ ½Ã°£°ú ÇöÀç½Ã°£ÀÌ µ¿ÀÏÇØÁú ¶§ alertActivityAlarmÇÔ¼ö·Î ¾Ë¸²À» ¹ß»ı½ÃÅ²´Ù.
-	//°øÈŞÀÏÀÇ ³¯Â¥¿Í ÇöÀç ³¯Â¥°¡ µ¿ÀÏÇÏ¸é ¿ÀÀü 8½Ã50ºĞ¿¡ alertHolidayAlarmÇÔ¼ö·Î ¾Ë¸²À» ¹ß»ı½ÃÅ²´Ù.
+	//Runnable ì¸í„°í˜ì´ìŠ¤ì˜ run()í•¨ìˆ˜ë¥¼ ì˜¤ë²„ë¼ì´ë”©í•œ í•¨ìˆ˜ì´ë‹¤.
+	//ì•Œë¦¼ ê¸°ëŠ¥ì„ ìŠ¤ë ˆë“œë¡œ ì‹¤í–‰í•œë‹¤.
+	//alarmTimeì˜ ì‹œê°„ê³¼ í˜„ì¬ì‹œê°„ì´ ë™ì¼í•´ì§ˆ ë•Œ alertActivityAlarmí•¨ìˆ˜ë¡œ ì•Œë¦¼ì„ ë°œìƒì‹œí‚¨ë‹¤.
+	//ê³µíœ´ì¼ì˜ ë‚ ì§œì™€ í˜„ì¬ ë‚ ì§œê°€ ë™ì¼í•˜ë©´ ì˜¤ì „ 8ì‹œ50ë¶„ì— alertHolidayAlarmí•¨ìˆ˜ë¡œ ì•Œë¦¼ì„ ë°œìƒì‹œí‚¨ë‹¤.
 	@Override
 	public void run() {
-		//¾Ë¸²¼³Á¤ KCH
+		//ì•Œë¦¼ì„¤ì • KCH
 		threadOnOff = 1;
 		while (threadOnOff == 1) {
 			//NowDate
@@ -86,41 +86,41 @@ public class Alarm implements Runnable {
 		}
 	}
 
-	//Seq(5) ¾Ë¸²¹ß»ı °ü·Ã KCH ------------------------------------------------------
-	//»ç¿ëÀÚ°¡ ¾Ë¸²À» on À¸·Î ¼³Á¤ÇßÀ» ¶§ È£ÃâµÇ´Â ÇÔ¼öÀÌ´Ù. ¾Ë¸² ½º·¹µå¸¦ ½ÇÇàÇÑ´Ù.
+	//Seq(5) ì•Œë¦¼ë°œìƒ ê´€ë ¨ KCH ------------------------------------------------------
+	//ì‚¬ìš©ìê°€ ì•Œë¦¼ì„ on ìœ¼ë¡œ ì„¤ì •í–ˆì„ ë•Œ í˜¸ì¶œë˜ëŠ” í•¨ìˆ˜ì´ë‹¤. ì•Œë¦¼ ìŠ¤ë ˆë“œë¥¼ ì‹¤í–‰í•œë‹¤.
 	public void startAlarmSystem() {
 		ArrayList <Integer> startTimeList =	getAllStartTime();
 		run();
 	}
 
 	public ArrayList<Integer> getAllStartTime() {
-		//½ºÄÉÁÙ ¸®½ºÆ®¾È¿¡ µé¾îÀÖ´Â ÀÏÁ¤µé
+		//ìŠ¤ì¼€ì¤„ ë¦¬ìŠ¤íŠ¸ì•ˆì— ë“¤ì–´ìˆëŠ” ì¼ì •ë“¤
 		for (int i = 0; i < allSchedule.size(); i++) {
-			//ÀÏÁ¤ ¾È¿¡ µé¾îÀÖ´Â ½Ã°£µé
+			//ì¼ì • ì•ˆì— ë“¤ì–´ìˆëŠ” ì‹œê°„ë“¤
 			ArrayList<DayAndTime> arr = allSchedule.get(i).dayAndTime;
 			for (int j = 0; j < arr.size(); j ++) {
-				//½Ã°£µé Áß¿¡ ½ÃÀÛ½Ã°£ -1 ÇÑ ½Ã°£
-				//¿©±â ½Ã°£ ´ÜÀ§ °è»êÇØ¼­ - ÁøÇàÇØ¾ßÇÔ!!!!!!!!!!!!!!!!!!!!!!!!!!!
-				//Áö±İÀº 11:00À» 1100ÀÌ¶ó ÀúÀåÇÒ °ÍÀÌ¶ó ¿¹ÃøÇØ¼­ - 100¸¸ ÇßÀ½
+				//ì‹œê°„ë“¤ ì¤‘ì— ì‹œì‘ì‹œê°„ -1 í•œ ì‹œê°„
+				//ì—¬ê¸° ì‹œê°„ ë‹¨ìœ„ ê³„ì‚°í•´ì„œ - ì§„í–‰í•´ì•¼í•¨!!!!!!!!!!!!!!!!!!!!!!!!!!!
+				//ì§€ê¸ˆì€ 11:00ì„ 1100ì´ë¼ ì €ì¥í•  ê²ƒì´ë¼ ì˜ˆì¸¡í•´ì„œ - 100ë§Œ í–ˆìŒ
 				alarmTime.add(arr.get(j).startTime -100);
 			}
 		}
 		return alarmTime;
 	}
 	//----------------------------------------------------------------------------
-	//»ç¿ëÀÚ°¡ ¾Ë¸²À» off·Î ¼³Á¤ÇßÀ» ¶§ È£ÃâµÇ´Â ÇÔ¼öÀÌ´Ù. ¾Ë¸² ½º·¹µå¸¦ Á¾·áÇÑ´Ù. 
+	//ì‚¬ìš©ìê°€ ì•Œë¦¼ì„ offë¡œ ì„¤ì •í–ˆì„ ë•Œ í˜¸ì¶œë˜ëŠ” í•¨ìˆ˜ì´ë‹¤. ì•Œë¦¼ ìŠ¤ë ˆë“œë¥¼ ì¢…ë£Œí•œë‹¤. 
 	public void stopAlarmSystem() {
-		//¾Ë¸² ¼³Á¤ KCH
+		//ì•Œë¦¼ ì„¤ì • KCH
 		threadOnOff = 0;
 	}
 	
-	//»ç¿ëÀÚ¿¡°Ô ÀÏÁ¤¸í°ú ÀÏÁ¤½Ã°£À» Ãâ·ÂÇÑ ¾Ë¸² ÆÄ¾÷À» ¶ç¿î´Ù.
+	//ì‚¬ìš©ìì—ê²Œ ì¼ì •ëª…ê³¼ ì¼ì •ì‹œê°„ì„ ì¶œë ¥í•œ ì•Œë¦¼ íŒŒì—…ì„ ë„ìš´ë‹¤.
 	public void alertActivityAlarm() {
-		//¾Ë¸²Àº JOptionPane ÀÌ¿ëÇÏ¶ó°í ÇÏ³× KCH
-		JOptionPane.showMessageDialog(null, "ÀÏÁ¤ ½Ã°£, ÀÏÁ¤ ÀÌ¸§", "È°µ¿ ¾Ë¸²", JOptionPane.PLAIN_MESSAGE);
+		//ì•Œë¦¼ì€ JOptionPane ì´ìš©í•˜ë¼ê³  í•˜ë„¤ KCH
+		JOptionPane.showMessageDialog(null, "ì¼ì • ì‹œê°„, ì¼ì • ì´ë¦„", "í™œë™ ì•Œë¦¼", JOptionPane.PLAIN_MESSAGE);
 	}
 	
-	//»ç¿ëÀÚ¿¡°Ô °øÈŞÀÏ ¹®±¸¸¦ Ãâ·ÂÇÑ ¾Ë¸² ÆË¾÷À» ¶ç¿î´Ù. 
+	//ì‚¬ìš©ìì—ê²Œ ê³µíœ´ì¼ ë¬¸êµ¬ë¥¼ ì¶œë ¥í•œ ì•Œë¦¼ íŒì—…ì„ ë„ìš´ë‹¤. 
 	public void alertHolidayAlarm(int j) {
 		JOptionPane.showMessageDialog(null, "Today is " + holidayText.get(j), "Holiday Alarm", JOptionPane.PLAIN_MESSAGE);
 	}
@@ -162,7 +162,7 @@ public class Alarm implements Runnable {
 	}
 	
 	
-	//allScheduleÀÇ getAllStartTimeÇÔ¼ö¿¡¼­ ¹İÈ¯¹ŞÀº °ªÀ» alarmTime¿¡ ÀúÀåÇÑ´Ù.  
+	//allScheduleì˜ getAllStartTimeí•¨ìˆ˜ì—ì„œ ë°˜í™˜ë°›ì€ ê°’ì„ alarmTimeì— ì €ì¥í•œë‹¤.  
 	public void updateAlarm() {
 	}
 }
