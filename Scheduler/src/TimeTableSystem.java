@@ -45,9 +45,10 @@ public class TimeTableSystem {
 	public TimeTableSystem() {
 		dataMG = new DataLoadSaveManager();	
 		allSchedule = dataMG.loadSchedule();
-		//alarm = dataMG.loadAlarmState();
-		
-		alarm = new Alarm();
+		//알림 상태 가져오기 - int 0 or 1 로 처리
+		int state = dataMG.loadAlarmState();
+		//System.out.println(state);	//state 잘 가져오는지 체크
+		alarm = new Alarm(state);
 		//alarm.crawlingHolidayInf("2021");
 		
 		drawTimeTableSystem();

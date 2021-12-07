@@ -22,8 +22,8 @@ public class Alarm implements Runnable {
 	//알림 OnOff 를 위한 쓰레드를 동작할 Int, KCH
 	static int threadOnOff = 0;
 	
-	public Alarm() {
-		this.alarmState = 0;
+	public Alarm(int status) {	//객체 생성시 state 설정
+		this.alarmState = status;
 	}
 	
 	public void setAlarmState(int alarmState) {
@@ -35,15 +35,13 @@ public class Alarm implements Runnable {
 	}
 
 	//Seq(5) 알림설정 관련 변경 KCH
-	public int changeAlarmState() {
+	public void changeAlarmState() {
 		if(alarmState == 0) {
 			alarmState = 1;
 			startAlarmSystem();
-			return 0;
 		}else {
 			alarmState = 0;
 			stopAlarmSystem();
-			return 1;
 		}
 	}
 	
@@ -95,14 +93,14 @@ public class Alarm implements Runnable {
 
 	public ArrayList<Integer> getAllStartTime() {
 		//스케줄 리스트안에 들어있는 일정들
-		for (int i = 0; i < allSchedule.size(); i++) {
+		for (Schedule schedule : allSchedule) {
 			//일정 안에 들어있는 시간들
-			ArrayList<DayAndTime> arr = allSchedule.get(i).dayAndTime;
-			for (int j = 0; j < arr.size(); j ++) {
+			ArrayList<DayAndTime> arr = schedule.dayAndTime;
+			for (DayAndTime dayAndTime : arr) {
 				//시간들 중에 시작시간 -1 한 시간
 				//여기 시간 단위 계산해서 - 진행해야함!!!!!!!!!!!!!!!!!!!!!!!!!!!
 				//지금은 11:00을 1100이라 저장할 것이라 예측해서 - 100만 했음
-				alarmTime.add(arr.get(j).startTime -100);
+				alarmTime.add(dayAndTime.startTime - 100);
 			}
 		}
 		return alarmTime;
