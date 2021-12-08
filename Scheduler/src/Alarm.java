@@ -135,7 +135,9 @@ public class Alarm implements Runnable {
 	//사용자에게 일정명과 일정시간을 출력한 알림 파업을 띄운다.
 	public void alertActivityAlarm(String scheduleName, int time) {
 		//알림은 JOptionPane 이용하라고 하네 KCH
-		JOptionPane.showMessageDialog(null, "일정 시간, 일정 이름", "활동 알림", JOptionPane.PLAIN_MESSAGE);
+		JOptionPane.showMessageDialog(null, "일정 시간: " +time / 100+ "시"
+				+ time % 100 + "분\n"
+				+ "일정: " + scheduleName, "알림", JOptionPane.PLAIN_MESSAGE);
 	}
 	
 	//사용자에게 공휴일 문구를 출력한 알림 팝업을 띄운다. 
