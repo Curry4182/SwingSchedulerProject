@@ -134,6 +134,11 @@ public class RightSettingUI extends JPanel {
 
 		add(chckbxNewCheckBox_2, gbc_chckbxNewCheckBox_2);
 
+		//체크박스가 선택된 상태이면 알림 시작
+		if (chckbxNewCheckBox_2.isSelected()) {
+			alarm.startAlarmSystem();
+		}
+
 		chckbxNewCheckBox_2.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

@@ -6,18 +6,18 @@ import org.w3c.dom.NodeList;
 import javax.swing.*;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Locale;
-import java.util.Objects;
+import java.util.*;
+import java.util.Timer;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ScheduledExecutorService;
 
 public class Alarm implements Runnable {
 	private ArrayList<Schedule> allSchedule; //사용자가 추가한 모든 일정 정보를 관리한다.
-	private ArrayList<Integer> alarmTime; //모든 일정의 ‘일정 시작 1시간 전’ 시간을 저장한다.
+	// 삭제 - private ArrayList<Integer> alarmTime; //모든 일정의 ‘일정 시작 1시간 전’ 시간을 저장한다.
 	private ArrayList<Integer> holidayDate; //공휴일의 날짜를 저장한다.
 	private ArrayList<String> holidayText; //공휴일 문구를 저장한다.
 	private int alarmState; //사용자가 설정한 알림 상태를 저장한다, 1이면 울리고, 0이면 울리지 않는것같음
-	private Thread th; //알림발생시간에 알림 팝업을 발생시키는 스레드이다.
+	// 삭제 - private Thread th; //알림발생시간에 알림 팝업을 발생시키는 스레드이다.
 
 
 	//알림 OnOff 를 위한 쓰레드를 동작할 Int, KCH
@@ -56,57 +56,62 @@ public class Alarm implements Runnable {
 	//공휴일의 날짜와 현재 날짜가 동일하면 오전 8시50분에 alertHolidayAlarm함수로 알림을 발생시킨다.
 	@Override
 	public void run() {
-		//알림설정 KCH
+		//알림설정을 위한 변수, 1이면 실행, 0이면 종료
 		threadOnOff = 1;
-		while (threadOnOff == 1) {
-			//NowDate
-			Date date = new Date(System.currentTimeMillis());
-			//DateFormat
-			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.MM.dd.HH.mm.E요일", Locale.KOREAN);
-			String dateString = simpleDateFormat.format(date);
-			//Split String, Struct ex: [2021, 12, 02, 16, 00]
-			String[] dateArr = dateString.split("[.]");
-			//current Time, ex: 1600
-			int currentTime = Integer.parseInt(dateArr[3] + dateArr[4]);
-			//call API with Year	Call here Temporary!!!! CHECK FOR ALARM!!!!
-			//current Day, ex: 20211201
-			String nowDate = dateArr[0] + dateArr[1] + dateArr[2];
-			//공휴일인지 판별하는
-			boolean isHoliday = false;
-			//현재 날짜를 가져오고, 공휴일 비교하는 로직
-			for (int j = 0; j < holidayDate.size(); j++) {	//Compare Holiday
-				//공휴일일 때
-				if (Objects.equals(holidayDate.get(j), Integer.valueOf(nowDate))) {
-					isHoliday = true;
-					if (currentTime == 850) {	//08:50 이면 Holiday Alarm
-						alertHolidayAlarm(j);	//j for alert user what holiday is it
-						break;
-					}
-					break;
-				}
-			}
-			//공휴일이 아니면
-			if (!isHoliday) {
-				for (int j = 0; j < allSchedule.size(); j ++) {	//모든 일정 중에
-					for (int k = 0; k < allSchedule.get(j).dayAndTime.size(); k ++) {	//모든 일정이 포함하는 시간 중에
-						if ((allSchedule.get(j).dayAndTime.get(k).startTime - 100) == currentTime	//현재시간 == 일정시간 - 1시간 &&
-							&& allSchedule.get(j).dayAndTime.get(k).day.equals(dateArr[5])			//오늘 날짜 == 일정 날짜
-						) {	//현재시각이 일정시간 - 100이면
-							alertActivityAlarm(allSchedule.get(j).title, allSchedule.get(j).dayAndTime.get(k).startTime);	//알림발생
+		TimerTask task = new TimerTask() {
+			@Override
+			public void run() {
+				while (threadOnOff == 1) {	//1일 때 무한루프
+					//NowDate
+					Date date = new Date(System.currentTimeMillis());
+					//DateFormat
+					SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.MM.dd.HH.mm.E요일", Locale.KOREAN);
+					String dateString = simpleDateFormat.format(date);
+					//Split String, Struct ex: [2021, 12, 02, 16, 00]
+					String[] dateArr = dateString.split("[.]");
+					//current Time, ex: 1600
+					int currentTime = Integer.parseInt(dateArr[3] + dateArr[4]);
+					//call API with Year	Call here Temporary!!!! CHECK FOR ALARM!!!!
+					//current Day, ex: 20211201
+					String nowDate = dateArr[0] + dateArr[1] + dateArr[2];
+					//공휴일인지 판별하는
+					boolean isHoliday = false;
+					//현재 날짜를 가져오고, 공휴일 비교하는 로직
+					for (int j = 0; j < holidayDate.size(); j++) {	//Compare Holiday
+						//공휴일일 때
+						if (Objects.equals(holidayDate.get(j), Integer.valueOf(nowDate))) {
+							isHoliday = true;
+							if (currentTime == 850) {	//08:50 이면 Holiday Alarm
+								alertHolidayAlarm(j);	//j for alert user what holiday is it
+								break;
+							}
+							break;
 						}
 					}
+					//공휴일이 아니면
+					if (!isHoliday) {
+						for (int j = 0; j < allSchedule.size(); j ++) {	//모든 일정 중에
+							for (int k = 0; k < allSchedule.get(j).dayAndTime.size(); k ++) {	//모든 일정이 포함하는 시간 중에
+								if ((allSchedule.get(j).dayAndTime.get(k).startTime - 100) == currentTime	//현재시간 == 일정시간 - 1시간 &&
+										&& allSchedule.get(j).dayAndTime.get(k).day.equals(dateArr[5])			//오늘 날짜 == 일정 날짜
+								) {	//현재시각이 일정시간 - 100이면
+									alertActivityAlarm(allSchedule.get(j).title, allSchedule.get(j).dayAndTime.get(k).startTime);	//알림발생
+								}
+								System.out.println(nowDate + " " + currentTime + " " + allSchedule.get(j).dayAndTime.get(k).startTime);
+							}
+						}
+					}
+					//1분 대기 - 분당 한번 알림을 주기 위해서
+					try {
+						Thread.sleep(60000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
 				}
 			}
-
-			//try-catch 주석처리하면 동작은 되는데, 알림 발생을 위해서 While 을 계속 돌리다 보니
-			//다른 동작을 수행할 수가 없다. 무언가 쓰레드를 쓰는 부분에 미비한 부분이 있나봄
-			//무능한 나는 여기까지 .... 일단 시험치고 생각해보자
-			try {
-				wait(60000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
+		};
+		Timer timer = new Timer();
+		timer.scheduleAtFixedRate(task, 0, 1);
 	}
 
 	//사용자가 알림을 on 으로 설정했을 때 호출되는 함수이다. 알림 스레드를 실행한다.
@@ -172,10 +177,5 @@ public class Alarm implements Runnable {
 			return null;
 		}
 		return node.getNodeValue();
-	}
-	
-	
-	//allSchedule의 getAllStartTime함수에서 반환받은 값을 alarmTime에 저장한다.  
-	public void updateAlarm() {
 	}
 }

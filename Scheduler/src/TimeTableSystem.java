@@ -91,7 +91,8 @@ public class TimeTableSystem {
 
 	public void closeSystem() {
 		dataMG.saveSchedule();
-		//dataMG.saveAlarmState();
+		//알림 상태 저장
+		dataMG.saveAlarmState(alarm.getAlarmState());
 		//terminate System
 	}
 }
