@@ -254,8 +254,6 @@ public class LeftTableUI extends JPanel {
 		this.add(jsp);
 		
 		revalidate();
-		
-		alarm.updateAlarm();
 	}
 	
 	//삭제 버튼을 클릭하면 호출되는 함수.

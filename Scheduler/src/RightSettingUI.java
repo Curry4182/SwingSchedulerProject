@@ -25,6 +25,7 @@ public class RightSettingUI extends JPanel {
 	public RightSettingUI(ArrayList<Schedule> allSchedule, LeftTableUI leftUI, Alarm alarm) {
 		this.allSchedule = allSchedule;
 		this.leftUI = leftUI;
+		this.alarm = alarm;
 		createSettingUI();
 	}
 	
@@ -119,15 +120,36 @@ public class RightSettingUI extends JPanel {
 		gbc_lineField.gridy = 15;
 		add(lineField, gbc_lineField);
 		
-		JCheckBox chckbxNewCheckBox_2 = new JCheckBox("알람설정");
+		JCheckBox chckbxNewCheckBox_2 = new JCheckBox("알림설정");
 		chckbxNewCheckBox_2.setBackground(UIManager.getColor ( "Panel.background" ));
 		chckbxNewCheckBox_2.setFont(new Font("굴림", Font.PLAIN, 12));
+		//알림 상태 1이면 체크박스 클릭된 상태
+		chckbxNewCheckBox_2.setSelected(alarm.getAlarmState() == 1);
+
 		GridBagConstraints gbc_chckbxNewCheckBox_2 = new GridBagConstraints();
 		gbc_chckbxNewCheckBox_2.gridwidth = 3;
 		gbc_chckbxNewCheckBox_2.insets = new Insets(0, 0, 0, 5);
 		gbc_chckbxNewCheckBox_2.gridx = 5;
 		gbc_chckbxNewCheckBox_2.gridy = 16;
+
 		add(chckbxNewCheckBox_2, gbc_chckbxNewCheckBox_2);
+
+		//체크박스가 선택된 상태이면 알림 시작
+		if (chckbxNewCheckBox_2.isSelected()) {
+			alarm.startAlarmSystem();
+		}
+
+		chckbxNewCheckBox_2.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (alarm.getAlarmState() == 1) {
+					alarmOnOffBtnClick(0);
+				} else {
+					alarmOnOffBtnClick(1);
+				}
+				
+			}
+		});
 		
 		this.timeLines = new ArrayList<DayTimeUI>();
 
@@ -511,7 +533,13 @@ public class RightSettingUI extends JPanel {
 	}
 	
 	//Seq(5) 알림설정 KCH
-	public void alarmOnOffBtnClick() {
+	public void alarmOnOffBtnClick(int state) {
+		//show alarmState On 에 해당하는 알림
+		if (state == 1) {
+			JOptionPane.showMessageDialog(null, "알림을 동작합니다.", "알림", JOptionPane.PLAIN_MESSAGE);
+		} else {
+			JOptionPane.showMessageDialog(null, "알림을 종료합니다.", "알림", JOptionPane.PLAIN_MESSAGE);
+		}
 		alarm.changeAlarmState();
 	}
 
