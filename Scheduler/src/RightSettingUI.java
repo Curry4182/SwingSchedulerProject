@@ -1,26 +1,19 @@
+import javax.swing.*;
+import javax.swing.border.LineBorder;
+import javax.swing.border.MatteBorder;
+import javax.swing.plaf.ColorUIResource;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-import javax.swing.*;
-import javax.swing.border.LineBorder;
-import javax.swing.border.MatteBorder;
-import javax.swing.plaf.ColorUIResource;
-
-import java.awt.Font;
-
-
-
 public class RightSettingUI extends JPanel {
 	//모든 일정 정보를 들고있는 필드 
-	private ArrayList<Schedule> allSchedule;
-	
-	//
-	private LeftTableUI leftUI;
+	private final ArrayList<Schedule> allSchedule;
+	private final LeftTableUI leftUI;
 	private ArrayList<DayTimeUI> timeLines;
 	//알림설정 관련해서 추가한 변수,KCH
-	private Alarm alarm;
+	private final Alarm alarm;
 	private JPanel dayTimeUIPanel;
 	public RightSettingUI(ArrayList<Schedule> allSchedule, LeftTableUI leftUI, Alarm alarm) {
 		this.allSchedule = allSchedule;
@@ -54,11 +47,7 @@ public class RightSettingUI extends JPanel {
 		JButton btnNewButton = new JButton("일정추가");
 		btnNewButton.setFont(new Font("맑은 고딕", Font.BOLD, 12));
 		btnNewButton.setBorder(new RoundedBorder(5));
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				addScheduleBtnClick();
-			}
-		});
+		btnNewButton.addActionListener(e -> addScheduleBtnClick());
 		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
 		gbc_btnNewButton.gridwidth = 3;
 		gbc_btnNewButton.insets = new Insets(0, 0, 5, 5);
@@ -78,14 +67,11 @@ public class RightSettingUI extends JPanel {
 		gbc_chckbxNewCheckBox.gridy = 1;
 		add(chckbxNewCheckBox, gbc_chckbxNewCheckBox);
 		group.add(chckbxNewCheckBox);
-		chckbxNewCheckBox.addActionListener(new ActionListener() {
-	        @Override
-	        public void actionPerformed(ActionEvent e) {
-	        	selectLecture();
-	        	revalidate();
-	        	repaint();
-	        }
-	    });
+		chckbxNewCheckBox.addActionListener(e -> {
+			selectLecture();
+			revalidate();
+			repaint();
+		});
 		
 		JRadioButton chckbxNewCheckBox_1 = new JRadioButton("기타일정");
 		chckbxNewCheckBox_1.setBackground(UIManager.getColor ( "Panel.background" ));
@@ -99,14 +85,11 @@ public class RightSettingUI extends JPanel {
 		group.add(chckbxNewCheckBox_1);
 
     	
-		chckbxNewCheckBox_1.addActionListener(new ActionListener() {
-	        @Override
-	        public void actionPerformed(ActionEvent e) {
-	        	selectOtherSchedule();
-	        	revalidate();
-	        	repaint();
-	        }
-	    });
+		chckbxNewCheckBox_1.addActionListener(e -> {
+			selectOtherSchedule();
+			revalidate();
+			repaint();
+		});
 		
 		
 
@@ -139,19 +122,16 @@ public class RightSettingUI extends JPanel {
 			alarm.startAlarmSystem();
 		}
 
-		chckbxNewCheckBox_2.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (alarm.getAlarmState() == 1) {
-					alarmOnOffBtnClick(0);
-				} else {
-					alarmOnOffBtnClick(1);
-				}
-				
+		chckbxNewCheckBox_2.addActionListener(e -> {
+			if (alarm.getAlarmState() == 1) {
+				alarmOnOffBtnClick(0);
+			} else {
+				alarmOnOffBtnClick(1);
 			}
+
 		});
 		
-		this.timeLines = new ArrayList<DayTimeUI>();
+		this.timeLines = new ArrayList<>();
 
 		//DayAndTime UI Container
 		JPanel dayTimeUIContainerPanel = new JPanel();
@@ -162,13 +142,13 @@ public class RightSettingUI extends JPanel {
 		selectLecture();
 	}
 	
-	//요일 및 시간을 입력받는 UI를 초기화하고 panel에 붙이는 함수 
-	//selectLecture와 selectOtherSchedule 함수에서 쓰인다. 
+	//요일 및 시간을 입력받는 UI를 초기화하고 panel 에 붙이는 함수
+	//selectLecture 와 selectOtherSchedule 함수에서 쓰인다.
 	public void addDayTimeUI(JPanel dayTimeUIContainerPanel) {
 		dayTimeUIContainerPanel.setBackground(UIManager.getColor ( "Panel.background" ));
 		dayTimeUIContainerPanel.setBorder(BorderFactory.createLineBorder(UIManager.getColor("Panel.background")));
 		
-		//Y축으로 추가되도록 설정
+		//Y 축으로 추가되도록 설정
 		dayTimeUIContainerPanel.setLayout(new BoxLayout(dayTimeUIContainerPanel, BoxLayout.Y_AXIS));
 		
 		//DayAndTime UI Panel
@@ -176,26 +156,22 @@ public class RightSettingUI extends JPanel {
 		dayTimeUIPanel.setBackground(UIManager.getColor ( "Panel.background" ));
 		dayTimeUIPanel.setBorder(BorderFactory.createLineBorder(UIManager.getColor("Panel.background")));
 		
-		//Y축으로 추가되도록 설정
+		//Y 축으로 추가되도록 설정
 		dayTimeUIPanel.setLayout(new BoxLayout(dayTimeUIPanel, BoxLayout.Y_AXIS));
 		
-		//기본적으로 요일 및 시간을 입력받을 수 있는 UI한줄 추가
+		//기본적으로 요일 및 시간을 입력받을 수 있는 UI 한줄 추가
 		DayTimeUI newDayTimeUI = new DayTimeUI();
 		timeLines.add(newDayTimeUI);
 		dayTimeUIPanel.add(newDayTimeUI);
 		
-		//DayAndTime UI Container에 DayAndTime UI Panel추가
+		//DayAndTime UI Container 에 DayAndTime UI Panel 추가
 		dayTimeUIContainerPanel.add(dayTimeUIPanel);
 		
 		//+버튼 추가 
 		JButton dayTimePlusBtn = new JButton("+");
 		
-		//+버튼 action추가 
-		dayTimePlusBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				addTimeLineBtnClick();
-			}
-		});
+		//+버튼 action 추가
+		dayTimePlusBtn.addActionListener(e -> addTimeLineBtnClick());
 		
 		//+버튼 추가 
 		dayTimePlusBtn.setBackground(UIManager.getColor ( "Panel.background" ));
@@ -223,23 +199,21 @@ public class RightSettingUI extends JPanel {
 	//요일 및 시간을 추가할 수 있는 버튼을 보여준다.
 	public void selectLecture() {
 		Component[] components = getComponents();
-		//panel에서 모든 컴포넌트 중에 강의일정 검색 후 선택
-		for(int i=0; i<components.length;i++) {
-			if(components[i] instanceof JRadioButton) {
-				//기타일정 Radio button에 select
-				JRadioButton radioBtn = (JRadioButton)components[i];
-				if(radioBtn.getText().equals("강의일정")) {
+		//panel 에서 모든 컴포넌트 중에 강의일정 검색 후 선택
+		for (Component component : components) {
+			if (component instanceof JRadioButton radioBtn) {
+				//기타일정 Radio button 에 select
+				if (radioBtn.getText().equals("강의일정")) {
 					radioBtn.setSelected(true);
 				}
 			}
-			
-			//isDeleteWhenReSelectRadioBtn -> 강의일정, 기타일정과 같은 Radio Button이 변경될때 마다 기존에 있던 삭제해야할 Component를 의미 
-			//만약 기존에 강의일정이 선택되어있다면 강의일정을 선택했을때 생성된 Component들을 삭제
-			if(components[i] instanceof JComponent) {
-				JComponent jComponent = (JComponent)components[i];
-				if(jComponent.getClientProperty("isDeleteWhenReSelectRadioBtn") != null){
-					boolean isDelete = (boolean)jComponent.getClientProperty("isDeleteWhenReSelectRadioBtn");
-					remove(components[i]);
+
+			//isDeleteWhenReSelectRadioBtn -> 강의일정, 기타일정과 같은 Radio Button 이 변경될때 마다 기존에 있던 삭제해야할 Component 를 의미
+			//만약 기존에 강의일정이 선택되어있다면 강의일정을 선택했을때 생성된 Component 들을 삭제
+			if (component instanceof JComponent jComponent) {
+				if (jComponent.getClientProperty("isDeleteWhenReSelectRadioBtn") != null) {
+					//boolean isDelete = (boolean) jComponent.getClientProperty("isDeleteWhenReSelectRadioBtn");
+					remove(component);
 				}
 			}
 		}
@@ -324,23 +298,20 @@ public class RightSettingUI extends JPanel {
 	//요일 및 시간을 추가할 수 있는 버튼을 보여준다. 
 	public void selectOtherSchedule() {
 		Component[] components = getComponents();
-		//panel에서 모든 컴포넌트 중에 기타일정 검색 후 선택 
-		for(int i=0; i<components.length;i++) {	
-			if(components[i] instanceof JRadioButton) {
-				//기타일정 Radio button에 select
-				JRadioButton radioBtn = (JRadioButton)components[i];
-				if(radioBtn.getText().equals("기타일정")) {
+		//panel 에서 모든 컴포넌트 중에 기타일정 검색 후 선택
+		for (Component component : components) {
+			if (component instanceof JRadioButton radioBtn) {
+				//기타일정 Radio button 에 select
+				if (radioBtn.getText().equals("기타일정")) {
 					radioBtn.setSelected(true);
 				}
 			}
-			
-			//isDeleteWhenReSelectRadioBtn -> 강의일정, 기타일정과 같은 Radio Button이 변경될때 마다 기존에 있던 삭제해야할 Component를 의미 
-			//만약 기존에 강의일정이 선택되어있다면 강의일정을 선택했을때 생성된 Component들을 삭제
-			if(components[i] instanceof JComponent) {
-				JComponent jComponent = (JComponent)components[i];
-				if(jComponent.getClientProperty("isDeleteWhenReSelectRadioBtn") != null){
-					boolean isDelete = (boolean)jComponent.getClientProperty("isDeleteWhenReSelectRadioBtn");
-					remove(components[i]);
+
+			//isDeleteWhenReSelectRadioBtn -> 강의일정, 기타일정과 같은 Radio Button 이 변경될때 마다 기존에 있던 삭제해야할 Component 를 의미
+			//만약 기존에 강의일정이 선택되어있다면 강의일정을 선택했을때 생성된 Component 들을 삭제
+			if (component instanceof JComponent jComponent) {
+				if (jComponent.getClientProperty("isDeleteWhenReSelectRadioBtn") != null) {
+					remove(component);
 				}
 			}
 		}
@@ -370,12 +341,12 @@ public class RightSettingUI extends JPanel {
 	}
 	
 	//일정추가 버튼을 클릭하면 호출되는 함수이다.
-	//입력되어있는 시간 정보를 가져와서 checkDuplication함수의 인자로 넘긴다.
-	//true를 반환 받으면 "시간이 겹칩니다."팝업창을 띄우고 함수를 종료한다.
-	//false를 반환 받으면 선택되어 있는 일정 종류를 확인한다.
-	//'강의 일정'의 경우 '강의명, 교수명, 장소, 요일 및 시간'을 '기타 일정'의 경우 '일정명, 요일 및 시간'
-	//정보를 가져와서 새로운 Schedule객체에 저장한다.
-	//서로 생성된 Schedule객체를 allSchedule에 추가한다.
+	//입력되어있는 시간 정보를 가져와서 checkDuplication 함수의 인자로 넘긴다.
+	//true 를 반환 받으면 "시간이 겹칩니다."팝업창을 띄우고 함수를 종료한다.
+	//false 를 반환 받으면 선택되어 있는 일정 종류를 확인한다.
+	//'강의 일정' 의 경우 '강의명, 교수명, 장소, 요일 및 시간' 을 '기타 일정' 의 경우 '일정명, 요일 및 시간'
+	//정보를 가져와서 새로운 Schedule 객체에 저장한다.
+	//서로 생성된 Schedule 객체를 allSchedule 에 추가한다.
 	//leftTableUI의 printSchedule 함수를 호출하여 새로운 일정을 시간표에 추가해 보여 줄 수 있도록 한다.
 	public void addScheduleBtnClick() {
 		
@@ -389,13 +360,13 @@ public class RightSettingUI extends JPanel {
 		Component[] components = getComponents();
 		boolean isLecture = false; //강의일정이 선택되어 있는지 아니면 기타일정이 선택되어있는지 상태를 저장하는 변수
 
-		//panel에서 모든 컴포넌트 중에 "강의일정" 검색 후 선택 
-		for(int i=0; i<components.length;i++) {	
-			if(components[i] instanceof JRadioButton) {
-				if(((JRadioButton)components[i]).getText().equals("강의일정")) {
-					
-					//현재 강의일정이 선택되어 있다면 
-					if(((JRadioButton)components[i]).isSelected()) {
+		//panel 에서 모든 컴포넌트 중에 "강의일정" 검색 후 선택
+		for (Component component : components) {
+			if (component instanceof JRadioButton) {
+				if (((JRadioButton) component).getText().equals("강의일정")) {
+
+					//현재 강의일정이 선택되어 있다면
+					if (((JRadioButton) component).isSelected()) {
 						isLecture = true;
 						break;
 					}
@@ -406,27 +377,23 @@ public class RightSettingUI extends JPanel {
 		String title="", profName="", location="";
 		//강의일정이 선택된 경우 
 		if(isLecture) {
-			for(int i=0; i<components.length;i++) {	
-				if(components[i] instanceof JTextField) {
-					JTextField field = (JTextField)components[i];
+			for (Component component : components) {
+				if (component instanceof JTextField field) {
 					String fieldName = field.getName();
-					
-					if(fieldName.equals("title")) {
-						title = field.getText().strip();
-					}else if(fieldName.equals("profName")) {
-						profName = field.getText().strip();
-					}else if(fieldName.equals("location")) {
-						location = field.getText().strip();
+
+					switch (fieldName) {
+						case "title" -> title = field.getText().strip();
+						case "profName" -> profName = field.getText().strip();
+						case "location" -> location = field.getText().strip();
 					}
 				}
 			}
 		}else {//기타일정이 선택된 경우 
-			for(int i=0; i<components.length;i++) {	
-				if(components[i] instanceof JTextField) {
-					JTextField field = (JTextField)components[i];
+			for (Component component : components) {
+				if (component instanceof JTextField field) {
 					String fieldName = field.getName();
-					
-					if(fieldName.equals("title")) {
+
+					if (fieldName.equals("title")) {
 						title = field.getText().strip();
 					}
 				}
@@ -451,41 +418,39 @@ public class RightSettingUI extends JPanel {
 			}
 		}
 		
-		ArrayList<DayAndTime> dayAndTimes = new ArrayList<DayAndTime>();
-		for(int i=0; i<timeLines.size(); i++) {
-			DayAndTime dayTime = timeLines.get(i).getDayAndTimeObject();
+		ArrayList<DayAndTime> dayAndTimes = new ArrayList<>();
+		for (DayTimeUI timeLine : timeLines) {
+			DayAndTime dayTime = timeLine.getDayAndTimeObject();
 			dayAndTimes.add(dayTime);
 		}
 		
-		Schedule scheldule = new Schedule(0, title, profName, location, dayAndTimes);
-		allSchedule.add(scheldule);
+		Schedule schedule = new Schedule(0, title, profName, location, dayAndTimes);
+		allSchedule.add(schedule);
 		
 		
 		leftUI.printSchedule();
 	}
 	
 	
-	//allSchedule에 저장되어 있는 일정들의 시간과 인자로 받은 시간이 겹친다면 true를 반환한다. 
+	//allSchedule 에 저장되어 있는 일정들의 시간과 인자로 받은 시간이 겹친다면 true 를 반환한다.
 	public Boolean checkDuplication() {
-		for(int k=0; k<timeLines.size(); k++) {
-			DayAndTime dayTime = timeLines.get(k).getDayAndTimeObject();
+		for (DayTimeUI timeLine : timeLines) {
+			DayAndTime dayTime = timeLine.getDayAndTimeObject();
 			String day = dayTime.day;
 			int startTime = dayTime.startTime;
 			int endTime = dayTime.endTime;
-			
-			for(int i=0; i < allSchedule.size(); i++) {
-				ArrayList<DayAndTime> dayAndTimes = allSchedule.get(i).getDayAndTime();
 
-				for(int j=0; j<dayAndTimes.size(); j++) {
-					if(dayAndTimes.get(j).day.equals(day)) {
-						DayAndTime nowDay = dayAndTimes.get(j); //기존에 있던 일정 
+			for (Schedule schedule : allSchedule) {
+				ArrayList<DayAndTime> dayAndTimes = schedule.getDayAndTime();
 
-						if(nowDay.startTime <= startTime &&  startTime < nowDay.endTime) {
+				for (DayAndTime dayAndTime : dayAndTimes) {
+					if (dayAndTime.day.equals(day)) {
+
+						if (dayAndTime.startTime <= startTime && startTime < dayAndTime.endTime) {
 							return true;
-						}
-						else if(nowDay.startTime < endTime &&  endTime <= nowDay.endTime) {
+						} else if (dayAndTime.startTime < endTime && endTime <= dayAndTime.endTime) {
 							return true;
-						}else if(startTime <= nowDay.startTime && nowDay.startTime <= endTime) {
+						} else if (startTime <= dayAndTime.startTime && dayAndTime.startTime <= endTime) {
 							return true;
 						}
 					}
@@ -495,7 +460,7 @@ public class RightSettingUI extends JPanel {
 		return false;
 	}
 	
-	//시간 추가 버튼(UI상으로 +버튼)을 크릭하면 호출되는 함수이다.
+	//시간 추가 버튼(UI 상으로 +버튼)을 클릭하면 호출되는 함수이다.
 	//dayTimeUI를 추가로 생성하여 요일 및시간 입력란을 하나 더 추가하여 보여준다. 입력란 옆에 삭제버튼을 생성한다. 
 	public void addTimeLineBtnClick() {
 		DayTimeUI newDayTimeUI = new DayTimeUI();
@@ -515,16 +480,14 @@ public class RightSettingUI extends JPanel {
 		gbcDayTimeXBtn.gridy = 0;
 		newDayTimeUI.add(dayTimeXBtn, gbcDayTimeXBtn);
 				
-		//x버튼 action추가
-		dayTimeXBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				JComponent button = (JComponent)e.getSource();
-				DayTimeUI dayTime = (DayTimeUI)button.getClientProperty("DayTimeUIInstance");
-				dayTimeUIPanel.remove(dayTime);
-				timeLines.remove(dayTime);
-				revalidate();
-				repaint();
-			}
+		//x버튼 action 추가
+		dayTimeXBtn.addActionListener(e -> {
+			JComponent button = (JComponent)e.getSource();
+			DayTimeUI dayTime = (DayTimeUI)button.getClientProperty("DayTimeUIInstance");
+			dayTimeUIPanel.remove(dayTime);
+			timeLines.remove(dayTime);
+			revalidate();
+			repaint();
 		});
 		
 		revalidate();

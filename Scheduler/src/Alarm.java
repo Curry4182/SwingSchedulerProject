@@ -6,19 +6,14 @@ import org.w3c.dom.NodeList;
 import javax.swing.*;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.text.SimpleDateFormat;
-import java.util.*;
 import java.util.Timer;
-import java.util.concurrent.Executor;
-import java.util.concurrent.ScheduledExecutorService;
+import java.util.*;
 
 public class Alarm implements Runnable {
 	private ArrayList<Schedule> allSchedule; //사용자가 추가한 모든 일정 정보를 관리한다.
-	// 삭제 - private ArrayList<Integer> alarmTime; //모든 일정의 ‘일정 시작 1시간 전’ 시간을 저장한다.
 	private ArrayList<Integer> holidayDate; //공휴일의 날짜를 저장한다.
 	private ArrayList<String> holidayText; //공휴일 문구를 저장한다.
 	private int alarmState; //사용자가 설정한 알림 상태를 저장한다, 1이면 울리고, 0이면 울리지 않는것같음
-	// 삭제 - private Thread th; //알림발생시간에 알림 팝업을 발생시키는 스레드이다.
-
 	boolean isHoliday = false;
 
 	//알림 OnOff 를 위한 쓰레드를 동작할 Int, KCH
@@ -27,11 +22,7 @@ public class Alarm implements Runnable {
 	public Alarm(int state) {	//객체 생성시 state 설정
 		this.alarmState = state;
 	}
-	
-	public void setAlarmState(int alarmState) {
-		this.alarmState = alarmState;
-	}
-	
+
 	public int getAlarmState() {
 		return alarmState;
 	}
@@ -53,8 +44,8 @@ public class Alarm implements Runnable {
 	
 	//Runnable 인터페이스의 run()함수를 오버라이딩한 함수이다.
 	//알림 기능을 스레드로 실행한다.
-	//alarmTime의 시간과 현재시간이 동일해질 때 alertActivityAlarm함수로 알림을 발생시킨다.
-	//공휴일의 날짜와 현재 날짜가 동일하면 오전 8시50분에 alertHolidayAlarm함수로 알림을 발생시킨다.
+	//alarmTime 의 시간과 현재시간이 동일해질 때 alertActivityAlarm 함수로 알림을 발생시킨다.
+	//공휴일의 날짜와 현재 날짜가 동일하면 오전 8시50분에 alertHolidayAlarm 함수로 알림을 발생시킨다.
 	@Override
 	public void run() {
 		//알림설정을 위한 변수, 1이면 실행, 0이면 종료
@@ -92,15 +83,15 @@ public class Alarm implements Runnable {
 					}
 					//공휴일이 아니면
 					if (!isHoliday) {
-						for (int j = 0; j < allSchedule.size(); j ++) {	//모든 일정 중에
-							for (int k = 0; k < allSchedule.get(j).dayAndTime.size(); k ++) {	//모든 일정이 포함하는 시간 중에
-								if ((allSchedule.get(j).dayAndTime.get(k).startTime - 100) == currentTime	//현재시간 == 일정시간 - 1시간 &&
-										&& allSchedule.get(j).dayAndTime.get(k).day.equals(dateArr[5])			//오늘 날짜 == 일정 날짜
-								) {	//현재시각이 일정시간 - 100이면
-									alertActivityAlarm(allSchedule.get(j).title, allSchedule.get(j).dayAndTime.get(k).startTime);	//알림발생
+						for (Schedule schedule : allSchedule) {    //모든 일정 중에
+							for (int k = 0; k < schedule.dayAndTime.size(); k++) {    //모든 일정이 포함하는 시간 중에
+								if ((schedule.dayAndTime.get(k).startTime - 100) == currentTime    //현재시간 == 일정시간 - 1시간 &&
+										&& schedule.dayAndTime.get(k).day.equals(dateArr[5])            //오늘 날짜 == 일정 날짜
+								) {    //현재시각이 일정시간 - 100이면
+									alertActivityAlarm(schedule.title, schedule.dayAndTime.get(k).startTime);    //알림발생
 								}
 								System.out.println("현재시각: " + nowDate + " " + currentTime + " " + dateArr[5] + " 일정 시간, 요일: "
-										+ allSchedule.get(j).dayAndTime.get(k).startTime + " " + allSchedule.get(j).dayAndTime.get(k).day);
+										+ schedule.dayAndTime.get(k).startTime + " " + schedule.dayAndTime.get(k).day);
 							}
 						}
 					}
@@ -129,7 +120,7 @@ public class Alarm implements Runnable {
 		run();
 	}
 
-	//사용자가 알림을 off로 설정했을 때 호출되는 함수이다. 알림 스레드를 종료한다. 
+	//사용자가 알림을 off 로 설정했을 때 호출되는 함수이다. 알림 스레드를 종료한다.
 	public void stopAlarmSystem() {
 		//알림 설정 KCH
 		threadOnOff = 0;
@@ -159,8 +150,8 @@ public class Alarm implements Runnable {
 					.parse(url);
 			document.getDocumentElement().normalize();
 			NodeList nodeList = document.getElementsByTagName("item");
-			holidayDate = new ArrayList<Integer>();	//reset data
-			holidayText = new ArrayList<String>();	//reset data
+			holidayDate = new ArrayList<>();	//reset data
+			holidayText = new ArrayList<>();	//reset data
 			for (int i = 0; i<nodeList.getLength(); i++) {
 				Node node = nodeList.item(i);
 
@@ -177,7 +168,7 @@ public class Alarm implements Runnable {
 	//Used to get Holiday in crawlingHolidayInf method
 	private static String getTagValue(String tag, Element element) {
 		NodeList nodeList = element.getElementsByTagName(tag).item(0).getChildNodes();
-		Node node = (Node)nodeList.item(0);
+		Node node = nodeList.item(0);
 		if (node == null) {
 			return null;
 		}
