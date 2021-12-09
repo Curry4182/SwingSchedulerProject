@@ -442,6 +442,9 @@ public class RightSettingUI extends JPanel {
 			
 			for(DayAndTime dayTimeItem: dayAndTimes) {
 				
+				if(!dayTimeItem.day.equals(currDayTime.day)) {
+					continue;
+				}
 				//새로 추가할려는 시작시간이 이전에 있던 시간과 겹칠경우 
 				if(dayTimeItem.startTime <= currDayTime.startTime 
 						&& currDayTime.startTime < dayTimeItem.endTime) {
