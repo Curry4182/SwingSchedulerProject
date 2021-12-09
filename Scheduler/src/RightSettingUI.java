@@ -477,10 +477,9 @@ public class RightSettingUI extends JPanel {
 				ArrayList<DayAndTime> dayAndTimes = allSchedule.get(i).getDayAndTime();
 
 				for(int j=0; j<dayAndTimes.size(); j++) {
-					if(dayAndTimes.get(j).day == day) {
+					if(dayAndTimes.get(j).day.equals(day)) {
 						DayAndTime nowDay = dayAndTimes.get(j); //기존에 있던 일정 
-						
-						
+
 						if(nowDay.startTime <= startTime &&  startTime < nowDay.endTime) {
 							return true;
 						}

@@ -19,6 +19,7 @@ public class Alarm implements Runnable {
 	private int alarmState; //사용자가 설정한 알림 상태를 저장한다, 1이면 울리고, 0이면 울리지 않는것같음
 	// 삭제 - private Thread th; //알림발생시간에 알림 팝업을 발생시키는 스레드이다.
 
+	boolean isHoliday = false;
 
 	//알림 OnOff 를 위한 쓰레드를 동작할 Int, KCH
 	static int threadOnOff = 0;
@@ -75,7 +76,6 @@ public class Alarm implements Runnable {
 					//current Day, ex: 20211201
 					String nowDate = dateArr[0] + dateArr[1] + dateArr[2];
 					//공휴일인지 판별하는
-					boolean isHoliday = false;
 					//현재 날짜를 가져오고, 공휴일 비교하는 로직
 					for (int j = 0; j < holidayDate.size(); j++) {	//Compare Holiday
 						//공휴일일 때
@@ -86,6 +86,8 @@ public class Alarm implements Runnable {
 								break;
 							}
 							break;
+						} else {
+							isHoliday = false;
 						}
 					}
 					//공휴일이 아니면
@@ -97,7 +99,8 @@ public class Alarm implements Runnable {
 								) {	//현재시각이 일정시간 - 100이면
 									alertActivityAlarm(allSchedule.get(j).title, allSchedule.get(j).dayAndTime.get(k).startTime);	//알림발생
 								}
-								System.out.println(nowDate + " " + currentTime + " " + allSchedule.get(j).dayAndTime.get(k).startTime);
+								System.out.println("현재시각: " + nowDate + " " + currentTime + " " + dateArr[5] + " 일정 시간, 요일: "
+										+ allSchedule.get(j).dayAndTime.get(k).startTime + " " + allSchedule.get(j).dayAndTime.get(k).day);
 							}
 						}
 					}
@@ -142,7 +145,7 @@ public class Alarm implements Runnable {
 	
 	//사용자에게 공휴일 문구를 출력한 알림 팝업을 띄운다. 
 	public void alertHolidayAlarm(int j) {
-		JOptionPane.showMessageDialog(null, "Today is " + holidayText.get(j), "Holiday Alarm", JOptionPane.PLAIN_MESSAGE);
+		JOptionPane.showMessageDialog(null, "오늘은 " + holidayText.get(j), "공휴일 알람", JOptionPane.PLAIN_MESSAGE);
 	}
 	
 	//Use Holiday API to get holiday, input Year (ex: "2021")
