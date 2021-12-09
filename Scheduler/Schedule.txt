@@ -1,9 +1,9 @@
-{"location":"50109","professor":"강동현","type":0,"title":"운영체제특론","dayAndTime":[{"day":"월요일","startTime":0,"endTime":430}]}
-{"location":"50109","professor":"오일러","type":0,"title":"위상수학","dayAndTime":[{"day":"수요일","startTime":0,"endTime":230}]}
-{"location":"50109","professor":"오일러","type":0,"title":"위상수학","dayAndTime":[{"day":"금요일","startTime":0,"endTime":500}]}
-{"location":"50109","professor":"강동현","type":0,"title":"소프트웨어공학강론","dayAndTime":[{"day":"토요일","startTime":0,"endTime":500}]}
-{"location":"11","professor":"11","type":0,"title":"11","dayAndTime":[{"day":"화요일","startTime":900,"endTime":1030}]}
-{"location":"112","professor":"112","type":0,"title":"112","dayAndTime":[{"day":"화요일","startTime":1030,"endTime":1200}]}
-{"location":"133","professor":"113","type":0,"title":"113","dayAndTime":[{"day":"수요일","startTime":900,"endTime":1030}]}
-{"location":"133","professor":"113","type":0,"title":"113","dayAndTime":[{"day":"목요일","startTime":1030,"endTime":1200}]}
-{"location":"133","professor":"113","type":0,"title":"113","dayAndTime":[{"day":"수요일","startTime":1030,"endTime":1200}]}
+{"location":"55516","professor":"강동현","type":0,"title":"소프트웨어 공학","dayAndTime":[{"day":"월요일","startTime":1030,"endTime":1200},{"day":"수요일","startTime":900,"endTime":1030}]}
+{"location":"11","professor":"11","type":0,"title":"11","dayAndTime":[{"day":"월요일","startTime":800,"endTime":900}]}
+{"location":"11","professor":"11","type":0,"title":"111","dayAndTime":[{"day":"월요일","startTime":0,"endTime":30}]}
+{"location":"11","professor":"11","type":0,"title":"11","dayAndTime":[{"day":"화요일","startTime":800,"endTime":900}]}
+{"location":"11","professor":"111","type":0,"title":"11","dayAndTime":[{"day":"수요일","startTime":800,"endTime":900}]}
+{"location":"11","professor":"11","type":0,"title":"11","dayAndTime":[{"day":"목요일","startTime":0,"endTime":30}]}
+{"location":"1","professor":"11","type":0,"title":"11","dayAndTime":[{"day":"수요일","startTime":0,"endTime":130}]}
+{"location":"11","professor":"11","type":0,"title":"111","dayAndTime":[{"day":"토요일","startTime":0,"endTime":30}]}
+{"location":"","professor":"","type":0,"title":"222","dayAndTime":[{"day":"일요일","startTime":0,"endTime":30}]}

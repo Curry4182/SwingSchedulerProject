@@ -428,7 +428,6 @@ public class RightSettingUI extends JPanel {
 				if(dayTimeItem.startTime <= currDayTime.startTime 
 						&& currDayTime.startTime < dayTimeItem.endTime) {
 					JOptionPane.showMessageDialog(null, "추가할려는 일정안에 시간들중 겹치는 시간이 있습니다.", "일정추가 에러 메세지", JOptionPane.WARNING_MESSAGE);
-					System.out.println("1");
 					return;
 				}
 				
@@ -436,21 +435,18 @@ public class RightSettingUI extends JPanel {
 				if(dayTimeItem.startTime < currDayTime.endTime 
 						&& currDayTime.endTime <= dayTimeItem.endTime) {
 					JOptionPane.showMessageDialog(null, "추가할려는 일정안에 시간들중 겹치는 시간이 있습니다.", "일정추가 에러 메세지", JOptionPane.WARNING_MESSAGE);
-					System.out.println("2");
 					return;
 				}
 				
 				if(currDayTime.startTime <= dayTimeItem.startTime 
 						&& dayTimeItem.startTime < currDayTime.endTime) {
 					JOptionPane.showMessageDialog(null, "추가할려는 일정안에 시간들중 겹치는 시간이 있습니다.", "일정추가 에러 메세지", JOptionPane.WARNING_MESSAGE);
-					System.out.println("1");
 					return;
 				}
 				
 				if(currDayTime.startTime < dayTimeItem.endTime 
 						&& dayTimeItem.endTime <= currDayTime.endTime) {
 					JOptionPane.showMessageDialog(null, "추가할려는 일정안에 시간들중 겹치는 시간이 있습니다.", "일정추가 에러 메세지", JOptionPane.WARNING_MESSAGE);
-					System.out.println("2");
 					return;
 				}
 				
@@ -458,7 +454,6 @@ public class RightSettingUI extends JPanel {
 				if(dayTimeItem.startTime == currDayTime.startTime
 						|| dayTimeItem.endTime == currDayTime.endTime) {
 					JOptionPane.showMessageDialog(null, "추가할려는 일정안에 시간들중 겹치는 시간이 있습니다.", "일정추가 에러 메세지", JOptionPane.WARNING_MESSAGE);
-					System.out.println("3");
 					return;
 				}
 			}
@@ -468,7 +463,9 @@ public class RightSettingUI extends JPanel {
 		Schedule schedule = new Schedule(0, title, profName, location, dayAndTimes);
 		allSchedule.add(schedule);
 		
-		
+		//일정을 추가하면 전체 RightSettingUI 재설정
+		removeAll();
+		createSettingUI();
 		leftUI.printSchedule();
 	}
 	
@@ -491,7 +488,19 @@ public class RightSettingUI extends JPanel {
 							return true;
 						} else if (dayAndTime.startTime < endTime && endTime <= dayAndTime.endTime) {
 							return true;
-						} else if (startTime <= dayAndTime.startTime && dayAndTime.startTime <= endTime) {
+						} 
+						
+						else if(startTime <= dayAndTime.startTime 
+								&& dayAndTime.startTime < endTime) {
+							return true;
+						}
+						
+						else if(startTime < dayAndTime.endTime 
+								&& dayAndTime.endTime <= endTime) {
+							return true;
+						}
+						else if(dayAndTime.startTime == startTime
+								|| dayAndTime.endTime == endTime) {
 							return true;
 						}
 					}

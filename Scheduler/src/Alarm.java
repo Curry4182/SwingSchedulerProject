@@ -72,6 +72,7 @@ public class Alarm implements Runnable {
 						//공휴일일 때
 						if (Objects.equals(holidayDate.get(j), Integer.valueOf(nowDate))) {
 							isHoliday = true;
+//							if (currentTime == 1606) {	//시연 - 임시 공휴일 알림 발생시간 - 현재시간 넣고, 아래줄 주석처리 할것
 							if (currentTime == 850) {	//08:50 이면 Holiday Alarm
 								alertHolidayAlarm(j);	//j for alert user what holiday is it
 								break;
@@ -90,8 +91,8 @@ public class Alarm implements Runnable {
 								) {    //현재시각이 일정시간 - 100이면
 									alertActivityAlarm(schedule.title, schedule.dayAndTime.get(k).startTime);    //알림발생
 								}
-								System.out.println("현재시각: " + nowDate + " " + currentTime + " " + dateArr[5] + " 일정 시간, 요일: "
-										+ schedule.dayAndTime.get(k).startTime + " " + schedule.dayAndTime.get(k).day);
+								System.out.println("현재시각: " + nowDate + " " + currentTime + " " + dateArr[5] + " 일정 이름, 시간, 요일: "
+										+ schedule.title + " " + schedule.dayAndTime.get(k).startTime + " " + schedule.dayAndTime.get(k).day);
 							}
 						}
 					}
@@ -159,8 +160,12 @@ public class Alarm implements Runnable {
 					Element element = (Element)node;
 					holidayText.add(getTagValue("dateName", element));	//insert data, format ex: "Christmas"
 					holidayDate.add(Integer.valueOf(Objects.requireNonNull(getTagValue("locdate", element))));//insert arr data, format ex: 20211225
+					//System.out.print(getTagValue("dateName", element)+ " ");	//시연 - 공휴일 API 로그
+					//System.out.println(Integer.valueOf(Objects.requireNonNull(getTagValue("locdate", element))));
 				}
 			}
+//			holidayText.add("임시로 추가한 공휴일");	//시연 - 임시로 공휴일 추가
+//			holidayDate.add(20211209);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
