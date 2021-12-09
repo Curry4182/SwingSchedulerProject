@@ -13,14 +13,13 @@ import com.google.gson.Gson;
 
 public class DataLoadSaveManager {
 	private ArrayList<Schedule> allSchedule;
-	private int alarmState;
 
 	public ArrayList<Schedule> loadSchedule(){
-		allSchedule = new ArrayList<Schedule>();
+		allSchedule = new ArrayList<>();
 		File file = new File("Schedule.txt");
 
 		if(!file.exists()) {
-			allSchedule = new ArrayList<Schedule>();
+			allSchedule = new ArrayList<>();
 			saveSchedule();
 			return allSchedule;
 		}
@@ -44,9 +43,9 @@ public class DataLoadSaveManager {
 		StringBuilder saveStr = new StringBuilder();
 		Gson gson = new Gson();
 
-		for(int i=0; i<allSchedule.size(); i++) {
-			String line = gson.toJson(allSchedule.get(i));
-			saveStr.append(line+"\n");
+		for (Schedule schedule : allSchedule) {
+			String line = gson.toJson(schedule);
+			saveStr.append(line).append("\n");
 		}
 		
 		File file = new File("Schedule.txt");
@@ -61,7 +60,7 @@ public class DataLoadSaveManager {
 	
 	//알림 상태 저장, 0 혹은 1로 저장
 	public void saveAlarmState(int status) {
-		String saveStr="";
+		String saveStr;
 		saveStr = ""+status;
 
 		File file = new File("Alarm.txt");
@@ -78,6 +77,7 @@ public class DataLoadSaveManager {
 		String filePath = "Alarm.txt";
 
 		File file = new File(filePath);
+		int alarmState;
 		if(!file.exists()) {	//파일이 존재하지 않으면, 0 상태로 파일 생성, 저장
 			alarmState = 0;
 			saveAlarmState(0);

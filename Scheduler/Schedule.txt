@@ -2,3 +2,4 @@
 {"location":"50109","professor":"오일러","type":0,"title":"위상수학","dayAndTime":[{"day":"수요일","startTime":0,"endTime":230}]}
 {"location":"50109","professor":"오일러","type":0,"title":"위상수학","dayAndTime":[{"day":"금요일","startTime":0,"endTime":500}]}
 {"location":"50109","professor":"강동현","type":0,"title":"소프트웨어공학강론","dayAndTime":[{"day":"토요일","startTime":0,"endTime":500}]}
+{"location":"1111","professor":"1111","type":0,"title":"1111","dayAndTime":[{"day":"화요일","startTime":0,"endTime":30},{"day":"화요일","startTime":200,"endTime":400}]}

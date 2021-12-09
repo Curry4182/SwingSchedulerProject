@@ -1,30 +1,19 @@
 import java.util.ArrayList;
-import java.awt.GridLayout;
 import java.awt.event.*;
 import javax.swing.*;
 
-import com.formdev.flatlaf.FlatDarculaLaf;
-import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLightLaf;
-import com.formdev.flatlaf.demo.*;
-import com.formdev.flatlaf.intellijthemes.FlatArcDarkOrangeIJTheme;
-import com.formdev.flatlaf.intellijthemes.FlatCarbonIJTheme;
-import com.formdev.flatlaf.intellijthemes.FlatCyanLightIJTheme;
 
 import java.awt.*;
 
 public class TimeTableSystem {
 
-	private ArrayList<Schedule> allSchedule;
+	private final ArrayList<Schedule> allSchedule;
 
 	//Alarm.txt, Schedule.txt
-	private DataLoadSaveManager dataMG;
+	private final DataLoadSaveManager dataMG;
 
-	private LeftTableUI leftUI;
-
-	private RightSettingUI rightUI;
-	
-	private Alarm alarm;
+	private final Alarm alarm;
 
 	public static void main(String[] args) {
 		//FlatDarkLaf.setup();
@@ -32,6 +21,7 @@ public class TimeTableSystem {
 		//FlatCarbonIJTheme.setup();
 		//FlatArcDarkOrangeIJTheme.setup();
 		FlatLightLaf.setup();	
+		//FlatLightLaf.setup();
 		//FlatCyanLightIJTheme.setup();
 
 		TimeTableSystem system = new TimeTableSystem();
@@ -64,7 +54,7 @@ public class TimeTableSystem {
 	    c.gridy = 0;
 	    c.weightx = 8;
         c.weighty = 1;
-        leftUI = new LeftTableUI(allSchedule, alarm);
+		LeftTableUI leftUI = new LeftTableUI(allSchedule);
         leftUI.setVisible(true);
 	    frame.add(leftUI,c);
 	    frame.setVisible(true);
@@ -74,7 +64,7 @@ public class TimeTableSystem {
 	    c.gridy = 0;
 	    c.weightx = 1;
         c.weighty = 1;
-        rightUI = new RightSettingUI(allSchedule, leftUI, alarm);
+		RightSettingUI rightUI = new RightSettingUI(allSchedule, leftUI, alarm);
 	    frame.add(rightUI, c);
 	    frame.setVisible(true);
 	    
