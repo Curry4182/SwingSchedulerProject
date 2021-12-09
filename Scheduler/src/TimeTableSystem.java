@@ -15,22 +15,17 @@ import java.awt.*;
 
 public class TimeTableSystem {
 
-	//�궗�슜�옄媛� 異붽��븳 紐⑤뱺 �씪�젙 �젙蹂대�� 愿�由ы븳�떎. 
 	private ArrayList<Schedule> allSchedule;
 
-	//紐⑤뱺 �씪�젙 �젙蹂대�� �뀓�뒪�듃�뙆�씪�뿉 ���옣�븯怨�, �뀓�뒪�듃 �뙆�씪�뿉�꽌 遺덈윭�삩�떎.
 	//Alarm.txt, Schedule.txt
 	private DataLoadSaveManager dataMG;
 
-	//[洹몃┝ 2]�젣�븞�븯�뒗 �냼�봽�듃�썾�뼱�쓽 援ъ긽�룄�뿉�꽌 �쇊履쎌뿉 �엳�뒗 �떆媛꾪몴
 	private LeftTableUI leftUI;
 
-	//[洹몃┝ 2]�젣�븞�븯�뒗 �냼�봽�듃�썾�뼱�쓽 援ъ긽�룄�뿉�꽌 �삤瑜몄そ�뿉 �엳�뒗 �꽕�젙�솕硫�
 	private RightSettingUI rightUI;
 	
 	private Alarm alarm;
-	
-	//TimeTableSystem 媛앹껜瑜� �깮�꽦�븯�뿬 �샇異쒗븳�떎. 
+
 	public static void main(String[] args) {
 		//FlatDarkLaf.setup();
 		//FlatDarculaLaf.setup();
@@ -45,16 +40,16 @@ public class TimeTableSystem {
 	public TimeTableSystem() {
 		dataMG = new DataLoadSaveManager();	
 		allSchedule = dataMG.loadSchedule();
-		//alarm = dataMG.loadAlarmState();
-		
-		alarm = new Alarm();
+		//알림 상태 가져오기 - int 0 or 1 로 처리
+		int state = dataMG.loadAlarmState();
+		//System.out.println(state);	//state 잘 가져오는지 체크
+		alarm = new Alarm(state);
+		alarm.setAllSchedule(allSchedule);	//알림에 일정 넣기
 		//alarm.crawlingHolidayInf("2021");
 		
 		drawTimeTableSystem();
 	}
-	
-	//leftTableUI�뿉 �떆媛꾪몴 寃⑹옄瑜� �깮�꽦�븯怨� �떆媛꾪몴�뿉 �씪�젙 �젙蹂대�� 異쒕젰�븯怨� �떆媛꾪몴 寃⑹옄移몄뿉 �깋�쓣 �몴�떆�븳�떎.
-	//rightsettingUI�뿉 �엯�젰 UI 瑜� �깮�꽦�븯怨� �븣由� �뿬遺��뿉 �뵲�씪 �븣由쇱뒪�쐞移섎�� �꽕�젙�븳�떎. 
+
 	public void drawTimeTableSystem() {
 		JFrame frame = new JFrame("시간표 기반 일정 관리 어플리케이션");
 	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -93,13 +88,11 @@ public class TimeTableSystem {
             }
         });
 	}
-	
-	//dataMG�쓽 saveSchedule�븿�닔瑜� �샇異쒗븯�뿬 txt�뙆�씪�뿉 ���옣�븳�떎. 
-	//�떆�뒪�뀥�쓣 醫낅즺�븳�떎.
+
 	public void closeSystem() {
-	//(6)醫낅즺 SequenceDiagram -KCH
 		dataMG.saveSchedule();
-		//dataMG.saveAlarmState();
+		//알림 상태 저장
+		dataMG.saveAlarmState(alarm.getAlarmState());
 		//terminate System
 	}
 }
