@@ -36,7 +36,7 @@ public class TimeTableSystem {
 		//FlatDarculaLaf.setup();
 		//FlatCarbonIJTheme.setup();
 		//FlatArcDarkOrangeIJTheme.setup();
-		//FlatLightLaf.setup();	
+		FlatLightLaf.setup();	
 		//FlatCyanLightIJTheme.setup();
 
 		TimeTableSystem system = new TimeTableSystem();
