@@ -1,10 +1,12 @@
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
-import java.awt.event.*;
-import javax.swing.*;
+
+import javax.swing.JFrame;
 
 import com.formdev.flatlaf.FlatLightLaf;
-
-import java.awt.*;
 
 public class TimeTableSystem {
 

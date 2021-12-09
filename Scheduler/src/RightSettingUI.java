@@ -1,11 +1,29 @@
-import javax.swing.*;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.util.ArrayList;
+
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.UIDefaults;
+import javax.swing.UIManager;
 import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
 import javax.swing.plaf.ColorUIResource;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 public class RightSettingUI extends JPanel {
 	//모든 일정 정보를 들고있는 필드 

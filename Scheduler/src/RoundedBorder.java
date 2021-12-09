@@ -1,8 +1,8 @@
-import java.awt.geom.*;
-import java.awt.event.*;
-import javax.swing.border.*;
-import java.awt.*;
-import javax.swing.*;
+import java.awt.Component;
+import java.awt.Graphics;
+import java.awt.Insets;
+
+import javax.swing.border.Border;
 
 class RoundedBorder implements Border {
     int radius;
