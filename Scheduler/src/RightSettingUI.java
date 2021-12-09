@@ -440,6 +440,21 @@ public class RightSettingUI extends JPanel {
 					return;
 				}
 				
+				if(currDayTime.startTime <= dayTimeItem.startTime 
+						&& dayTimeItem.startTime < currDayTime.endTime) {
+					JOptionPane.showMessageDialog(null, "추가할려는 일정안에 시간들중 겹치는 시간이 있습니다.", "일정추가 에러 메세지", JOptionPane.WARNING_MESSAGE);
+					System.out.println("1");
+					return;
+				}
+				
+				if(currDayTime.startTime < dayTimeItem.endTime 
+						&& dayTimeItem.endTime <= currDayTime.endTime) {
+					JOptionPane.showMessageDialog(null, "추가할려는 일정안에 시간들중 겹치는 시간이 있습니다.", "일정추가 에러 메세지", JOptionPane.WARNING_MESSAGE);
+					System.out.println("2");
+					return;
+				}
+				
+				
 				if(dayTimeItem.startTime == currDayTime.startTime
 						|| dayTimeItem.endTime == currDayTime.endTime) {
 					JOptionPane.showMessageDialog(null, "추가할려는 일정안에 시간들중 겹치는 시간이 있습니다.", "일정추가 에러 메세지", JOptionPane.WARNING_MESSAGE);

@@ -169,10 +169,6 @@ public class LeftTableUI extends JPanel {
 
 				//각 요일(월요일~일요일)에 맞게 col 변경
 				int col = initCol + dayToNum.get(day);
-				
-				//for(int i=0; i<dayToNum.size(); i++) {
-					System.out.println(dayToNum.keySet());
-				//}
 
 				GridBagConstraints gbc = gbcs.get(startRow).get(col);
 				gbc.gridheight = endRow - startRow;
