@@ -10,27 +10,8 @@ public class CommonSchedule {
 		this.title = title;
 		this.dayAndTime = dayAndTime;
 	}
-	
-	public String getTitle() {
-		return title;
-	}
-	
+
 	public ArrayList<DayAndTime> getDayAndTime(){
 		return dayAndTime;
-	}
-	
-	public ArrayList<Integer> getAllStartTime(){
-		ArrayList<Integer> startTimes = new ArrayList<Integer>();
-		
-		for(int i=0; i<dayAndTime.size(); i++) {
-			startTimes.set(i, dayAndTime.get(i).startTime + 1);
-		}
-		
-		return startTimes;
-	}
-	
-	//type을 반환한다. 0은 강의 일정을 , 1은 기타일정을 의미한다
-	public int getType() {
-		return type;
 	}
 }

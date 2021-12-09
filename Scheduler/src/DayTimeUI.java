@@ -1,22 +1,14 @@
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.event.*;
-
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.UIManager;
-
-import java.awt.Color;
-import java.awt.Font;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Objects;
 
 public class DayTimeUI extends JPanel{
-	private JComboBox day;
-	private JComboBox startTime;
-	private JComboBox endTime;
-	
-	
+	private final JComboBox day;
+	private final JComboBox startTime;
+	private final JComboBox endTime;
+
 	//요일, 시작 시간, 종료 시간을 선택할 수 있는 콤보박스를 생성해서 panel에 붙인다.
 	public DayTimeUI() {
 		
@@ -25,7 +17,7 @@ public class DayTimeUI extends JPanel{
 		setBackground(UIManager.getColor ( "Panel.background" ));
 		gridBagLayout.columnWidths = new int[] {40, 10, 40, 10, 40, 5, 25};
 		
-		String days[]={"월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일"};    
+		String[] days ={"월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일"};
 		day = new JComboBox(days);
 		
 		GridBagConstraints c = new GridBagConstraints();
@@ -34,17 +26,17 @@ public class DayTimeUI extends JPanel{
 		c.gridy = 0;
 		add(day, c);
 		
-		String times[] = new String[48];
+		String[] times = new String[48];
 		
 		int idx = 0;
 		for(int i=0; i<24; i++) {
 			if(i<10) { 
-				times[idx] = "0" + String.valueOf(i) + ":" + "00";
-				times[idx+1] = "0" + String.valueOf(i) + ":" + "30";
+				times[idx] = "0" + i + ":" + "00";
+				times[idx+1] = "0" + i + ":" + "30";
 				idx+=2;
 			}else {
-				times[idx] = String.valueOf(i) + ":" + "00";
-				times[idx+1] = String.valueOf(i) + ":" + "30";
+				times[idx] = i + ":" + "00";
+				times[idx+1] = i + ":" + "30";
 				idx+=2;
 			}
 		}
@@ -61,44 +53,40 @@ public class DayTimeUI extends JPanel{
 		endTime.setSelectedIndex(1);
 		
 		//시작시간이 종료시간 보다 크거나 같을 경우 되돌리는 함수 추가
-		startTime.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                JComboBox startComboBox = (JComboBox) e.getSource();
-                int selectedStartTime = Integer.valueOf(startComboBox.getSelectedItem().toString().replace(":", ""));
-                
-                JComboBox endComboBox = (JComboBox)startComboBox.getClientProperty("endTime");
-        		int selectedEndTime = Integer.valueOf(endComboBox.getSelectedItem().toString().replace(":", ""));
+		startTime.addActionListener(e -> {
+			JComboBox startComboBox = (JComboBox) e.getSource();
+			int selectedStartTime = Integer.parseInt(Objects.requireNonNull(startComboBox.getSelectedItem()).toString().replace(":", ""));
 
-        		if(selectedStartTime >= selectedEndTime) {
-        			JOptionPane.showMessageDialog(null, "시작시간이 종료시간 보다 크거나 같을 수 없습니다.", "일정추가 에러 메세지", JOptionPane.WARNING_MESSAGE);
-        			Object pre = startComboBox.getClientProperty("pre");
-        			startComboBox.setSelectedItem(pre);
-        		}else {
-        			Object pre = startComboBox.getSelectedItem();
-        			startComboBox.putClientProperty("pre", pre);
-        		}
-            }
-        });
+			JComboBox endComboBox = (JComboBox)startComboBox.getClientProperty("endTime");
+			int selectedEndTime = Integer.parseInt(Objects.requireNonNull(endComboBox.getSelectedItem()).toString().replace(":", ""));
+
+			if(selectedStartTime >= selectedEndTime) {
+				JOptionPane.showMessageDialog(null, "시작시간이 종료시간 보다 크거나 같을 수 없습니다.", "일정추가 에러 메세지", JOptionPane.WARNING_MESSAGE);
+				Object pre = startComboBox.getClientProperty("pre");
+				startComboBox.setSelectedItem(pre);
+			}else {
+				Object pre = startComboBox.getSelectedItem();
+				startComboBox.putClientProperty("pre", pre);
+			}
+		});
 		
 		//종료시간이 시작시간 보다 작거나 같을 경우 되돌리는 함수 추가
-		endTime.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-            	JComboBox endComboBox = (JComboBox) e.getSource();
-                int selectedEndTime = Integer.valueOf(endComboBox.getSelectedItem().toString().replace(":", ""));
-                
-                JComboBox startComboBox = (JComboBox)endComboBox.getClientProperty("startTime");
-        		int selectedStartTime = Integer.valueOf(startComboBox.getSelectedItem().toString().replace(":", ""));
+		endTime.addActionListener(e -> {
+			JComboBox endComboBox = (JComboBox) e.getSource();
+			int selectedEndTime = Integer.parseInt(Objects.requireNonNull(endComboBox.getSelectedItem()).toString().replace(":", ""));
 
-        		if(selectedStartTime >= selectedEndTime) {
-        			JOptionPane.showMessageDialog(null, "종료시간이 시작시간 보다 작거나 같을 수 없습니다.", "일정추가 에러 메세지", JOptionPane.WARNING_MESSAGE);
-        			Object pre = endComboBox.getClientProperty("pre");
-        			endComboBox.setSelectedItem(pre);
-        		}else {
-        			Object pre = endComboBox.getSelectedItem();
-        			endComboBox.putClientProperty("pre", pre);
-        		}
-            }
-        });
+			JComboBox startComboBox = (JComboBox)endComboBox.getClientProperty("startTime");
+			int selectedStartTime = Integer.parseInt(Objects.requireNonNull(startComboBox.getSelectedItem()).toString().replace(":", ""));
+
+			if(selectedStartTime >= selectedEndTime) {
+				JOptionPane.showMessageDialog(null, "종료시간이 시작시간 보다 작거나 같을 수 없습니다.", "일정추가 에러 메세지", JOptionPane.WARNING_MESSAGE);
+				Object pre = endComboBox.getClientProperty("pre");
+				endComboBox.setSelectedItem(pre);
+			}else {
+				Object pre = endComboBox.getSelectedItem();
+				endComboBox.putClientProperty("pre", pre);
+			}
+		});
 		
 		c.gridx = 2;
 		c.gridy = 0;
@@ -112,9 +100,9 @@ public class DayTimeUI extends JPanel{
 	public DayAndTime getDayAndTimeObject() {
 		if(startTime.getSelectedIndex() == -1 || endTime.getSelectedIndex() == -1) return null;
 		
-		int selectedStartTime = Integer.valueOf(startTime.getSelectedItem().toString().replace(":", ""));
-		int selectedEndTime = Integer.valueOf(endTime.getSelectedItem().toString().replace(":", ""));
+		int selectedStartTime = Integer.parseInt(Objects.requireNonNull(startTime.getSelectedItem()).toString().replace(":", ""));
+		int selectedEndTime = Integer.parseInt(Objects.requireNonNull(endTime.getSelectedItem()).toString().replace(":", ""));
 		
-		return new DayAndTime(day.getSelectedItem().toString(), selectedStartTime, selectedEndTime);
+		return new DayAndTime(Objects.requireNonNull(day.getSelectedItem()).toString(), selectedStartTime, selectedEndTime);
 	}
 }
