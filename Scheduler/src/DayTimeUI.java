@@ -51,10 +51,11 @@ public class DayTimeUI extends JPanel{
 		startTime.putClientProperty("pre", startTime.getSelectedItem());
 		startTime.putClientProperty("endTime", endTime);
 		
-		endTime.putClientProperty("pre", endTime.getSelectedItem());
-		endTime.putClientProperty("startTime", startTime);
 		//00:30분 부터 시작되도록 설정
 		endTime.setSelectedIndex(1);
+		endTime.putClientProperty("pre", endTime.getSelectedItem());
+		endTime.putClientProperty("startTime", startTime);
+		
 		
 		//시작시간이 종료시간 보다 크거나 같을 경우 되돌리는 함수 추가
 		startTime.addActionListener(e -> {
