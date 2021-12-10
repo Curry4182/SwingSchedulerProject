@@ -1,11 +1,4 @@
 {"location":"55516","professor":"강동현","type":0,"title":"소프트웨어 공학","dayAndTime":[{"day":"월요일","startTime":1030,"endTime":1200},{"day":"수요일","startTime":900,"endTime":1030}]}
 {"location":"11","professor":"11","type":0,"title":"11","dayAndTime":[{"day":"월요일","startTime":800,"endTime":900}]}
-{"location":"11","professor":"11","type":0,"title":"111","dayAndTime":[{"day":"월요일","startTime":0,"endTime":30}]}
 {"location":"11","professor":"11","type":0,"title":"11","dayAndTime":[{"day":"화요일","startTime":800,"endTime":900}]}
 {"location":"11","professor":"111","type":0,"title":"11","dayAndTime":[{"day":"수요일","startTime":800,"endTime":900}]}
-{"location":"11","professor":"11","type":0,"title":"11","dayAndTime":[{"day":"목요일","startTime":0,"endTime":30}]}
-{"location":"1","professor":"11","type":0,"title":"11","dayAndTime":[{"day":"수요일","startTime":0,"endTime":130}]}
-{"location":"11","professor":"11","type":0,"title":"111","dayAndTime":[{"day":"토요일","startTime":0,"endTime":30}]}
-{"location":"11","professor":"11","type":0,"title":"111","dayAndTime":[{"day":"금요일","startTime":0,"endTime":30}]}
-{"location":"11","professor":"11","type":0,"title":"11","dayAndTime":[{"day":"월요일","startTime":100,"endTime":330},{"day":"화요일","startTime":100,"endTime":330}]}
-{"location":"11","professor":"11","type":0,"title":"11","dayAndTime":[{"day":"토요일","startTime":30,"endTime":700},{"day":"일요일","startTime":0,"endTime":30}]}
