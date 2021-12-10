@@ -237,7 +237,7 @@ public class RightSettingUI extends JPanel {
 		}
 		
 		//수업명 label 생성
-		JLabel lblNewLabel = new JLabel("수업명");
+		JLabel lblNewLabel = new JLabel("강의명");
 		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
 		gbc_lblNewLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel.gridx = 1;
@@ -420,7 +420,7 @@ public class RightSettingUI extends JPanel {
 		
 		if(isLecture) {
 			if(title.equals("")) {
-				JOptionPane.showMessageDialog(null, "수업명을 입력해주세요", "일정추가 에러 메세지", JOptionPane.WARNING_MESSAGE);
+				JOptionPane.showMessageDialog(null, "강의명을 입력해주세요", "일정추가 에러 메세지", JOptionPane.WARNING_MESSAGE);
 				return;
 			}else if(profName.equals("")) {
 				JOptionPane.showMessageDialog(null, "교수명을 입력해주세요", "일정추가 에러 메세지", JOptionPane.WARNING_MESSAGE);
