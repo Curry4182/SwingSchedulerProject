@@ -1,1 +1,0 @@
-{"location":"55516","professor":"강동현","type":0,"title":"소프트웨어 공학","dayAndTime":[{"day":"월요일","startTime":1030,"endTime":1200},{"day":"수요일","startTime":900,"endTime":1030}]}

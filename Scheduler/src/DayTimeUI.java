@@ -29,7 +29,7 @@ public class DayTimeUI extends JPanel{
 		c.gridy = 0;
 		add(day, c);
 		
-		String[] times = new String[48];
+		String[] times = new String[49];
 		
 		int idx = 0;
 		for(int i=0; i<24; i++) {
@@ -43,6 +43,7 @@ public class DayTimeUI extends JPanel{
 				idx+=2;
 			}
 		}
+		times[48] = "24:00";
 		
 		startTime = new JComboBox(times);
 		endTime = new JComboBox(times);

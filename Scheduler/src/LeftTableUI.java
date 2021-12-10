@@ -203,11 +203,8 @@ public class LeftTableUI extends JPanel {
 
 				//버튼 텍스트 수정 
 				btns.get(startRow).get(col).setText(btnInformStr);
-
 				btns.get(startRow).get(col).putClientProperty("scheduleItem", schedule);
-
 				
-
 				Color darkColor = newColor.darker();
 				Color lightColor = newColor.brighter();
 
@@ -215,14 +212,17 @@ public class LeftTableUI extends JPanel {
 				btns.get(startRow).get(col).setBackground(lightColor);
 
 
-				//btns.get(startRow).get(col).setBackground(Color.RED);
-
-
 				//버튼 클릭시 상세정보 표시 함수 실행
 				btns.get(startRow).get(col).addActionListener(e -> {
 					JButton btn = (JButton) e.getSource();
 					Schedule item = (Schedule) (btn).getClientProperty("scheduleItem");
-					String InformStr = String.format("<html>강의명: %s<br/>장소: %s<br/>교수: %s<br/></html>", item.title, item.getLocation(), item.getProfessor());
+					
+					String InformStr="";
+					if(item.type == 0) {//강의일정
+						InformStr = String.format("<html>강의명: %s<br/>장소: %s<br/>교수: %s<br/></html>", item.title, item.getLocation(), item.getProfessor());
+					}else if(item.type == 1){ //기타일정
+						InformStr = String.format("<html>일정명: %s</html>", item.title);
+					}
 					ScheduleDeleteDialog dialog = new ScheduleDeleteDialog(InformStr, e1 -> deleteBtnClick(item));
 				});
 			}
