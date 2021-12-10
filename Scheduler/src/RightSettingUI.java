@@ -37,13 +37,13 @@ public class RightSettingUI extends JPanel {
 		this.allSchedule = allSchedule;
 		this.leftUI = leftUI;
 		this.alarm = alarm;
-		createSettingUI();
+		createSettingUI(0);
 	}
 	
 	//강의일정과 기타일정 체크박스, 알림 스위치, DayTimeUI생성
 	//기본적으로 강의 일정이 체크된 상태로 변경
 	//selectLecture 호출
-	public void createSettingUI() {
+	public void createSettingUI(int flag) {	//최초 실행 flag, 0이면 최초실행
 		//버튼 클릭시 안에있는 텍스트에 밑줄 생기는것을 없앤다. 
 		UIDefaults defaults = UIManager.getLookAndFeelDefaults();
 		defaults.put("Button.focus", new ColorUIResource(new Color(0, 0, 0, 0)));
@@ -135,8 +135,8 @@ public class RightSettingUI extends JPanel {
 
 		add(chckbxNewCheckBox_2, gbc_chckbxNewCheckBox_2);
 
-		//체크박스가 선택된 상태이면 알림 시작
-		if (chckbxNewCheckBox_2.isSelected()) {
+		//체크박스가 선택된 상태이면 알림 시작, 최초 실행시에만 적용
+		if (chckbxNewCheckBox_2.isSelected() && flag == 0) {
 			alarm.startAlarmSystem();
 		}
 
@@ -486,7 +486,7 @@ public class RightSettingUI extends JPanel {
 		
 		//일정을 추가하면 전체 RightSettingUI 재설정
 		removeAll();
-		createSettingUI();
+		createSettingUI(1);
 		leftUI.printSchedule();
 	}
 	
