@@ -21,9 +21,8 @@ public class Alarm implements Runnable {
 	private int alarmState; //사용자가 설정한 알림 상태를 저장한다, 1이면 울리고, 0이면 울리지 않는것같음
 	boolean isHoliday = false;
 
-	//알림 OnOff 를 위한 쓰레드를 동작할 Int, KCH
-	static int threadOnOff = 0;
-	
+	TimerTask task;
+
 	public Alarm(int state) {	//객체 생성시 state 설정
 		this.alarmState = state;
 	}
@@ -54,64 +53,55 @@ public class Alarm implements Runnable {
 	@Override
 	public void run() {
 		//알림설정을 위한 변수, 1이면 실행, 0이면 종료
-		threadOnOff = 1;
-		TimerTask task = new TimerTask() {
+		task = new TimerTask() {
 			@Override
 			public void run() {
-				while (threadOnOff == 1) {	//1일 때 무한루프
-					//NowDate
-					Date date = new Date(System.currentTimeMillis());
-					//DateFormat
-					SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.MM.dd.HH.mm.E요일", Locale.KOREAN);
-					String dateString = simpleDateFormat.format(date);
-					//Split String, Struct ex: [2021, 12, 02, 16, 00]
-					String[] dateArr = dateString.split("[.]");
-					//current Time, ex: 1600
-					int currentTime = Integer.parseInt(dateArr[3] + dateArr[4]);
-					//call API with Year	Call here Temporary!!!! CHECK FOR ALARM!!!!
-					//current Day, ex: 20211201
-					String nowDate = dateArr[0] + dateArr[1] + dateArr[2];
-					//공휴일인지 판별하는
-					//현재 날짜를 가져오고, 공휴일 비교하는 로직
-					for (int j = 0; j < holidayDate.size(); j++) {	//Compare Holiday
-						//공휴일일 때
-						if (Objects.equals(holidayDate.get(j), Integer.valueOf(nowDate))) {
-							isHoliday = true;
+				//NowDate
+				Date date = new Date(System.currentTimeMillis());
+				//DateFormat
+				SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.MM.dd.HH.mm.E요일", Locale.KOREAN);
+				String dateString = simpleDateFormat.format(date);
+				//Split String, Struct ex: [2021, 12, 02, 16, 00]
+				String[] dateArr = dateString.split("[.]");
+				//current Time, ex: 1600
+				int currentTime = Integer.parseInt(dateArr[3] + dateArr[4]);
+				//call API with Year	Call here Temporary!!!! CHECK FOR ALARM!!!!
+				//current Day, ex: 20211201
+				String nowDate = dateArr[0] + dateArr[1] + dateArr[2];
+				//공휴일인지 판별하는
+				//현재 날짜를 가져오고, 공휴일 비교하는 로직
+				for (int j = 0; j < holidayDate.size(); j++) {	//Compare Holiday
+					//공휴일일 때
+					if (Objects.equals(holidayDate.get(j), Integer.valueOf(nowDate))) {
+						isHoliday = true;
 //							if (currentTime == 1606) {	//시연 - 임시 공휴일 알림 발생시간 - 현재시간 넣고, 아래줄 주석처리 할것
-							if (currentTime == 850) {	//08:50 이면 Holiday Alarm
-								alertHolidayAlarm(j);	//j for alert user what holiday is it
-								break;
-							}
+						if (currentTime == 850) {	//08:50 이면 Holiday Alarm
+							alertHolidayAlarm(j);	//j for alert user what holiday is it
 							break;
-						} else {
-							isHoliday = false;
 						}
+						break;
+					} else {
+						isHoliday = false;
 					}
-					//공휴일이 아니면
-					if (!isHoliday) {
-						for (Schedule schedule : allSchedule) {    //모든 일정 중에
-							for (int k = 0; k < schedule.dayAndTime.size(); k++) {    //모든 일정이 포함하는 시간 중에
-								if ((schedule.dayAndTime.get(k).startTime - 100) == currentTime    //현재시간 == 일정시간 - 1시간 &&
-										&& schedule.dayAndTime.get(k).day.equals(dateArr[5])            //오늘 날짜 == 일정 날짜
-								) {    //현재시각이 일정시간 - 100이면
-									alertActivityAlarm(schedule.title, schedule.dayAndTime.get(k).startTime);    //알림발생
-								}
-								System.out.println("현재시각: " + nowDate + " " + currentTime + " " + dateArr[5] + " 일정 이름, 시간, 요일: "
-										+ schedule.title + " " + schedule.dayAndTime.get(k).startTime + " " + schedule.dayAndTime.get(k).day);
+				}
+				//공휴일이 아니면
+				if (!isHoliday) {
+					for (Schedule schedule : allSchedule) {    //모든 일정 중에
+						for (int k = 0; k < schedule.dayAndTime.size(); k++) {    //모든 일정이 포함하는 시간 중에
+							if ((schedule.dayAndTime.get(k).startTime - 100) == currentTime    //현재시간 == 일정시간 - 1시간 &&
+									&& schedule.dayAndTime.get(k).day.equals(dateArr[5])            //오늘 날짜 == 일정 날짜
+							) {    //현재시각이 일정시간 - 100이면
+								alertActivityAlarm(schedule.title, schedule.dayAndTime.get(k).startTime);    //알림발생
 							}
+							System.out.println("현재시각: " + nowDate + " " + currentTime + " " + dateArr[5] + "\n일정 이름: "
+									+ schedule.title + "\t시간: " + schedule.dayAndTime.get(k).startTime + "\t요일: " + schedule.dayAndTime.get(k).day);
 						}
-					}
-					//1분 대기 - 분당 한번 알림을 주기 위해서
-					try {
-						Thread.sleep(60000);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
 					}
 				}
 			}
 		};
 		Timer timer = new Timer();
-		timer.scheduleAtFixedRate(task, 0, 1);
+		timer.schedule(task, 0, 60000);
 	}
 
 	//사용자가 알림을 on 으로 설정했을 때 호출되는 함수이다. 알림 스레드를 실행한다.
@@ -129,7 +119,7 @@ public class Alarm implements Runnable {
 	//사용자가 알림을 off 로 설정했을 때 호출되는 함수이다. 알림 스레드를 종료한다.
 	public void stopAlarmSystem() {
 		//알림 설정 KCH
-		threadOnOff = 0;
+		task.cancel();
 	}
 	
 	//사용자에게 일정명과 일정시간을 출력한 알림 파업을 띄운다.
@@ -170,7 +160,7 @@ public class Alarm implements Runnable {
 				}
 			}
 //			holidayText.add("임시로 추가한 공휴일");	//시연 - 임시로 공휴일 추가
-//			holidayDate.add(20211209);
+//			holidayDate.add(20211209);	//시연날짜 입력할것
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
